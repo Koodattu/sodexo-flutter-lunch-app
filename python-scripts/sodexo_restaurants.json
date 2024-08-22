@@ -1,0 +1,1289 @@
+[
+    {
+        "json_id": "69",
+        "url_id": "keilaranta-1",
+        "name": "Keilaranta 1",
+        "location": "Espoo",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "08.00 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "86",
+        "url_id": "ravintola-aalto-kvarkki",
+        "name": "Ravintola Aalto Kvarkki ",
+        "location": "Espoo",
+        "lunch_hours": "10.30 - 14.00",
+        "open_hours": "09.00 - 14.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "86",
+        "url_id": "ravintola-aalto-tietotekniikantalo",
+        "name": "Ravintola Aalto Tietotekniikantalo ",
+        "location": "Espoo",
+        "lunch_hours": "10.30 - 14.00",
+        "open_hours": "08.00 - 14.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "207",
+        "url_id": "ravintola-arvo",
+        "name": "Ravintola Arvo",
+        "location": "Espoo",
+        "lunch_hours": "11.00 - 14.00",
+        "open_hours": "08.00 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "60",
+        "url_id": "hills-business-park",
+        "name": "Ravintola Hills",
+        "location": "Espoo",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "08.00 - 13.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": null,
+        "url_id": "kaivomestari",
+        "name": "Ravintola Kaivomestari",
+        "location": "Espoo",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "lounas"
+    },
+    {
+        "json_id": "61",
+        "url_id": "keilasatama-5",
+        "name": "Ravintola Keilasatama 5",
+        "location": "Espoo",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "08.00 - 15.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "170",
+        "url_id": "laturi",
+        "name": "Ravintola Laturi (Caruna)",
+        "location": "Espoo",
+        "lunch_hours": "11.00 - 13.00",
+        "open_hours": "11.00 - 13.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "1694324",
+        "url_id": "ravintola-safiiri",
+        "name": "Ravintola Safiiri",
+        "location": "Espoo",
+        "lunch_hours": "08.00 - 14.30",
+        "open_hours": "08.00 - 10.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "159",
+        "url_id": "technopolis-innopoli-1",
+        "name": "Technopolis Innopoli 1",
+        "location": "Espoo",
+        "lunch_hours": "08.00 - 10.00",
+        "open_hours": "08.00 - 14.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "91",
+        "url_id": "vorssan-vapriikki",
+        "name": "Ravintola Vapriikki",
+        "location": "Forssa",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "07.15 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "10229",
+        "url_id": "ravintola-visis-hamk-hameenlinna",
+        "name": "Ravintola Visis - HAMK Hämeenlinna",
+        "location": "Hämeenlinna",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "07.45 - 16.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "1045996",
+        "url_id": "helsingin-yliopisto-paarakennus",
+        "name": "Helsingin yliopisto Päärakennus",
+        "location": "Helsinki",
+        "lunch_hours": "09.00 - 15.30",
+        "open_hours": "10.30 - 15.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": null,
+        "url_id": "helsingin-yliopisto-paarakennus-ravintola-flora",
+        "name": "Helsingin yliopisto päärakennus - Ravintola Flora",
+        "location": "Helsinki",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "lounas"
+    },
+    {
+        "json_id": "158",
+        "url_id": "metropolia-myllypuro",
+        "name": "Metropolia Myllypuro",
+        "location": "Helsinki",
+        "lunch_hours": "07.30 - 09.30",
+        "open_hours": "07.30 - 15.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "149",
+        "url_id": "ankkuri",
+        "name": "Ravintola Ankkuri",
+        "location": "Helsinki",
+        "lunch_hours": "11.00 - 13.00",
+        "open_hours": "08.00 - 13.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "66",
+        "url_id": "ravintola-atomitie-5",
+        "name": "Ravintola Atomitie 5",
+        "location": "Helsinki",
+        "lunch_hours": "10.45 - 13.00",
+        "open_hours": "10.45 - 13.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "275380",
+        "url_id": "ravintola-hdl-alppikortteli",
+        "name": "Ravintola HDL Alppikortteli",
+        "location": "Helsinki",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "lounas"
+    },
+    {
+        "json_id": "275381",
+        "url_id": "ravintola-hdl-kotikallio",
+        "name": "Ravintola HDL Kotikallio",
+        "location": "Helsinki",
+        "lunch_hours": "11.15 - 12.30",
+        "open_hours": "11.15 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "260007",
+        "url_id": "ravintola-hdl-viikki",
+        "name": "Ravintola HDL Viikki",
+        "location": "Helsinki",
+        "lunch_hours": "11.00 - 13.00",
+        "open_hours": "08.00 - 13.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "1872124",
+        "url_id": "ravintola-k-auto-helsinki",
+        "name": "Ravintola K-Auto Helsinki",
+        "location": "Helsinki",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "07.30 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "1007802",
+        "url_id": "ravintola-kasarmikatu-21",
+        "name": "Ravintola Kasarmikatu 21 ",
+        "location": "Helsinki",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "08.00 - 13.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "55",
+        "url_id": "ravintola-kiltakellari",
+        "name": "Ravintola Kiltakellari",
+        "location": "Helsinki",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "10.30 - 13.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "68",
+        "url_id": "ravintola-ladonlukko",
+        "name": "Ravintola Ladonlukko",
+        "location": "Helsinki",
+        "lunch_hours": "10.30 - 14.30",
+        "open_hours": "07.45 - 15.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": null,
+        "url_id": "ravintola-pikseli",
+        "name": "Ravintola Pikseli",
+        "location": "Helsinki",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "lounas"
+    },
+    {
+        "json_id": "178",
+        "url_id": "ravintola-sisapiha",
+        "name": "Ravintola Sisäpiha",
+        "location": "Helsinki",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "08.00 - 13.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "65",
+        "url_id": "ravintola-tk21",
+        "name": "Ravintola TK21",
+        "location": "Helsinki",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "08.00 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "190",
+        "url_id": "ravintola-valaja",
+        "name": "Ravintola Valaja",
+        "location": "Helsinki",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "10.30 - 13.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "85",
+        "url_id": "stadin-ao-hattulantie-2",
+        "name": "Stadin AO - Hattulantie 2",
+        "location": "Helsinki",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "07.45 - 14.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "179",
+        "url_id": "stadin-ao-kullervonkatu",
+        "name": "Stadin AO Kullervonkatu",
+        "location": "Helsinki",
+        "lunch_hours": "10.45 - 12.30",
+        "open_hours": "07.45 - 14.15",
+        "type": "lounas"
+    },
+    {
+        "json_id": "2734905",
+        "url_id": "stadin-ao-meritalo",
+        "name": "Stadin AO Meritalo",
+        "location": "Helsinki",
+        "lunch_hours": "10.45 - 13.30",
+        "open_hours": "10.45 - 13.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "2734896",
+        "url_id": "stadin-ao-savonkatu",
+        "name": "Stadin AO Savonkatu",
+        "location": "Helsinki",
+        "lunch_hours": "08.30 - 10.00",
+        "open_hours": "08.00 - 15.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "157",
+        "url_id": "stadin-ao-tk23",
+        "name": "Stadin AO TK 23",
+        "location": "Helsinki",
+        "lunch_hours": "10.30 - 12.30",
+        "open_hours": "08.00 - 14.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "180",
+        "url_id": "stadin-ao-vilppulantie",
+        "name": "Stadin AO Vilppulantie",
+        "location": "Helsinki",
+        "lunch_hours": "11.00 - 13.00",
+        "open_hours": "08.00 - 14.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "1872121",
+        "url_id": "ravintola-onnenmaa",
+        "name": "Ravintola Onnenmaa",
+        "location": "Hyvinkää",
+        "lunch_hours": "10.00 - 12.30",
+        "open_hours": "07.30 - 09.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "2553505",
+        "url_id": "ravintola-willava",
+        "name": "Ravintola Willava",
+        "location": "Hyvinkää",
+        "lunch_hours": "10.00 - 12.15",
+        "open_hours": "07.00 - 13.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": null,
+        "url_id": "ikaalisten-kasi-ja-taideteollisuusoppilaitos-ilona",
+        "name": "Ravintola Ilona",
+        "location": "Ikaalinen",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "lounas"
+    },
+    {
+        "json_id": "162",
+        "url_id": "stora-enso",
+        "name": "Stora Enso Imatra",
+        "location": "Imatra",
+        "lunch_hours": "11.00 - 13.00",
+        "open_hours": "11.00 - 13.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "119",
+        "url_id": "stora-enso-vieraskerhot-torna",
+        "name": "Stora Enso Imatran Tehtaiden Vieraskerhot, Tornan kerho",
+        "location": "Imatra",
+        "lunch_hours": "07.00 - 15.00",
+        "open_hours": "07.00 - 15.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "1491010",
+        "url_id": "ravintola-optimes-business-garden",
+        "name": "Ravintola Optimes Business Garden",
+        "location": "Jyväskylä",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "08.00 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "128",
+        "url_id": "ylistonmaki",
+        "name": "Ravintola Ylistönmäki",
+        "location": "Jyväskylä",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "08.00 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "123",
+        "url_id": "tietotalo",
+        "name": "Tietotalon ravintola",
+        "location": "Jyväskylä",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "08.00 - 13.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "2509349",
+        "url_id": "ravintola-metsa-group-kemin-tehtaat",
+        "name": "Ravintola Metsä Group Kemin tehtaat",
+        "location": "Kemi",
+        "lunch_hours": "09.30 - 13.00",
+        "open_hours": "07.00 - 14.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "189",
+        "url_id": "vihikari-10",
+        "name": "Ravintola Vihikari 10",
+        "location": "Kempele",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "08.00 - 13.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "129",
+        "url_id": "savonia-amk-centria-campus",
+        "name": "Campusravintola",
+        "location": "Kokkola",
+        "lunch_hours": "08.00 - 14.00",
+        "open_hours": "10.30 - 13.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "1924246",
+        "url_id": "ravintola-metsa-fibre-joutseno",
+        "name": "Ravintola Metsä Fibre Joutseno",
+        "location": "Lappeenranta",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "07.00 - 14.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "597738",
+        "url_id": "nammo-lapua",
+        "name": "Nammo Lapua",
+        "location": "Lapua",
+        "lunch_hours": "09.45 - 12.30",
+        "open_hours": "08.00 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "2509350",
+        "url_id": "ravintola-kosolan-talo",
+        "name": "Ravintola Kosolan talo",
+        "location": "Lapua",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "11.00 - 16.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "187",
+        "url_id": "rengasterassi",
+        "name": "Ravintola Rengasterassi",
+        "location": "Nokia",
+        "lunch_hours": "07.30 - 09.30",
+        "open_hours": "07.30 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "121",
+        "url_id": "louhi",
+        "name": "Louhi",
+        "location": "Oulu",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "lounas"
+    },
+    {
+        "json_id": "2658978",
+        "url_id": "oulun-yliopisto-kontinkangas-ravintola-medisiina",
+        "name": "Oulun Yliopisto Kontinkangas Ravintola Medisiina",
+        "location": "Oulu",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "08.00 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": null,
+        "url_id": "ravintola-caritas",
+        "name": "Ravintola Caritas",
+        "location": "Oulu",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "lounas"
+    },
+    {
+        "json_id": "120",
+        "url_id": "ravintola-elektra",
+        "name": "Ravintola Elektra",
+        "location": "Oulu",
+        "lunch_hours": "10.30 - 12.30",
+        "open_hours": "10.30 - 12.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "121",
+        "url_id": "ravintola-galaksi",
+        "name": "Ravintola Galaksi",
+        "location": "Oulu",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "10.30 - 13.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "1461459",
+        "url_id": "ravintola-matriitti",
+        "name": "Ravintola Matriitti",
+        "location": "Oulu",
+        "lunch_hours": "11.00 - 12.30",
+        "open_hours": "11.00 - 12.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "1532933",
+        "url_id": "ravintola-muskotti",
+        "name": "Ravintola Muskotti",
+        "location": "Oulu",
+        "lunch_hours": "10.30 - 12.00",
+        "open_hours": "08.00 - 13.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "232",
+        "url_id": "ravintola-technopolis-myrsky",
+        "name": "Ravintola Technopolis Myrsky",
+        "location": "Oulu",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "10.30 - 13.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "96",
+        "url_id": "ravintola-robotti-hamk-riihimaki",
+        "name": "Ravintola RoBotti - HAMK Riihimäki",
+        "location": "Riihimäki",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "07.45 - 14.15",
+        "type": "lounas"
+    },
+    {
+        "json_id": "1461460",
+        "url_id": "ravintola-vanha-varikko",
+        "name": "Ravintola Vanha Varikko",
+        "location": "Rovaniemi",
+        "lunch_hours": "11.00 - 13.00",
+        "open_hours": "08.00 - 13.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "108",
+        "url_id": "ravintola-frami",
+        "name": "Ravintola Frami",
+        "location": "Seinäjoki",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "09.00 - 13.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "109",
+        "url_id": "ravintola-ja-kahvila-kampustalo",
+        "name": "Ravintola ja kahvila Kampustalo ",
+        "location": "Seinäjoki",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "08.00 - 14.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": null,
+        "url_id": "ravintola-hermia-5",
+        "name": "Ravintola Hermia 5",
+        "location": "Tampere",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "lounas"
+    },
+    {
+        "json_id": "110",
+        "url_id": "hermia-6",
+        "name": "Ravintola Hermia 6",
+        "location": "Tampere",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "07.30 - 09.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "111",
+        "url_id": "ravintola-hertsi",
+        "name": "Ravintola Hertsi",
+        "location": "Tampere",
+        "lunch_hours": "08.00 - 10.00",
+        "open_hours": "08.00 - 16.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": null,
+        "url_id": "kulmasarvis",
+        "name": "Ravintola Kulmasarvis",
+        "location": "Tampere",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "lounas"
+    },
+    {
+        "json_id": "116",
+        "url_id": "ravintola-linna",
+        "name": "Ravintola Linna",
+        "location": "Tampere",
+        "lunch_hours": "10.30 - 16.30",
+        "open_hours": "08.30 - 17.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": null,
+        "url_id": "ravintola-volvo-truck",
+        "name": "Ravintola Volvo Truck",
+        "location": "Tampere",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "lounas"
+    },
+    {
+        "json_id": "104",
+        "url_id": "tampereen-oikeustalo-rooteli",
+        "name": "Tampereen Oikeustalo",
+        "location": "Tampere",
+        "lunch_hours": "11.00 - 13.00",
+        "open_hours": "08.30 - 13.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "102",
+        "url_id": "flavoria-medisiina-d",
+        "name": "Flavoria Medisiina D",
+        "location": "Turku",
+        "lunch_hours": "07.30 - 15.30",
+        "open_hours": "10.30 - 13.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "100",
+        "url_id": "ravintola-fiskarholmen-auriga-business-center",
+        "name": "Ravintola Fiskarholmen - Auriga Business Center",
+        "location": "Turku",
+        "lunch_hours": "07.45 - 09.30",
+        "open_hours": "07.45 - 13.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": null,
+        "url_id": "turun-amk-lemminkaisenkatu",
+        "name": "Turun AMK Lemminkäisenkatu",
+        "location": "Turku",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "lounas"
+    },
+    {
+        "json_id": "117",
+        "url_id": "ravintola-koski-hamk-valkeakoski",
+        "name": "Ravintola Koski - HAMK Valkeakoski",
+        "location": "Valkeakoski",
+        "lunch_hours": "11.15 - 12.30",
+        "open_hours": "08.00 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "152",
+        "url_id": "metropolia-myyrmaki",
+        "name": "Metropolia Myyrmäki",
+        "location": "Vantaa",
+        "lunch_hours": "07.30 - 15.00",
+        "open_hours": "10.30 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "62",
+        "url_id": "ravintola-hott-house-travel-and-transportation",
+        "name": "Ravintola HOTT - House of Travel and Transportation",
+        "location": "Vantaa",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "07.45 - 14.00",
+        "type": "lounas"
+    },
+    {
+        "json_id": "171",
+        "url_id": "parkki",
+        "name": "Ravintola Parkki",
+        "location": "Vantaa",
+        "lunch_hours": "10.30 - 13.15",
+        "open_hours": "08.00 - 14.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "54",
+        "url_id": "ravintola-tuuli",
+        "name": "Ravintola Tuuli",
+        "location": "Vantaa",
+        "lunch_hours": "11.00 - 13.00",
+        "open_hours": "08.00 - 14.15",
+        "type": "lounas"
+    },
+    {
+        "json_id": "118",
+        "url_id": "ravintola-navitas",
+        "name": "Ravintola Navitas",
+        "location": "Varkaus",
+        "lunch_hours": "11.00 - 12.30",
+        "open_hours": "09.00 - 13.30",
+        "type": "lounas"
+    },
+    {
+        "json_id": "86",
+        "url_id": "ravintola-aalto-kvarkki",
+        "name": "Ravintola Aalto Kvarkki ",
+        "location": "Espoo",
+        "lunch_hours": "10.30 - 14.00",
+        "open_hours": "09.00 - 14.30",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "86",
+        "url_id": "ravintola-aalto-tietotekniikantalo",
+        "name": "Ravintola Aalto Tietotekniikantalo ",
+        "location": "Espoo",
+        "lunch_hours": "10.30 - 14.00",
+        "open_hours": "08.00 - 14.30",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "10229",
+        "url_id": "ravintola-visis-hamk-hameenlinna",
+        "name": "Ravintola Visis - HAMK Hämeenlinna",
+        "location": "Hämeenlinna",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "07.45 - 16.00",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "1045996",
+        "url_id": "helsingin-yliopisto-paarakennus",
+        "name": "Helsingin yliopisto Päärakennus",
+        "location": "Helsinki",
+        "lunch_hours": "09.00 - 15.30",
+        "open_hours": "10.30 - 15.30",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": null,
+        "url_id": "helsingin-yliopisto-paarakennus-ravintola-flora",
+        "name": "Helsingin yliopisto päärakennus - Ravintola Flora",
+        "location": "Helsinki",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "158",
+        "url_id": "metropolia-myllypuro",
+        "name": "Metropolia Myllypuro",
+        "location": "Helsinki",
+        "lunch_hours": "07.30 - 09.30",
+        "open_hours": "07.30 - 15.00",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "68",
+        "url_id": "ravintola-ladonlukko",
+        "name": "Ravintola Ladonlukko",
+        "location": "Helsinki",
+        "lunch_hours": "10.30 - 14.30",
+        "open_hours": "07.45 - 15.00",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "1580536",
+        "url_id": "ravintola-stadin-ao-ilkantie",
+        "name": "Ravintola Stadin AO Ilkantie",
+        "location": "Helsinki",
+        "lunch_hours": "10.45 - 12.30",
+        "open_hours": "07.45 - 14.15",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "85",
+        "url_id": "stadin-ao-hattulantie-2",
+        "name": "Stadin AO - Hattulantie 2",
+        "location": "Helsinki",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "07.45 - 14.30",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "179",
+        "url_id": "stadin-ao-kullervonkatu",
+        "name": "Stadin AO Kullervonkatu",
+        "location": "Helsinki",
+        "lunch_hours": "10.45 - 12.30",
+        "open_hours": "07.45 - 14.15",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "2734905",
+        "url_id": "stadin-ao-meritalo",
+        "name": "Stadin AO Meritalo",
+        "location": "Helsinki",
+        "lunch_hours": "10.45 - 13.30",
+        "open_hours": "10.45 - 13.30",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "2734896",
+        "url_id": "stadin-ao-savonkatu",
+        "name": "Stadin AO Savonkatu",
+        "location": "Helsinki",
+        "lunch_hours": "08.30 - 10.00",
+        "open_hours": "08.00 - 15.00",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "157",
+        "url_id": "stadin-ao-tk23",
+        "name": "Stadin AO TK 23",
+        "location": "Helsinki",
+        "lunch_hours": "10.30 - 12.30",
+        "open_hours": "08.00 - 14.30",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "180",
+        "url_id": "stadin-ao-vilppulantie",
+        "name": "Stadin AO Vilppulantie",
+        "location": "Helsinki",
+        "lunch_hours": "11.00 - 13.00",
+        "open_hours": "08.00 - 14.30",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": null,
+        "url_id": "ikaalisten-kasi-ja-taideteollisuusoppilaitos-ilona",
+        "name": "Ravintola Ilona",
+        "location": "Ikaalinen",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "129",
+        "url_id": "savonia-amk-centria-campus",
+        "name": "Campusravintola",
+        "location": "Kokkola",
+        "lunch_hours": "08.00 - 14.00",
+        "open_hours": "10.30 - 13.00",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "96",
+        "url_id": "ravintola-robotti-hamk-riihimaki",
+        "name": "Ravintola RoBotti - HAMK Riihimäki",
+        "location": "Riihimäki",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "07.45 - 14.15",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "108",
+        "url_id": "ravintola-frami",
+        "name": "Ravintola Frami",
+        "location": "Seinäjoki",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "09.00 - 13.30",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "109",
+        "url_id": "ravintola-ja-kahvila-kampustalo",
+        "name": "Ravintola ja kahvila Kampustalo ",
+        "location": "Seinäjoki",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "08.00 - 14.30",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "111",
+        "url_id": "ravintola-hertsi",
+        "name": "Ravintola Hertsi",
+        "location": "Tampere",
+        "lunch_hours": "08.00 - 10.00",
+        "open_hours": "08.00 - 16.00",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "116",
+        "url_id": "ravintola-linna",
+        "name": "Ravintola Linna",
+        "location": "Tampere",
+        "lunch_hours": "10.30 - 16.30",
+        "open_hours": "08.30 - 17.00",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "102",
+        "url_id": "flavoria-medisiina-d",
+        "name": "Flavoria Medisiina D",
+        "location": "Turku",
+        "lunch_hours": "07.30 - 15.30",
+        "open_hours": "10.30 - 13.30",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "100",
+        "url_id": "ravintola-fiskarholmen-auriga-business-center",
+        "name": "Ravintola Fiskarholmen - Auriga Business Center",
+        "location": "Turku",
+        "lunch_hours": "07.45 - 09.30",
+        "open_hours": "07.45 - 13.00",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": null,
+        "url_id": "turun-amk-lemminkaisenkatu",
+        "name": "Turun AMK Lemminkäisenkatu",
+        "location": "Turku",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "117",
+        "url_id": "ravintola-koski-hamk-valkeakoski",
+        "name": "Ravintola Koski - HAMK Valkeakoski",
+        "location": "Valkeakoski",
+        "lunch_hours": "11.15 - 12.30",
+        "open_hours": "08.00 - 14.00",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": "152",
+        "url_id": "metropolia-myyrmaki",
+        "name": "Metropolia Myyrmäki",
+        "location": "Vantaa",
+        "lunch_hours": "07.30 - 15.00",
+        "open_hours": "10.30 - 14.00",
+        "type": "opiskelija"
+    },
+    {
+        "json_id": null,
+        "url_id": "cafe-panorama",
+        "name": "Cafe Panorama",
+        "location": "Espoo",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "kahvila"
+    },
+    {
+        "json_id": null,
+        "url_id": "kahvila-kylteri",
+        "name": "Kahvila Kylteri",
+        "location": "Espoo",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "69",
+        "url_id": "keilaranta-1",
+        "name": "Keilaranta 1",
+        "location": "Espoo",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "08.00 - 14.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "61",
+        "url_id": "keilasatama-5",
+        "name": "Ravintola Keilasatama 5",
+        "location": "Espoo",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "08.00 - 15.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "1694324",
+        "url_id": "ravintola-safiiri",
+        "name": "Ravintola Safiiri",
+        "location": "Espoo",
+        "lunch_hours": "08.00 - 14.30",
+        "open_hours": "08.00 - 10.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "159",
+        "url_id": "technopolis-innopoli-1",
+        "name": "Technopolis Innopoli 1",
+        "location": "Espoo",
+        "lunch_hours": "08.00 - 10.00",
+        "open_hours": "08.00 - 14.30",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "10229",
+        "url_id": "ravintola-visis-hamk-hameenlinna",
+        "name": "Ravintola Visis - HAMK Hämeenlinna",
+        "location": "Hämeenlinna",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "07.45 - 16.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "1045996",
+        "url_id": "helsingin-yliopisto-paarakennus",
+        "name": "Helsingin yliopisto Päärakennus",
+        "location": "Helsinki",
+        "lunch_hours": "09.00 - 15.30",
+        "open_hours": "10.30 - 15.30",
+        "type": "kahvila"
+    },
+    {
+        "json_id": null,
+        "url_id": "helsingin-yliopisto-paarakennus-ravintola-flora",
+        "name": "Helsingin yliopisto päärakennus - Ravintola Flora",
+        "location": "Helsinki",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "158",
+        "url_id": "metropolia-myllypuro",
+        "name": "Metropolia Myllypuro",
+        "location": "Helsinki",
+        "lunch_hours": "07.30 - 09.30",
+        "open_hours": "07.30 - 15.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "1007802",
+        "url_id": "ravintola-kasarmikatu-21",
+        "name": "Ravintola Kasarmikatu 21 ",
+        "location": "Helsinki",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "08.00 - 13.30",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "68",
+        "url_id": "ravintola-ladonlukko",
+        "name": "Ravintola Ladonlukko",
+        "location": "Helsinki",
+        "lunch_hours": "10.30 - 14.30",
+        "open_hours": "07.45 - 15.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": null,
+        "url_id": "ravintola-pikseli",
+        "name": "Ravintola Pikseli",
+        "location": "Helsinki",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "65",
+        "url_id": "ravintola-tk21",
+        "name": "Ravintola TK21",
+        "location": "Helsinki",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "08.00 - 14.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "190",
+        "url_id": "ravintola-valaja",
+        "name": "Ravintola Valaja",
+        "location": "Helsinki",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "10.30 - 13.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "85",
+        "url_id": "stadin-ao-hattulantie-2",
+        "name": "Stadin AO - Hattulantie 2",
+        "location": "Helsinki",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "07.45 - 14.30",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "157",
+        "url_id": "stadin-ao-tk23",
+        "name": "Stadin AO TK 23",
+        "location": "Helsinki",
+        "lunch_hours": "10.30 - 12.30",
+        "open_hours": "08.00 - 14.30",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "180",
+        "url_id": "stadin-ao-vilppulantie",
+        "name": "Stadin AO Vilppulantie",
+        "location": "Helsinki",
+        "lunch_hours": "11.00 - 13.00",
+        "open_hours": "08.00 - 14.30",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "1872121",
+        "url_id": "ravintola-onnenmaa",
+        "name": "Ravintola Onnenmaa",
+        "location": "Hyvinkää",
+        "lunch_hours": "10.00 - 12.30",
+        "open_hours": "07.30 - 09.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": null,
+        "url_id": "ikaalisten-kasi-ja-taideteollisuusoppilaitos-ilona",
+        "name": "Ravintola Ilona",
+        "location": "Ikaalinen",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "129",
+        "url_id": "savonia-amk-centria-campus",
+        "name": "Campusravintola",
+        "location": "Kokkola",
+        "lunch_hours": "08.00 - 14.00",
+        "open_hours": "10.30 - 13.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "2509350",
+        "url_id": "ravintola-kosolan-talo",
+        "name": "Ravintola Kosolan talo",
+        "location": "Lapua",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "11.00 - 16.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "121",
+        "url_id": "louhi",
+        "name": "Louhi",
+        "location": "Oulu",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "kahvila"
+    },
+    {
+        "json_id": null,
+        "url_id": "ravintola-caritas",
+        "name": "Ravintola Caritas",
+        "location": "Oulu",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "121",
+        "url_id": "ravintola-galaksi",
+        "name": "Ravintola Galaksi",
+        "location": "Oulu",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "10.30 - 13.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "232",
+        "url_id": "ravintola-technopolis-myrsky",
+        "name": "Ravintola Technopolis Myrsky",
+        "location": "Oulu",
+        "lunch_hours": "10.30 - 13.00",
+        "open_hours": "10.30 - 13.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "96",
+        "url_id": "ravintola-robotti-hamk-riihimaki",
+        "name": "Ravintola RoBotti - HAMK Riihimäki",
+        "location": "Riihimäki",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "07.45 - 14.15",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "109",
+        "url_id": "ravintola-ja-kahvila-kampustalo",
+        "name": "Ravintola ja kahvila Kampustalo ",
+        "location": "Seinäjoki",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "08.00 - 14.30",
+        "type": "kahvila"
+    },
+    {
+        "json_id": null,
+        "url_id": "ravintola-hermia-5",
+        "name": "Ravintola Hermia 5",
+        "location": "Tampere",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "110",
+        "url_id": "hermia-6",
+        "name": "Ravintola Hermia 6",
+        "location": "Tampere",
+        "lunch_hours": "10.30 - 13.30",
+        "open_hours": "07.30 - 09.30",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "111",
+        "url_id": "ravintola-hertsi",
+        "name": "Ravintola Hertsi",
+        "location": "Tampere",
+        "lunch_hours": "08.00 - 10.00",
+        "open_hours": "08.00 - 16.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": null,
+        "url_id": "kulmasarvis",
+        "name": "Ravintola Kulmasarvis",
+        "location": "Tampere",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "116",
+        "url_id": "ravintola-linna",
+        "name": "Ravintola Linna",
+        "location": "Tampere",
+        "lunch_hours": "10.30 - 16.30",
+        "open_hours": "08.30 - 17.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "102",
+        "url_id": "flavoria-medisiina-d",
+        "name": "Flavoria Medisiina D",
+        "location": "Turku",
+        "lunch_hours": "07.30 - 15.30",
+        "open_hours": "10.30 - 13.30",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "100",
+        "url_id": "ravintola-fiskarholmen-auriga-business-center",
+        "name": "Ravintola Fiskarholmen - Auriga Business Center",
+        "location": "Turku",
+        "lunch_hours": "07.45 - 09.30",
+        "open_hours": "07.45 - 13.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": null,
+        "url_id": "turun-amk-lemminkaisenkatu",
+        "name": "Turun AMK Lemminkäisenkatu",
+        "location": "Turku",
+        "lunch_hours": "N/A",
+        "open_hours": "N/A",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "117",
+        "url_id": "ravintola-koski-hamk-valkeakoski",
+        "name": "Ravintola Koski - HAMK Valkeakoski",
+        "location": "Valkeakoski",
+        "lunch_hours": "11.15 - 12.30",
+        "open_hours": "08.00 - 14.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "152",
+        "url_id": "metropolia-myyrmaki",
+        "name": "Metropolia Myyrmäki",
+        "location": "Vantaa",
+        "lunch_hours": "07.30 - 15.00",
+        "open_hours": "10.30 - 14.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "62",
+        "url_id": "ravintola-hott-house-travel-and-transportation",
+        "name": "Ravintola HOTT - House of Travel and Transportation",
+        "location": "Vantaa",
+        "lunch_hours": "11.00 - 13.30",
+        "open_hours": "07.45 - 14.00",
+        "type": "kahvila"
+    },
+    {
+        "json_id": "118",
+        "url_id": "ravintola-navitas",
+        "name": "Ravintola Navitas",
+        "location": "Varkaus",
+        "lunch_hours": "11.00 - 12.30",
+        "open_hours": "09.00 - 13.30",
+        "type": "kahvila"
+    }
+]

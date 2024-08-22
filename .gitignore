@@ -261,3 +261,4 @@ iOSInjectionProject/
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/dart,flutter,visualstudiocode,java,android,swift
+/python-scripts/venv
