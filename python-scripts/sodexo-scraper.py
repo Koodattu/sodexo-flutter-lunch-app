@@ -10,14 +10,14 @@ def get_restaurant_details(link, restaurant_type, location):
     
     name = link.text
     hours = soup.find_all('span', class_='hours')
-    open_hours = hours[0].text.strip() if len(hours) > 0 else 'N/A'
-    lunch_hours = hours[1].text.strip() if len(hours) > 1 else 'N/A'
+    open_hours = hours[0].text.strip() if len(hours) > 0 else None
+    lunch_hours = hours[1].text.strip() if len(hours) > 1 else None
     
-    if open_hours == 'N/A' or lunch_hours == 'N/A':
+    if open_hours == None or lunch_hours == None:
         office_hours = soup.find_all('div', class_='office-hours__item-slots')
         if len(office_hours) > 0:
-            open_hours = office_hours[0].text.strip() if open_hours == 'N/A' else open_hours
-            lunch_hours = office_hours[1].text.strip() if len(office_hours) > 1 and lunch_hours == 'N/A' else lunch_hours
+            open_hours = office_hours[0].text.strip() if open_hours == None else open_hours
+            lunch_hours = office_hours[1].text.strip() if len(office_hours) > 1 and lunch_hours == None else lunch_hours
     
     url_id = url.split('/')[-1]
     json_url = soup.find('a', href=lambda x: x and '/weekly_json/' in x)
@@ -28,13 +28,13 @@ def get_restaurant_details(link, restaurant_type, location):
         'url_id': url_id,
         'name': name,
         'location': location,
-        'lunch_hours': lunch_hours,
         'open_hours': open_hours,
-        'type': restaurant_type
+        'lunch_hours': lunch_hours,
+        'type': [ restaurant_type ]
     }
 
 # Funktio kaikkien ravintoloiden linkkien scrapaamiseen ja tietojen keräämiseen
-def scrape_restaurants(base_url, restaurant_type):
+def scrape_restaurants(base_url, restaurant_type, all_restaurants):
     response = requests.get(base_url)
     soup = BeautifulSoup(response.text, 'html.parser')
     
@@ -45,7 +45,17 @@ def scrape_restaurants(base_url, restaurant_type):
         print("Scraping", link.text)
         location = link.find_previous('h3').text
         restaurant_details = get_restaurant_details(link, restaurant_type, location)
-        restaurants.append(restaurant_details)
+
+        # Check if the restaurant already exists
+        existing_restaurant = next((r for r in all_restaurants if r['url_id'] == restaurant_details['url_id']), None)
+        
+        if existing_restaurant:
+            # If the restaurant exists, add the new type if it's not already there
+            if restaurant_type not in existing_restaurant['type']:
+                existing_restaurant['type'].append(restaurant_details['type'][0])
+        else:
+            # If the restaurant does not exist, add it to the list
+            all_restaurants.append(restaurant_details)
     
     return restaurants
 
@@ -54,17 +64,17 @@ lunch_restaurants_url = "https://www.sodexo.fi/lounasravintolat"
 student_restaurants_url = "https://www.sodexo.fi/opiskelijaravintolat"
 cafes_url = "https://www.sodexo.fi/kahvilat"
 
+# Alusta tyhjä lista kaikkien ravintoloiden tallentamiseen
+all_restaurants = []
+
 # Scrapaa lounasravintolat
-lunch_restaurants = scrape_restaurants(lunch_restaurants_url, 'lunch')
+scrape_restaurants(lunch_restaurants_url, 'lunch', all_restaurants)
 
 # Scrapaa opiskelijaravintolat
-student_restaurants = scrape_restaurants(student_restaurants_url, 'student')
+scrape_restaurants(student_restaurants_url, 'student', all_restaurants)
 
 # Scrapaa kahvilat
-cafes = scrape_restaurants(cafes_url, 'cafe')
-
-# Yhdistä kaikki ravintolat yhteen listaan
-all_restaurants = lunch_restaurants + student_restaurants + cafes
+scrape_restaurants(cafes_url, 'cafe', all_restaurants)
 
 # Tallenna kaikki ravintolat JSON-tiedostoksi
 with open('sodexo_restaurants.json', 'w', encoding='utf-8') as json_file:
