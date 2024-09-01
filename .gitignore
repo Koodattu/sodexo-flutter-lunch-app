@@ -262,3 +262,6 @@ iOSInjectionProject/
 
 # End of https://www.toptal.com/developers/gitignore/api/dart,flutter,visualstudiocode,java,android,swift
 /python-scripts/venv
+python-scripts/sodexo_restaurants.json
+python-scripts/sodexo_restaurants - Copy.json
+python-scripts/sodexo_restaurants.json

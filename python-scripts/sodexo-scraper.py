@@ -1,9 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+api_key = os.getenv('GEOCODING_API_KEY')
 
 # Funktio tietojen keräämiseksi yksittäisestä ravintolasivusta
-def get_restaurant_details(link, restaurant_type, location):
+def get_restaurant_details(link, restaurant_type, location, lat, lon):
     url = "https://www.sodexo.fi/" + link['href']
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -28,10 +33,33 @@ def get_restaurant_details(link, restaurant_type, location):
         'url_id': url_id,
         'name': name,
         'location': location,
+        'lat': lat,
+        'lon': lon,
         'open_hours': open_hours,
         'lunch_hours': lunch_hours,
         'type': [ restaurant_type ]
     }
+
+# Dictionary to store already fetched coordinates
+coordinates_cache = {}
+
+def get_lat_lon(address):
+    if address in coordinates_cache:
+        return coordinates_cache[address]
+    
+    url = f"https://geocode.maps.co/search?q={address}&api_key={api_key}"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        if len(data) > 0:
+            lat = data[0].get('lat')
+            lon = data[0].get('lon')
+            return lat, lon
+        else:
+            return None, None
+    else:
+        return None, None
 
 # Funktio kaikkien ravintoloiden linkkien scrapaamiseen ja tietojen keräämiseen
 def scrape_restaurants(base_url, restaurant_type, all_restaurants):
@@ -44,7 +72,8 @@ def scrape_restaurants(base_url, restaurant_type, all_restaurants):
     for link in restaurant_links:
         print("Scraping", link.text)
         location = link.find_previous('h3').text
-        restaurant_details = get_restaurant_details(link, restaurant_type, location)
+        lat, lon = get_lat_lon(location)
+        restaurant_details = get_restaurant_details(link, restaurant_type, location, lat, lon)
 
         # Check if the restaurant already exists
         existing_restaurant = next((r for r in all_restaurants if r['url_id'] == restaurant_details['url_id']), None)
