@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 api_key = os.getenv('GEOCODING_API_KEY')
 
-# Funktio tietojen keräämiseksi yksittäisestä ravintolasivusta
+# Function to get restaurant details
 def get_restaurant_details(link, restaurant_type, location, lat, lon):
     url = "https://www.sodexo.fi/" + link['href']
     response = requests.get(url)
@@ -38,7 +38,7 @@ def get_restaurant_details(link, restaurant_type, location, lat, lon):
         'lon': lon,
         'open_hours': open_hours,
         'lunch_hours': lunch_hours,
-        'type': [ restaurant_type ]
+        'type': [restaurant_type]
     }
 
 # Dictionary to store already fetched coordinates
@@ -63,52 +63,53 @@ def get_lat_lon(address):
     else:
         return None, None
 
-# Funktio kaikkien ravintoloiden linkkien scrapaamiseen ja tietojen keräämiseen
+# Function to scrape restaurant data
 def scrape_restaurants(base_url, restaurant_type, all_restaurants):
     response = requests.get(base_url)
     soup = BeautifulSoup(response.text, 'html.parser')
     
     restaurant_links = soup.find_all('a', href=lambda x: x and '/ravintolat/' in x)
     
-    restaurants = []
     for link in restaurant_links:
         print("Scraping", link.text)
         location = link.find_previous('h3').text
         lat, lon = get_lat_lon(location)
         restaurant_details = get_restaurant_details(link, restaurant_type, location, lat, lon)
 
-        # Check if the restaurant already exists
         existing_restaurant = next((r for r in all_restaurants if r['url_id'] == restaurant_details['url_id']), None)
         
         if existing_restaurant:
-            # If the restaurant exists, add the new type if it's not already there
-            if restaurant_type not in existing_restaurant['type']:
-                existing_restaurant['type'].append(restaurant_details['type'][0])
+            # Update existing fields if new data is not None or changed
+            for key, value in restaurant_details.items():
+                if key == "type":
+                    # Ensure the type is updated without overwriting
+                    for t in restaurant_details['type']:
+                        if t not in existing_restaurant['type']:
+                            existing_restaurant['type'].append(t)
+                elif value is not None and value != existing_restaurant.get(key):
+                    existing_restaurant[key] = value
         else:
-            # If the restaurant does not exist, add it to the list
             all_restaurants.append(restaurant_details)
-    
-    return restaurants
 
-# URLit eri ravintolatyyppien scrapaamiseen
+# Load existing data
+if os.path.exists('sodexo_restaurants.json'):
+    with open('sodexo_restaurants.json', 'r', encoding='utf-8') as json_file:
+        all_restaurants = json.load(json_file)
+else:
+    all_restaurants = []
+
+# Scraping URLs
 lunch_restaurants_url = "https://www.sodexo.fi/lounasravintolat"
 student_restaurants_url = "https://www.sodexo.fi/opiskelijaravintolat"
 cafes_url = "https://www.sodexo.fi/kahvilat"
 
-# Alusta tyhjä lista kaikkien ravintoloiden tallentamiseen
-all_restaurants = []
-
-# Scrapaa lounasravintolat
+# Scrape and update restaurants
 scrape_restaurants(lunch_restaurants_url, 'lunch', all_restaurants)
-
-# Scrapaa opiskelijaravintolat
 scrape_restaurants(student_restaurants_url, 'student', all_restaurants)
-
-# Scrapaa kahvilat
 scrape_restaurants(cafes_url, 'cafe', all_restaurants)
 
-# Tallenna kaikki ravintolat JSON-tiedostoksi
+# Save updated data
 with open('sodexo_restaurants.json', 'w', encoding='utf-8') as json_file:
     json.dump(all_restaurants, json_file, ensure_ascii=False, indent=4)
 
-print("Data tallennettu tiedostoon sodexo_restaurants.json")
+print("Data saved to sodexo_restaurants.json")

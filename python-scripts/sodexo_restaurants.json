@@ -9,8 +9,8 @@
         "open_hours": "08.00 - 14.00",
         "lunch_hours": "11.00 - 13.30",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -23,8 +23,8 @@
         "open_hours": "09.00 - 14.30",
         "lunch_hours": "10.30 - 14.00",
         "type": [
-            "lunch",
-            "student"
+            "student",
+            "lunch"
         ]
     },
     {
@@ -37,8 +37,8 @@
         "open_hours": "08.00 - 14.30",
         "lunch_hours": "10.30 - 14.00",
         "type": [
-            "lunch",
-            "student"
+            "student",
+            "lunch"
         ]
     },
     {
@@ -68,6 +68,20 @@
         ]
     },
     {
+        "json_id": "1872123",
+        "url_id": "ravintola-k-auto-espoo",
+        "name": "Ravintola K-Auto Espoo",
+        "location": "Espoo",
+        "lat": "60.2047672",
+        "lon": "24.6568435",
+        "open_hours": "07.30 - 14.00",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
         "json_id": "84",
         "url_id": "kaivomestari",
         "name": "Ravintola Kaivomestari",
@@ -87,11 +101,11 @@
         "location": "Espoo",
         "lat": "60.2047672",
         "lon": "24.6568435",
-        "open_hours": "08.00 - 15.00",
+        "open_hours": "08.00 - 14.00",
         "lunch_hours": "11.00 - 13.30",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -117,8 +131,8 @@
         "open_hours": "08.00 - 10.00",
         "lunch_hours": "08.00 - 14.30",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -131,36 +145,8 @@
         "open_hours": "08.00 - 14.30",
         "lunch_hours": "08.00 - 10.00",
         "type": [
-            "lunch",
-            "cafe"
-        ]
-    },
-    {
-        "json_id": "91",
-        "url_id": "vorssan-vapriikki",
-        "name": "Ravintola Vapriikki",
-        "location": "Forssa",
-        "lat": "60.8155736",
-        "lon": "23.629833",
-        "open_hours": "07.15 - 14.00",
-        "lunch_hours": "11.00 - 13.30",
-        "type": [
+            "cafe",
             "lunch"
-        ]
-    },
-    {
-        "json_id": "10229",
-        "url_id": "ravintola-visis-hamk-hameenlinna",
-        "name": "Ravintola Visis - HAMK Hämeenlinna",
-        "location": "Hämeenlinna",
-        "lat": "60.9948584",
-        "lon": "24.46654",
-        "open_hours": "07.45 - 16.00",
-        "lunch_hours": "10.30 - 13.30",
-        "type": [
-            "lunch",
-            "student",
-            "cafe"
         ]
     },
     {
@@ -173,9 +159,9 @@
         "open_hours": "10.30 - 15.30",
         "lunch_hours": "09.00 - 15.30",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
         ]
     },
     {
@@ -185,12 +171,12 @@
         "location": "Helsinki",
         "lat": "60.1674881",
         "lon": "24.9427473",
-        "open_hours": "11.00 - 13.30",
+        "open_hours": "11.00 - 14.00",
         "lunch_hours": "11.00 - 13.30",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
         ]
     },
     {
@@ -203,9 +189,9 @@
         "open_hours": "07.30 - 17.00",
         "lunch_hours": "07.30 - 09.30",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
         ]
     },
     {
@@ -248,14 +234,14 @@
         ]
     },
     {
-        "json_id": null,
+        "json_id": "275381",
         "url_id": "ravintola-hdl-kotikallio",
         "name": "Ravintola HDL Kotikallio",
         "location": "Helsinki",
         "lat": "60.1674881",
         "lon": "24.9427473",
-        "open_hours": null,
-        "lunch_hours": null,
+        "open_hours": "11.15 - 14.00",
+        "lunch_hours": "11.15 - 12.30",
         "type": [
             "lunch"
         ]
@@ -283,6 +269,7 @@
         "open_hours": "07.30 - 14.00",
         "lunch_hours": "10.30 - 13.00",
         "type": [
+            "cafe",
             "lunch"
         ]
     },
@@ -296,8 +283,8 @@
         "open_hours": "08.00 - 13.30",
         "lunch_hours": "11.00 - 13.30",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -321,25 +308,11 @@
         "lat": "60.1674881",
         "lon": "24.9427473",
         "open_hours": "07.45 - 15.00",
-        "lunch_hours": "10.30 - 14.30",
+        "lunch_hours": "10.30 - 14.00",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
-        ]
-    },
-    {
-        "json_id": null,
-        "url_id": "ravintola-pikseli",
-        "name": "Ravintola Pikseli",
-        "location": "Helsinki",
-        "lat": "60.1674881",
-        "lon": "24.9427473",
-        "open_hours": null,
-        "lunch_hours": null,
-        "type": [
-            "lunch",
-            "cafe"
+            "student"
         ]
     },
     {
@@ -365,8 +338,8 @@
         "open_hours": "08.00 - 14.00",
         "lunch_hours": "10.30 - 13.30",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -379,8 +352,8 @@
         "open_hours": "10.30 - 13.00",
         "lunch_hours": "10.30 - 13.00",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -393,9 +366,9 @@
         "open_hours": "07.45 - 14.30",
         "lunch_hours": "11.00 - 13.30",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
         ]
     },
     {
@@ -408,8 +381,8 @@
         "open_hours": "07.45 - 14.15",
         "lunch_hours": "10.45 - 12.30",
         "type": [
-            "lunch",
-            "student"
+            "student",
+            "lunch"
         ]
     },
     {
@@ -422,8 +395,8 @@
         "open_hours": "10.45 - 13.30",
         "lunch_hours": "10.45 - 13.30",
         "type": [
-            "lunch",
-            "student"
+            "student",
+            "lunch"
         ]
     },
     {
@@ -433,11 +406,11 @@
         "location": "Helsinki",
         "lat": "60.1674881",
         "lon": "24.9427473",
-        "open_hours": "08.00 - 15.00",
-        "lunch_hours": "08.30 - 10.00",
+        "open_hours": "08.00 - 14.30",
+        "lunch_hours": "08.00 - 10.00",
         "type": [
-            "lunch",
-            "student"
+            "student",
+            "lunch"
         ]
     },
     {
@@ -447,12 +420,12 @@
         "location": "Helsinki",
         "lat": "60.1674881",
         "lon": "24.9427473",
-        "open_hours": "08.00 - 14.30",
-        "lunch_hours": "10.30 - 12.30",
+        "open_hours": "08.00 - 16.00",
+        "lunch_hours": "10.30 - 13.00",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
         ]
     },
     {
@@ -465,9 +438,9 @@
         "open_hours": "08.00 - 14.30",
         "lunch_hours": "11.00 - 13.00",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
         ]
     },
     {
@@ -480,8 +453,8 @@
         "open_hours": "07.30 - 09.00",
         "lunch_hours": "10.00 - 12.30",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -507,9 +480,9 @@
         "open_hours": "08.30 - 15.00",
         "lunch_hours": "10.30 - 12.30",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
         ]
     },
     {
@@ -519,8 +492,8 @@
         "location": "Imatra",
         "lat": "61.1923342",
         "lon": "28.7716996",
-        "open_hours": "11.00 - 13.00",
-        "lunch_hours": "11.00 - 13.00",
+        "open_hours": null,
+        "lunch_hours": null,
         "type": [
             "lunch"
         ]
@@ -585,7 +558,7 @@
         "lat": "65.7333404",
         "lon": "24.5666495",
         "open_hours": "07.00 - 14.30",
-        "lunch_hours": "09.30 - 13.00",
+        "lunch_hours": "09.45 - 13.00",
         "type": [
             "lunch"
         ]
@@ -613,9 +586,23 @@
         "open_hours": "10.30 - 13.30",
         "lunch_hours": "08.00 - 15.00",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
+        ]
+    },
+    {
+        "json_id": "1872125",
+        "url_id": "ravintola-k-auto-lahti",
+        "name": "Ravintola K-Auto Lahti",
+        "location": "Lahti",
+        "lat": "60.9826014",
+        "lon": "25.6613764",
+        "open_hours": "07.45 - 14.00",
+        "lunch_hours": "11.00 - 13.30",
+        "type": [
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -645,20 +632,6 @@
         ]
     },
     {
-        "json_id": null,
-        "url_id": "ravintola-kosolan-talo",
-        "name": "Ravintola Kosolan talo",
-        "location": "Lapua",
-        "lat": "62.9702783",
-        "lon": "23.0068628",
-        "open_hours": null,
-        "lunch_hours": null,
-        "type": [
-            "lunch",
-            "cafe"
-        ]
-    },
-    {
         "json_id": "187",
         "url_id": "rengasterassi",
         "name": "Ravintola Rengasterassi",
@@ -681,8 +654,8 @@
         "open_hours": null,
         "lunch_hours": null,
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -696,20 +669,6 @@
         "lunch_hours": "10.30 - 13.30",
         "type": [
             "lunch"
-        ]
-    },
-    {
-        "json_id": null,
-        "url_id": "ravintola-caritas",
-        "name": "Ravintola Caritas",
-        "location": "Oulu",
-        "lat": "65.0118734",
-        "lon": "25.4716809",
-        "open_hours": null,
-        "lunch_hours": null,
-        "type": [
-            "lunch",
-            "cafe"
         ]
     },
     {
@@ -735,19 +694,19 @@
         "open_hours": "10.30 - 13.00",
         "lunch_hours": "10.30 - 13.00",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
-        "json_id": null,
+        "json_id": "1461459",
         "url_id": "ravintola-matriitti",
         "name": "Ravintola Matriitti",
         "location": "Oulu",
         "lat": "65.0118734",
         "lon": "25.4716809",
-        "open_hours": null,
-        "lunch_hours": null,
+        "open_hours": "11.00 - 12.30",
+        "lunch_hours": "11.00 - 12.30",
         "type": [
             "lunch"
         ]
@@ -775,23 +734,8 @@
         "open_hours": "10.30 - 13.00",
         "lunch_hours": "10.30 - 13.00",
         "type": [
-            "lunch",
-            "cafe"
-        ]
-    },
-    {
-        "json_id": "96",
-        "url_id": "ravintola-robotti-hamk-riihimaki",
-        "name": "Ravintola RoBotti - HAMK Riihimäki",
-        "location": "Riihimäki",
-        "lat": "60.7390089",
-        "lon": "24.7728148",
-        "open_hours": "07.45 - 14.15",
-        "lunch_hours": "10.30 - 13.30",
-        "type": [
-            "lunch",
-            "student",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -808,6 +752,19 @@
         ]
     },
     {
+        "json_id": "2866094",
+        "url_id": "seniorlounasravintola-kulmasali",
+        "name": "Seniorlounasravintola Kulmasali",
+        "location": "Rovaniemi",
+        "lat": "66.5025657",
+        "lon": "25.73122",
+        "open_hours": "10.30 - 13.30",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
         "json_id": "108",
         "url_id": "ravintola-frami",
         "name": "Ravintola Frami",
@@ -817,8 +774,8 @@
         "open_hours": "09.00 - 13.30",
         "lunch_hours": "10.30 - 13.30",
         "type": [
-            "lunch",
-            "student"
+            "student",
+            "lunch"
         ]
     },
     {
@@ -831,23 +788,23 @@
         "open_hours": "07.30 - 16.00",
         "lunch_hours": "10.30 - 13.30",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
         ]
     },
     {
-        "json_id": null,
+        "json_id": "107",
         "url_id": "ravintola-hermia-5",
         "name": "Ravintola Hermia 5",
         "location": "Tampere",
         "lat": "61.4980214",
         "lon": "23.7603118",
-        "open_hours": null,
-        "lunch_hours": null,
+        "open_hours": "08.00 - 13.00",
+        "lunch_hours": "11.00 - 13.00",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -860,8 +817,8 @@
         "open_hours": "07.30 - 09.30",
         "lunch_hours": "10.30 - 13.30",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -874,9 +831,23 @@
         "open_hours": "08.00 - 16.00",
         "lunch_hours": "08.00 - 10.00",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
+        ]
+    },
+    {
+        "json_id": "1872126",
+        "url_id": "ravintola-k-auto-tampere",
+        "name": "Ravintola K-Auto Tampere",
+        "location": "Tampere",
+        "lat": "61.4980214",
+        "lon": "23.7603118",
+        "open_hours": "08.00 - 15.00",
+        "lunch_hours": "11.00 - 13.00",
+        "type": [
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -889,8 +860,8 @@
         "open_hours": "08.00 - 13.00",
         "lunch_hours": "10.45 - 13.00",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -903,9 +874,9 @@
         "open_hours": "08.30 - 17.00",
         "lunch_hours": "10.30 - 16.30",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
         ]
     },
     {
@@ -944,9 +915,9 @@
         "open_hours": "10.30 - 13.30",
         "lunch_hours": "07.30 - 15.30",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
         ]
     },
     {
@@ -959,9 +930,23 @@
         "open_hours": "07.45 - 13.00",
         "lunch_hours": "07.45 - 09.30",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
+        ]
+    },
+    {
+        "json_id": "1872127",
+        "url_id": "ravintola-k-auto-turku",
+        "name": "Ravintola K-Auto Turku",
+        "location": "Turku",
+        "lat": "60.4517531",
+        "lon": "22.2670522",
+        "open_hours": "07.30 - 14.30",
+        "lunch_hours": "11.00 - 13.30",
+        "type": [
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -972,26 +957,24 @@
         "lat": "60.4517531",
         "lon": "22.2670522",
         "open_hours": "07.45 - 14.30",
-        "lunch_hours": "10.45 - 13.00",
+        "lunch_hours": "10.30 - 13.00",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
         ]
     },
     {
-        "json_id": "117",
-        "url_id": "ravintola-koski-hamk-valkeakoski",
-        "name": "Ravintola Koski - HAMK Valkeakoski",
-        "location": "Valkeakoski",
-        "lat": "61.2637921",
-        "lon": "24.0301278",
-        "open_hours": "08.00 - 14.00",
-        "lunch_hours": "11.15 - 12.30",
+        "json_id": "2930870",
+        "url_id": "leko-7",
+        "name": "Leko 7",
+        "location": "Vantaa",
+        "lat": "60.2933337",
+        "lon": "25.0407809",
+        "open_hours": "07.30 - 14.00",
+        "lunch_hours": "10.30 - 13.00",
         "type": [
-            "lunch",
-            "student",
-            "cafe"
+            "lunch"
         ]
     },
     {
@@ -1002,11 +985,11 @@
         "lat": "60.2933337",
         "lon": "25.0407809",
         "open_hours": "10.30 - 17.00",
-        "lunch_hours": "07.30 - 18.00",
+        "lunch_hours": "10.30 - 13.30",
         "type": [
+            "cafe",
             "lunch",
-            "student",
-            "cafe"
+            "student"
         ]
     },
     {
@@ -1019,8 +1002,8 @@
         "open_hours": "07.45 - 14.00",
         "lunch_hours": "11.00 - 13.30",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
@@ -1059,8 +1042,8 @@
         "open_hours": "09.00 - 13.30",
         "lunch_hours": "11.00 - 12.30",
         "type": [
-            "lunch",
-            "cafe"
+            "cafe",
+            "lunch"
         ]
     },
     {
