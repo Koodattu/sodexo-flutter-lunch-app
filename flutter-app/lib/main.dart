@@ -258,6 +258,10 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
             : const Text('Sodexo Restaurants', style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => {},
+          ),
+          IconButton(
             icon: _isLocating ? const FaIcon(FontAwesomeIcons.spinner) : const Icon(Icons.location_on),
             onPressed: _getLocationAndSort,
           ),
