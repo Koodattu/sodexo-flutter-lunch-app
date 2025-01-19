@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
+import time
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -47,6 +48,7 @@ def get_lat_lon(address):
     if address in coordinates_cache:
         return coordinates_cache[address]
     
+    time.sleep(1)
     url = f"https://geocode.maps.co/search?q={address}&api_key={api_key}"
     response = requests.get(url)
     

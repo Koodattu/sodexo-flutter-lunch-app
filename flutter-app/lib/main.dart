@@ -241,6 +241,8 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 17, 17, 17),
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 223, 0, 0),
+        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Color.fromARGB(132, 0, 0, 0)),
         title: _isSearching
             ? TextField(
                 controller: _searchController,
@@ -254,8 +256,6 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
                 onChanged: _searchRestaurants,
               )
             : const Text('Sodexo Restaurants', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color.fromARGB(255, 223, 0, 0),
-        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Color.fromARGB(132, 0, 0, 0)),
         actions: [
           IconButton(
             icon: _isLocating ? const FaIcon(FontAwesomeIcons.spinner) : const Icon(Icons.location_on),
@@ -269,6 +269,9 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
       ),
       body: Column(
         children: [
+          const SizedBox(
+            height: 4,
+          ),
           if (_isSearching) ...[
             Padding(
               padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
@@ -498,15 +501,172 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
     return n.toString().padLeft(2, '0');
   }
 
+  void _showCourseDetailDialog(BuildContext context, Map<String, dynamic> course) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.grey[850],
+          elevation: 8,
+          title: Text(course['title_fi'] ?? course['title_en'] ?? 'Unknown Dish',
+              style: const TextStyle(color: Colors.white)),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                RichText(
+                  text: TextSpan(
+                    text: 'Category: ',
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '${course['category'] ?? 'No Category'}\n',
+                        style: const TextStyle(fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
+                ),
+                RichText(
+                  text: TextSpan(
+                    text: 'Price: ',
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '${course['price'] ?? 'No Price'}\n',
+                        style: const TextStyle(fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
+                ),
+                if (course['dietcodes'] != null)
+                  RichText(
+                    text: TextSpan(
+                      text: 'Diet Codes: ',
+                      style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: '${course['dietcodes']}\n',
+                          style: const TextStyle(fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
+                  ),
+                if (course['allergens'] != null)
+                  RichText(
+                    text: TextSpan(
+                      text: 'Allergens: ',
+                      style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: '${course['allergens']}\n',
+                          style: const TextStyle(fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
+                  ),
+                if (course['properties'] != null)
+                  RichText(
+                    text: TextSpan(
+                      text: 'Properties: ',
+                      style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: '${course['properties']}\n',
+                          style: const TextStyle(fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
+                  ),
+                if (course['recipes'] != null) ..._buildRecipeDetails(course['recipes']),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  List<Widget> _buildRecipeDetails(Map<String, dynamic> recipes) {
+    List<Widget> details = [];
+
+    recipes.forEach((key, recipe) {
+      if (key != 'hideAll') {
+        details.add(const SizedBox(height: 8));
+        details.add(
+          RichText(
+            text: TextSpan(
+              text: 'Recipe: ',
+              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              children: <TextSpan>[
+                TextSpan(
+                  text: '${recipe['name'] ?? 'No Name'}\n',
+                  style: const TextStyle(fontWeight: FontWeight.normal),
+                ),
+              ],
+            ),
+          ),
+        );
+        if (recipe['ingredients'] != null) {
+          details.add(
+            RichText(
+              text: TextSpan(
+                text: 'Ingredients: ',
+                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: '${recipe['ingredients']}\n'.replaceAll(", ", "\n"),
+                    style: const TextStyle(fontWeight: FontWeight.normal),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+        if (recipe['nutrients'] != null) {
+          details.add(
+            RichText(
+              text: TextSpan(
+                text: 'Nutritional Info:\n',
+                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: '${recipe['nutrients']}\n'.replaceAll("|", "\n"),
+                    style: const TextStyle(fontWeight: FontWeight.normal),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+      }
+    });
+
+    return details;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 17, 17, 17),
       appBar: AppBar(
-        title: Text(widget.restaurant.name),
+        backgroundColor: const Color.fromARGB(255, 223, 0, 0),
+        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Color.fromARGB(132, 0, 0, 0)),
+        title: Text(widget.restaurant.name, style: const TextStyle(color: Colors.white)),
         bottom: TabBar(
+          indicatorColor: Colors.white,
+          labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
           controller: _tabController,
           tabs: const [
-            Tab(text: 'Current Week'),
+            Tab(
+              text: 'Current Week',
+            ),
             Tab(text: 'Next Week'),
           ],
         ),
@@ -557,37 +717,41 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
               const SizedBox(height: 10),
               ...courses.entries.map<Widget>((courseEntry) {
                 final course = courseEntry.value;
-                return InkWell(
-                  onTap: () {
-                    // Handle course card tap
-                  },
-                  child: Card(
-                    color: Colors.grey[900],
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            course['title_fi'] ?? 'No Title',
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            course['title_en'] ?? 'No English Title',
-                            style: const TextStyle(fontSize: 16, color: Colors.white70),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            course['category'] ?? 'No Category',
-                            style: const TextStyle(fontSize: 14, color: Colors.white54),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Price: ${course['price'] ?? 'N/A'}',
-                            style: const TextStyle(fontSize: 14, color: Colors.white54),
-                          ),
-                        ],
+                return Card(
+                  color: const Color.fromARGB(255, 46, 46, 46),
+                  child: InkWell(
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                    onTap: () {
+                      _showCourseDetailDialog(context, course);
+                    },
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              course['title_fi'] ?? 'No Title',
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              course['title_en'] ?? 'No English Title',
+                              style: const TextStyle(fontSize: 16, color: Colors.white70),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              course['category'] ?? 'No Category',
+                              style: const TextStyle(fontSize: 14, color: Colors.white54),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Price: ${course['price'] ?? 'N/A'}',
+                              style: const TextStyle(fontSize: 14, color: Colors.white54),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -618,21 +782,34 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
       itemCount: _nextWeekMenuData!.length,
       itemBuilder: (context, index) {
         final dayData = _nextWeekMenuData![index];
-        if (dayData.isEmpty) {
-          return const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              "No menu available for this day.",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-          );
-        }
         final DateTime currentDayDate = nextMonday.add(Duration(days: index));
         final String dayName = DateFormat('EEEE').format(currentDayDate);
         final String dayDate =
             "${_twoDigits(currentDayDate.day)}.${_twoDigits(currentDayDate.month)}.${currentDayDate.year}";
         final String dayTitle = '$dayName - $dayDate';
         final courses = dayData['courses'];
+
+        if (courses.isEmpty) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    dayTitle,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const Text(
+                  "No menu available for this day.",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+              ],
+            ),
+          );
+        }
 
         return Padding(
           padding: const EdgeInsets.all(8.0),
@@ -644,39 +821,43 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
                 style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
-              ...courses.entries.map<Widget>((courseEntry) {
+              ...courses?.entries.map<Widget>((courseEntry) {
                 final course = courseEntry.value;
-                return InkWell(
-                  onTap: () {
-                    // Handle course card tap
-                  },
-                  child: Card(
-                    color: Colors.grey[900],
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            course['title_fi'] ?? 'No Title',
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            course['title_en'] ?? 'No English Title',
-                            style: const TextStyle(fontSize: 16, color: Colors.white70),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            course['category'] ?? 'No Category',
-                            style: const TextStyle(fontSize: 14, color: Colors.white54),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Price: ${course['price'] ?? 'N/A'}',
-                            style: const TextStyle(fontSize: 14, color: Colors.white54),
-                          ),
-                        ],
+                return Card(
+                  color: const Color.fromARGB(255, 46, 46, 46),
+                  child: InkWell(
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                    onTap: () {
+                      _showCourseDetailDialog(context, course);
+                    },
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              course['title_fi'] ?? 'No Title',
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              course['title_en'] ?? 'No English Title',
+                              style: const TextStyle(fontSize: 16, color: Colors.white70),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              course['category'] ?? 'No Category',
+                              style: const TextStyle(fontSize: 14, color: Colors.white54),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Price: ${course['price'] ?? 'N/A'}',
+                              style: const TextStyle(fontSize: 14, color: Colors.white54),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

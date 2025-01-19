@@ -179,14 +179,14 @@
         ]
     },
     {
-        "json_id": "2264317",
+        "json_id": null,
         "url_id": "helsingin-yliopisto-paarakennus-ravintola-flora",
         "name": "Helsingin yliopisto päärakennus - Ravintola Flora",
         "location": "Helsinki",
         "lat": "60.1674881",
         "lon": "24.9427473",
-        "open_hours": "11.00 - 13.30",
-        "lunch_hours": "11.00 - 13.30",
+        "open_hours": null,
+        "lunch_hours": null,
         "type": [
             "lunch",
             "student",
@@ -235,7 +235,7 @@
         ]
     },
     {
-        "json_id": "275380",
+        "json_id": null,
         "url_id": "ravintola-hdl-alppikortteli",
         "name": "Ravintola HDL Alppikortteli",
         "location": "Helsinki",
@@ -248,14 +248,14 @@
         ]
     },
     {
-        "json_id": null,
+        "json_id": "275381",
         "url_id": "ravintola-hdl-kotikallio",
         "name": "Ravintola HDL Kotikallio",
         "location": "Helsinki",
         "lat": "60.1674881",
         "lon": "24.9427473",
-        "open_hours": null,
-        "lunch_hours": null,
+        "open_hours": "11.15 - 14.00",
+        "lunch_hours": "11.15 - 12.30",
         "type": [
             "lunch"
         ]
@@ -274,14 +274,14 @@
         ]
     },
     {
-        "json_id": "1872124",
+        "json_id": null,
         "url_id": "ravintola-k-auto-helsinki",
         "name": "Ravintola K-Auto Helsinki",
         "location": "Helsinki",
         "lat": "60.1674881",
         "lon": "24.9427473",
-        "open_hours": "07.30 - 14.00",
-        "lunch_hours": "10.30 - 13.00",
+        "open_hours": null,
+        "lunch_hours": null,
         "type": [
             "lunch"
         ]
@@ -565,14 +565,14 @@
         ]
     },
     {
-        "json_id": "123",
+        "json_id": null,
         "url_id": "tietotalo",
         "name": "Tietotalon ravintola",
         "location": "Jyväskylä",
         "lat": "62.2417066",
         "lon": "25.7495727",
-        "open_hours": "08.00 - 13.30",
-        "lunch_hours": "10.30 - 13.00",
+        "open_hours": null,
+        "lunch_hours": null,
         "type": [
             "lunch"
         ]
@@ -740,14 +740,14 @@
         ]
     },
     {
-        "json_id": null,
+        "json_id": "1461459",
         "url_id": "ravintola-matriitti",
         "name": "Ravintola Matriitti",
         "location": "Oulu",
         "lat": "65.0118734",
         "lon": "25.4716809",
-        "open_hours": null,
-        "lunch_hours": null,
+        "open_hours": "11.00 - 12.30",
+        "lunch_hours": "11.00 - 12.30",
         "type": [
             "lunch"
         ]
@@ -795,14 +795,14 @@
         ]
     },
     {
-        "json_id": "1461460",
+        "json_id": null,
         "url_id": "ravintola-vanha-varikko",
         "name": "Ravintola Vanha Varikko",
         "location": "Rovaniemi",
         "lat": "66.5025657",
         "lon": "25.73122",
-        "open_hours": "08.00 - 13.30",
-        "lunch_hours": "11.00 - 13.00",
+        "open_hours": null,
+        "lunch_hours": null,
         "type": [
             "lunch"
         ]
@@ -1001,8 +1001,8 @@
         "location": "Vantaa",
         "lat": "60.2933337",
         "lon": "25.0407809",
-        "open_hours": "10.30 - 17.00",
-        "lunch_hours": "07.30 - 18.00",
+        "open_hours": "10.30 - 14.00",
+        "lunch_hours": "07.30 - 16.00",
         "type": [
             "lunch",
             "student",
