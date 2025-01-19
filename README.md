@@ -1,16 +1,45 @@
-# sodexo_flutter_lunch_app
+<div align="center">
+    <br />
+    <img src="https://i.imgur.com/ZIbw4jg.png" alt="Logo" width="80" height="80">
+  <h3 align="center">Sodexo Restaurants Menu App</h3>
+  <h4 align="center">Cross-platform mobile application for Sodexo restaurant menus</h4>
+    <br />
+    <br />
+</div>
 
-A new Flutter project.
+## Description
 
-## Getting Started
+A cross-platform mobile lunch menu application providing menus for Sodexo restaurants. 
+Made with Flutter and written in Dart.
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- Lunch menus from Sodexo restaurants
+- Menus are parsed as JSON
+- Ability to view history and upcoming weeks
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Tech
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The application fetches Sodexo lunch menu data in JSON format from Sodexo's public API for various Sodexo restaurants.
+
+- **Platform:** Mobile
+- **Languages:** Dart
+- **Frontend:** Flutter
+- **Tools:** Visual Studio Code
+
+## Version History
+
+* 0.0.1
+    * Initial version with basic functionality
+
+## Authors
+
+Juha Ala-Rantala ([Koodattu](https://github.com/Koodattu/))
+
+## Acknowledgments
+
+* [Sodexo](https://www.sodexo.fi/) - Menu data
+
+## License
+
+Distributed under the MIT License. See `LICENSE` file for more information.
