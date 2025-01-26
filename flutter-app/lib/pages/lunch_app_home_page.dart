@@ -392,7 +392,7 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
           );
         },
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -426,7 +426,7 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
                                 restaurant.location,
                                 style: const TextStyle(
                                   color: Colors.white70,
-                                  fontSize: 12,
+                                  fontSize: 14,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -447,7 +447,7 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 4),
 
               // Hours row (using chips)
               Wrap(
@@ -461,7 +461,7 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
                         'Lunch: ${restaurant.lunchHours!}',
                         style: const TextStyle(color: Colors.white),
                       ),
-                      backgroundColor: Colors.deepOrangeAccent.withOpacity(0.3),
+                      backgroundColor: Colors.deepOrange.withValues(alpha: 0.5),
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     ),
                   if (restaurant.openHours != null && restaurant.openHours!.isNotEmpty)
@@ -471,19 +471,23 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
                         'Open: ${restaurant.openHours!}',
                         style: const TextStyle(color: Colors.white),
                       ),
-                      backgroundColor: Colors.tealAccent.withOpacity(0.3),
+                      backgroundColor: Colors.tealAccent.withValues(alpha: 0.5),
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 4),
 
               // Types row (icons + text)
               if (restaurant.type.isNotEmpty)
                 Wrap(
                   spacing: 8.0,
                   runSpacing: 4.0,
-                  children: restaurant.type.map((t) => _buildTypeIndicator(t)).toList(),
+                  children: (List<String>.from(restaurant.type)
+                        ..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase())))
+                      .where((type) => type.toLowerCase() != 'lunch')
+                      .map((t) => _buildTypeIndicator(t))
+                      .toList(),
                 ),
             ],
           ),
@@ -503,12 +507,12 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
       case 'student':
         iconData = Icons.school;
         color = Colors.blueAccent;
-        label = 'Student';
+        label = 'Student Discount';
         break;
       case 'cafe':
         iconData = Icons.local_cafe;
-        color = Colors.tealAccent;
-        label = 'Cafe';
+        color = Colors.brown[500]!;
+        label = 'Cafe Services';
         break;
       case 'lunch':
         iconData = Icons.restaurant;
@@ -526,7 +530,7 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.3),
+        color: color.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
