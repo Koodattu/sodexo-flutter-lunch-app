@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 
 import '../models/restaurant.dart';
+import '../providers/lunch_app_state.dart';
 import 'restaurant_detail_page.dart';
 
-/// The main home page where restaurants are listed, filtered, searched, and sorted by location.
 class LunchAppHomePage extends StatefulWidget {
   const LunchAppHomePage({super.key});
 
@@ -22,6 +23,8 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
   String _selectedFilter = 'All';
   bool _isSearching = false;
   bool _isLocating = false;
+  bool _sortByDistance = false; // NEW: Track whether we are sorting by distance
+
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
   LocationData? _userLocation;
@@ -32,7 +35,22 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
     _loadRestaurants();
   }
 
-  // Method to get the user's location and sort the restaurants
+  Future<void> _loadRestaurants() async {
+    final String jsonString = await rootBundle.loadString('assets/sodexo_restaurants.json');
+    final List<dynamic> jsonResponse = json.decode(jsonString);
+
+    List<Restaurant> restaurants = jsonResponse.map((data) => Restaurant.fromJson(data)).toList();
+
+    // Sort restaurants alphabetically by name by default
+    restaurants.sort((a, b) => a.name.compareTo(b.name));
+
+    setState(() {
+      _allRestaurants = restaurants;
+      _filteredRestaurants = restaurants;
+    });
+  }
+
+  // Method to get the user's location and sort the restaurants by distance
   Future<void> _getLocationAndSort() async {
     if (_isLocating) {
       return;
@@ -40,8 +58,8 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
     setState(() {
       _isLocating = true;
     });
-    Location location = Location();
 
+    Location location = Location();
     bool serviceEnabled;
     PermissionStatus permissionGranted;
 
@@ -71,29 +89,14 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
 
     // Get the user's current location
     _userLocation = await location.getLocation();
-
-    // Sort restaurants based on proximity
-    if (_userLocation != null) {
-      _filteredRestaurants.sort((a, b) {
-        double distanceA = _calculateDistance(
-          _userLocation!.latitude!,
-          _userLocation!.longitude!,
-          a.lat ?? 0,
-          a.lon ?? 0,
-        );
-        double distanceB = _calculateDistance(
-          _userLocation!.latitude!,
-          _userLocation!.longitude!,
-          b.lat ?? 0,
-          b.lon ?? 0,
-        );
-        return distanceA.compareTo(distanceB);
-      });
-    }
-
     setState(() {
       _isLocating = false;
+      // Indicate that we are now sorting by distance
+      _sortByDistance = true;
     });
+
+    // Rebuild so that we re-sort the list in the build() method
+    setState(() {});
   }
 
   // Helper method to calculate distance between two points (Haversine formula)
@@ -111,21 +114,7 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
     return degrees * pi / 180;
   }
 
-  Future<void> _loadRestaurants() async {
-    final String jsonString = await rootBundle.loadString('assets/sodexo_restaurants.json');
-    final List<dynamic> jsonResponse = json.decode(jsonString);
-
-    List<Restaurant> restaurants = jsonResponse.map((data) => Restaurant.fromJson(data)).toList();
-
-    // Sort restaurants alphabetically by name
-    restaurants.sort((a, b) => a.name.compareTo(b.name));
-
-    setState(() {
-      _allRestaurants = restaurants;
-      _filteredRestaurants = restaurants;
-    });
-  }
-
+  // Filter restaurants by type and search query
   void _filterRestaurants(String type) {
     setState(() {
       _selectedFilter = type;
@@ -146,9 +135,13 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
       } else {
         _filteredRestaurants = filteredList;
       }
+
+      // Reset sorting to name-based if we change filters (optional)
+      _sortByDistance = false;
     });
   }
 
+  // Search restaurants by name/location
   void _searchRestaurants(String query) {
     setState(() {
       if (query.isEmpty) {
@@ -160,6 +153,8 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
                 restaurant.location.toLowerCase().contains(query.toLowerCase()))
             .toList();
       }
+      // Reset sorting to name-based if we change search (optional)
+      _sortByDistance = false;
     });
   }
 
@@ -169,11 +164,62 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
       _searchController.clear();
       _filteredRestaurants = _allRestaurants;
       _searchFocusNode.requestFocus();
+      _sortByDistance = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Grab our app state (where favorites are stored)
+    final appState = Provider.of<LunchAppState>(context);
+
+    // At build time, we have two groups:
+    // 1) Favorite restaurants (subset of _filteredRestaurants)
+    // 2) Non-favorites (subset of _filteredRestaurants)
+
+    final favoriteRestaurants = _filteredRestaurants.where((r) => appState.isFavorite(r.urlId)).toList();
+    final nonFavoriteRestaurants = _filteredRestaurants.where((r) => !appState.isFavorite(r.urlId)).toList();
+
+    // Now we need to apply sorting. We either sort by name or by distance (if user location is available and _sortByDistance is true).
+
+    // If we’re sorting by distance but user location is null, we’ll skip that step.
+    if (_sortByDistance && _userLocation != null) {
+      favoriteRestaurants.sort((a, b) {
+        double distanceA = _calculateDistance(
+          _userLocation!.latitude!,
+          _userLocation!.longitude!,
+          a.lat ?? 0,
+          a.lon ?? 0,
+        );
+        double distanceB = _calculateDistance(
+          _userLocation!.latitude!,
+          _userLocation!.longitude!,
+          b.lat ?? 0,
+          b.lon ?? 0,
+        );
+        return distanceA.compareTo(distanceB);
+      });
+      nonFavoriteRestaurants.sort((a, b) {
+        double distanceA = _calculateDistance(
+          _userLocation!.latitude!,
+          _userLocation!.longitude!,
+          a.lat ?? 0,
+          a.lon ?? 0,
+        );
+        double distanceB = _calculateDistance(
+          _userLocation!.latitude!,
+          _userLocation!.longitude!,
+          b.lat ?? 0,
+          b.lon ?? 0,
+        );
+        return distanceA.compareTo(distanceB);
+      });
+    } else {
+      // Default sort by name
+      favoriteRestaurants.sort((a, b) => a.name.compareTo(b.name));
+      nonFavoriteRestaurants.sort((a, b) => a.name.compareTo(b.name));
+    }
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 17, 17, 17),
       appBar: AppBar(
@@ -218,134 +264,279 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
         children: [
           const SizedBox(height: 4),
           if (_isSearching) ...[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: () => _filterRestaurants('All'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _selectedFilter == 'All' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
-                      foregroundColor: Colors.white,
-                    ),
-                    child: const Text('All'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => _filterRestaurants('lunch'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _selectedFilter == 'lunch' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
-                      foregroundColor: Colors.white,
-                    ),
-                    child: const Text('Lunch'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => _filterRestaurants('student'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          _selectedFilter == 'student' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
-                      foregroundColor: Colors.white,
-                    ),
-                    child: const Text('Student'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => _filterRestaurants('cafe'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _selectedFilter == 'cafe' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
-                      foregroundColor: Colors.white,
-                    ),
-                    child: const Text('Cafe'),
-                  ),
-                ],
-              ),
-            ),
+            _buildFilterRow(),
           ],
+          // Favorites first
           Expanded(
-            child: ListView.builder(
-              itemCount: _filteredRestaurants.length,
-              itemBuilder: (context, index) {
-                final restaurant = _filteredRestaurants[index];
-                return Card(
-                  color: const Color.fromARGB(255, 46, 46, 46),
-                  margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                  child: InkWell(
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) =>
-                              RestaurantDetailPage(restaurant: restaurant),
-                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                            const begin = Offset(1.0, 0.0);
-                            const end = Offset.zero;
-                            const curve = Curves.easeInOut;
-
-                            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            restaurant.name,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              const Icon(Icons.location_on, color: Colors.grey),
-                              const SizedBox(width: 5),
-                              Text(restaurant.location),
-                            ],
-                          ),
-                          const SizedBox(height: 5),
-                          Row(
-                            children: [
-                              const Icon(Icons.access_time, color: Colors.grey),
-                              const SizedBox(width: 5),
-                              Text('Lunch: ${restaurant.lunchHours ?? "N/A"}'),
-                            ],
-                          ),
-                          const SizedBox(height: 5),
-                          Row(
-                            children: [
-                              const Icon(Icons.access_time_filled, color: Colors.grey),
-                              const SizedBox(width: 5),
-                              Text('Open: ${restaurant.openHours ?? "N/A"}'),
-                            ],
-                          ),
-                          const SizedBox(height: 5),
-                          Row(
-                            children: [
-                              const Icon(Icons.restaurant_menu, color: Colors.grey),
-                              const SizedBox(width: 5),
-                              Expanded(
-                                child: Text(
-                                  'Type: ${restaurant.type.join(", ")}',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+            child: ListView(
+              children: [
+                if (favoriteRestaurants.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Favorites',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red[200],
                       ),
                     ),
                   ),
+                ...favoriteRestaurants.map((restaurant) {
+                  return _buildRestaurantCard(context, restaurant, appState);
+                }),
+
+                // Then all the non-favorites
+                if (nonFavoriteRestaurants.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'All Restaurants',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red[200],
+                      ),
+                    ),
+                  ),
+                ...nonFavoriteRestaurants.map((restaurant) {
+                  return _buildRestaurantCard(context, restaurant, appState);
+                }),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// A helper to build the row of filter buttons (All, Lunch, Student, Cafe).
+  Widget _buildFilterRow() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          ElevatedButton(
+            onPressed: () => _filterRestaurants('All'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _selectedFilter == 'All' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('All'),
+          ),
+          ElevatedButton(
+            onPressed: () => _filterRestaurants('lunch'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _selectedFilter == 'lunch' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Lunch'),
+          ),
+          ElevatedButton(
+            onPressed: () => _filterRestaurants('student'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _selectedFilter == 'student' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Student'),
+          ),
+          ElevatedButton(
+            onPressed: () => _filterRestaurants('cafe'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _selectedFilter == 'cafe' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Cafe'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// A helper to build a Card widget for a given restaurant.
+  Widget _buildRestaurantCard(
+    BuildContext context,
+    Restaurant restaurant,
+    LunchAppState appState,
+  ) {
+    return Card(
+      color: const Color.fromARGB(255, 46, 46, 46),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      elevation: 4, // Slightly increased elevation for better separation
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: InkWell(
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        onTap: () {
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return RestaurantDetailPage(restaurant: restaurant);
+              },
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.easeInOut;
+
+                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
                 );
               },
             ),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Row with the title and favorite icon
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          restaurant.name,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.location_on,
+                              color: Colors.white70,
+                              size: 16,
+                            ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Text(
+                                restaurant.location,
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 12,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      appState.isFavorite(restaurant.urlId) ? Icons.star : Icons.star_border,
+                      color: appState.isFavorite(restaurant.urlId) ? Colors.yellow : Colors.white,
+                    ),
+                    onPressed: () {
+                      appState.toggleFavorite(restaurant.urlId);
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+
+              // Hours row (using chips)
+              Wrap(
+                spacing: 8.0,
+                runSpacing: 4.0,
+                children: [
+                  if (restaurant.lunchHours != null && restaurant.lunchHours!.isNotEmpty)
+                    Chip(
+                      avatar: const Icon(Icons.restaurant_menu, size: 16, color: Colors.white),
+                      label: Text(
+                        'Lunch: ${restaurant.lunchHours!}',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.deepOrangeAccent.withOpacity(0.3),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    ),
+                  if (restaurant.openHours != null && restaurant.openHours!.isNotEmpty)
+                    Chip(
+                      avatar: const Icon(Icons.access_time, size: 16, color: Colors.white),
+                      label: Text(
+                        'Open: ${restaurant.openHours!}',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.tealAccent.withOpacity(0.3),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 8),
+
+              // Types row (icons + text)
+              if (restaurant.type.isNotEmpty)
+                Wrap(
+                  spacing: 8.0,
+                  runSpacing: 4.0,
+                  children: restaurant.type.map((t) => _buildTypeIndicator(t)).toList(),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Builds a little widget (icon + text) for each 'type'.
+  Widget _buildTypeIndicator(String type) {
+    // Define mapping from type -> icon/color.
+    IconData iconData;
+    Color color;
+    String label;
+
+    switch (type.toLowerCase()) {
+      case 'student':
+        iconData = Icons.school;
+        color = Colors.blueAccent;
+        label = 'Student';
+        break;
+      case 'cafe':
+        iconData = Icons.local_cafe;
+        color = Colors.tealAccent;
+        label = 'Cafe';
+        break;
+      case 'lunch':
+        iconData = Icons.restaurant;
+        color = Colors.deepOrangeAccent;
+        label = 'Lunch';
+        break;
+      default:
+        iconData = Icons.category;
+        color = Colors.grey;
+        // Capitalize the first letter
+        label = type[0].toUpperCase() + type.substring(1);
+        break;
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.3),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(iconData, color: Colors.white, size: 16),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: const TextStyle(color: Colors.white, fontSize: 12),
           ),
         ],
       ),
