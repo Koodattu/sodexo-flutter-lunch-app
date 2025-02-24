@@ -462,7 +462,14 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
                         style: const TextStyle(color: Colors.white),
                       ),
                       backgroundColor: Colors.deepOrange.withValues(alpha: 0.5),
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        side: BorderSide(
+                          color: Colors.transparent,
+                          width: 0,
+                        ),
+                      ),
                     ),
                   if (restaurant.openHours != null && restaurant.openHours!.isNotEmpty)
                     Chip(
@@ -472,7 +479,14 @@ class _LunchAppHomePageState extends State<LunchAppHomePage> {
                         style: const TextStyle(color: Colors.white),
                       ),
                       backgroundColor: Colors.tealAccent.withValues(alpha: 0.5),
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        side: BorderSide(
+                          color: Colors.transparent,
+                          width: 0,
+                        ),
+                      ),
                     ),
                 ],
               ),

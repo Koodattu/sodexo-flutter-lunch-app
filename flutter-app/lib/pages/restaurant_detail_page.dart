@@ -72,7 +72,9 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
   Future<void> _fetchNextWeekMenuData() async {
     final List<Map<String, dynamic>> nextWeekMenu = [];
     final DateTime today = DateTime.now();
-    final DateTime nextMonday = today.add(Duration(days: (7 - today.weekday + 1) % 7));
+    final DateTime nextMonday = today.weekday == DateTime.monday
+        ? today.add(const Duration(days: 7))
+        : today.add(Duration(days: (8 - today.weekday) % 7));
 
     try {
       for (int i = 0; i < 5; i++) {
@@ -422,7 +424,9 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
       );
     }
 
-    final DateTime nextMonday = DateTime.now().add(Duration(days: (7 - DateTime.now().weekday + 1) % 7));
+    final DateTime nextMonday = DateTime.now().weekday == DateTime.monday
+        ? DateTime.now().add(const Duration(days: 7))
+        : DateTime.now().add(Duration(days: (8 - DateTime.now().weekday) % 7));
 
     return ListView.builder(
       itemCount: _nextWeekMenuData!.length,

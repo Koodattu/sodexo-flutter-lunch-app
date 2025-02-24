@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => LunchAppState(),
       child: MaterialApp(
-        title: 'Namer App',
+        title: 'Sodexo Restaurants Menus',
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
