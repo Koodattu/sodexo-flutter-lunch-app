@@ -134,60 +134,46 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
       _isSearching = !_isSearching;
       _searchController.clear();
       _filteredRestaurants = _allRestaurants;
-      _searchFocusNode.requestFocus();
+      if (_isSearching) {
+        _searchFocusNode.requestFocus();
+      }
       _sortByDistance = false;
     });
   }
 
-  Widget _buildFilterRow() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          ElevatedButton(
-            onPressed: () => _filterRestaurants('All'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: _selectedFilter == 'All' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
-              foregroundColor: Colors.white,
-            ),
-            child: const Text('All'),
-          ),
-          ElevatedButton(
-            onPressed: () => _filterRestaurants('lunch'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: _selectedFilter == 'lunch' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
-              foregroundColor: Colors.white,
-            ),
-            child: const Text('Lunch'),
-          ),
-          ElevatedButton(
-            onPressed: () => _filterRestaurants('student'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: _selectedFilter == 'student' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
-              foregroundColor: Colors.white,
-            ),
-            child: const Text('Student'),
-          ),
-          ElevatedButton(
-            onPressed: () => _filterRestaurants('cafe'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: _selectedFilter == 'cafe' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
-              foregroundColor: Colors.white,
-            ),
-            child: const Text('Cafe'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
+  Widget _buildHeader(LunchAppState appState) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          // Expanded widget: either a title text or a search TextField when searching.
+          Expanded(
+            child: _isSearching
+                ? TextField(
+                    controller: _searchController,
+                    focusNode: _searchFocusNode,
+                    onChanged: _searchRestaurants,
+                    decoration: InputDecoration(
+                      hintText: 'Search restaurants...',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.transparent,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                    ),
+                  )
+                : Text(
+                    "All Restaurants",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red[200],
+                    ),
+                  ),
+          ),
           // Location button (with spinner when locating)
           IconButton(
             icon: _isLocating
@@ -347,7 +333,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                   runSpacing: 4.0,
                   children: (List<String>.from(restaurant.type)
                         ..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase())))
-                      .where((type) => type.toLowerCase() != 'lunch')
+                      .where((t) => t.toLowerCase() != 'lunch')
                       .map((t) => _buildTypeIndicator(t))
                       .toList(),
                 ),
@@ -409,6 +395,8 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<LunchAppState>(context);
+
+    // Separate restaurants into favorites and non-favorites for sorting.
     final favoriteRestaurants = _filteredRestaurants.where((r) => appState.isFavorite(r.urlId)).toList();
     final nonFavoriteRestaurants = _filteredRestaurants.where((r) => !appState.isFavorite(r.urlId)).toList();
 
@@ -448,52 +436,70 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
       nonFavoriteRestaurants.sort((a, b) => a.name.compareTo(b.name));
     }
 
+    // Merge the two lists (favorites first).
+    final allRestaurants = [...favoriteRestaurants, ...nonFavoriteRestaurants];
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 17, 17, 17),
         body: Column(
           children: [
-            // Custom header replacing the AppBar actions.
-            _buildHeader(),
+            // Updated header row with title/search field and icon buttons.
+            _buildHeader(appState),
+            // (Optional) You can keep filter buttons below the header if desired.
             if (_isSearching) _buildFilterRow(),
             Expanded(
               child: ListView(
-                children: [
-                  if (favoriteRestaurants.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Favorites',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red[200],
-                        ),
-                      ),
-                    ),
-                  ...favoriteRestaurants
-                      .map((restaurant) => _buildRestaurantCard(context, restaurant, appState))
-                      .toList(),
-                  if (nonFavoriteRestaurants.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'All Restaurants',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red[200],
-                        ),
-                      ),
-                    ),
-                  ...nonFavoriteRestaurants
-                      .map((restaurant) => _buildRestaurantCard(context, restaurant, appState))
-                      .toList(),
-                ],
+                children:
+                    allRestaurants.map((restaurant) => _buildRestaurantCard(context, restaurant, appState)).toList(),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  // The unchanged filter row.
+  Widget _buildFilterRow() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          ElevatedButton(
+            onPressed: () => _filterRestaurants('All'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _selectedFilter == 'All' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('All'),
+          ),
+          ElevatedButton(
+            onPressed: () => _filterRestaurants('lunch'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _selectedFilter == 'lunch' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Lunch'),
+          ),
+          ElevatedButton(
+            onPressed: () => _filterRestaurants('student'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _selectedFilter == 'student' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Student'),
+          ),
+          ElevatedButton(
+            onPressed: () => _filterRestaurants('cafe'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _selectedFilter == 'cafe' ? Colors.red : const Color.fromARGB(255, 102, 60, 57),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Cafe'),
+          ),
+        ],
       ),
     );
   }
