@@ -1,0 +1,1101 @@
+[
+    {
+        "json_id": "69",
+        "url_id": "keilaranta-1",
+        "name": "Keilaranta 1",
+        "location": "Keilaranta 1, 02150 Espoo",
+        "lat": "60.176040799999996",
+        "lon": "24.831337260892496",
+        "open_hours": "08.00 - 14.00",
+        "lunch_hours": "11.00 - 13.30",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "86",
+        "url_id": "ravintola-aalto-kvarkki",
+        "name": "Ravintola Aalto Kvarkki",
+        "location": "Otakaari 3, 02150 Espoo",
+        "lat": "60.1882535",
+        "lon": "24.8300111",
+        "open_hours": "09.00 - 14.30",
+        "lunch_hours": "10.30 - 14.00",
+        "type": [
+            "student",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "86",
+        "url_id": "ravintola-aalto-tietotekniikantalo",
+        "name": "Ravintola Aalto Tietotekniikantalo",
+        "location": "Konemiehentie 2, 02150 Espoo",
+        "lat": "60.18697455",
+        "lon": "24.82150626602166",
+        "open_hours": "08.00 - 14.30",
+        "lunch_hours": "10.30 - 14.00",
+        "type": [
+            "student",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "207",
+        "url_id": "ravintola-arvo",
+        "name": "Ravintola Arvo",
+        "location": "Ekonominaukio 1, 02150 Espoo",
+        "lat": "60.1858612",
+        "lon": "24.8236621",
+        "open_hours": "08.00 - 14.00",
+        "lunch_hours": "11.00 - 14.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "60",
+        "url_id": "hills-business-park",
+        "name": "Ravintola Hills",
+        "location": "Klovinpellontie 1-3, 02180 Espoo",
+        "lat": "60.2045382",
+        "lon": "24.755175333215682",
+        "open_hours": "08.00 - 13.00",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "1872123",
+        "url_id": "ravintola-k-auto-espoo",
+        "name": "Ravintola K-Auto Espoo",
+        "location": "Piispantilantie 2, 02240 Espoo",
+        "lat": "60.164745",
+        "lon": "24.72656065280494",
+        "open_hours": "07.30 - 14.00",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "84",
+        "url_id": "kaivomestari",
+        "name": "Ravintola Kaivomestari",
+        "location": "Kaivomestarinniitty 2, 02770 Espoo",
+        "lat": "60.210127",
+        "lon": "24.6600414",
+        "open_hours": "11.00 - 13.00",
+        "lunch_hours": "07.00 - 19.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "61",
+        "url_id": "keilasatama-5",
+        "name": "Ravintola Keilasatama 5",
+        "location": "Keilasatama 5, 02150 Espoo",
+        "lat": "60.1738547",
+        "lon": "24.8293437",
+        "open_hours": "08.00 - 14.00",
+        "lunch_hours": "11.00 - 13.30",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "170",
+        "url_id": "laturi",
+        "name": "Ravintola Laturi (Caruna)",
+        "location": "Upseerinkatu 2, 02600 Espoo",
+        "lat": "60.216691850000004",
+        "lon": "24.820114949999997",
+        "open_hours": "11.00 - 13.00",
+        "lunch_hours": "11.00 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "1694324",
+        "url_id": "ravintola-safiiri",
+        "name": "Ravintola Safiiri",
+        "location": "Puolikkotie 8, 02230 Espoo",
+        "lat": "60.1631372",
+        "lon": "24.7390008",
+        "open_hours": "08.00 - 10.00",
+        "lunch_hours": "08.00 - 14.30",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "159",
+        "url_id": "technopolis-innopoli-1",
+        "name": "Technopolis Innopoli 1",
+        "location": "Tekniikantie 12, 02150 Espoo",
+        "lat": "60.1840754",
+        "lon": "24.8142991",
+        "open_hours": "08.00 - 14.30",
+        "lunch_hours": "08.00 - 10.00",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "1045996",
+        "url_id": "helsingin-yliopisto-paarakennus",
+        "name": "Helsingin yliopisto Päärakennus",
+        "location": "Fabianinkatu 33, 00170 Helsinki",
+        "lat": "60.1694378",
+        "lon": "24.950124308664773",
+        "open_hours": "10.30 - 15.30",
+        "lunch_hours": "09.00 - 15.30",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "2264317",
+        "url_id": "helsingin-yliopisto-paarakennus-ravintola-flora",
+        "name": "Helsingin yliopisto päärakennus - Ravintola Flora",
+        "location": "Fabianinkatu 33, 00170 Helsinki",
+        "lat": "60.1694378",
+        "lon": "24.950124308664773",
+        "open_hours": "11.00 - 14.00",
+        "lunch_hours": "11.00 - 13.30",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "158",
+        "url_id": "metropolia-myllypuro",
+        "name": "Metropolia Myllypuro",
+        "location": "Myllypurontie 1, 00920 Helsinki",
+        "lat": "60.22370585",
+        "lon": "25.079117550515534",
+        "open_hours": "07.30 - 17.00",
+        "lunch_hours": "07.30 - 09.30",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "149",
+        "url_id": "ankkuri",
+        "name": "Ravintola Ankkuri",
+        "location": "Pasilankatu 2, 00240 Helsinki",
+        "lat": "60.1956039",
+        "lon": "24.928423",
+        "open_hours": "08.00 - 13.30",
+        "lunch_hours": "11.00 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "66",
+        "url_id": "ravintola-atomitie-5",
+        "name": "Ravintola Atomitie 5",
+        "location": "Atomitie 5, 00370 Helsinki",
+        "lat": "60.22243925",
+        "lon": "24.871972035474723",
+        "open_hours": "10.45 - 13.00",
+        "lunch_hours": "10.45 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "275380",
+        "url_id": "ravintola-hdl-alppikortteli",
+        "name": "Ravintola HDL Alppikortteli",
+        "location": "Alppikatu 2, 00530 Helsinki",
+        "lat": "60.18472",
+        "lon": "24.9405309",
+        "open_hours": null,
+        "lunch_hours": null,
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "275381",
+        "url_id": "ravintola-hdl-kotikallio",
+        "name": "Ravintola HDL Kotikallio",
+        "location": "Kyläkirkontie 6-10, 00370 Helsinki",
+        "lat": "60.22318305",
+        "lon": "24.84282088499819",
+        "open_hours": "11.15 - 14.00",
+        "lunch_hours": "11.15 - 12.30",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "260007",
+        "url_id": "ravintola-hdl-viikki",
+        "name": "Ravintola HDL Viikki",
+        "location": "Agronominkatu 7, 00790 Helsinki",
+        "lat": "60.233028649999994",
+        "lon": "25.03473721397436",
+        "open_hours": "08.00 - 13.00",
+        "lunch_hours": "11.00 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "1872124",
+        "url_id": "ravintola-k-auto-helsinki",
+        "name": "Ravintola K-Auto Helsinki",
+        "location": "Mekaanikonkatu 10, 00880 Helsinki",
+        "lat": "60.20255695",
+        "lon": "25.044415123513218",
+        "open_hours": "07.30 - 14.00",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "1007802",
+        "url_id": "ravintola-kasarmikatu-21",
+        "name": "Ravintola Kasarmikatu 21",
+        "location": "Kasarmikatu 21 B, 00130 Helsinki",
+        "lat": "60.1634725",
+        "lon": "24.9480548",
+        "open_hours": "08.00 - 13.30",
+        "lunch_hours": "11.00 - 13.30",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "55",
+        "url_id": "ravintola-kiltakellari",
+        "name": "Ravintola Kiltakellari",
+        "location": "Bulevardi 44 (käyntiosoite 56), 00120 Helsinki",
+        "lat": "60.1674881",
+        "lon": "24.9427473",
+        "open_hours": "10.30 - 14.00",
+        "lunch_hours": "11.00 - 13.30",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "68",
+        "url_id": "ravintola-ladonlukko",
+        "name": "Ravintola Ladonlukko",
+        "location": "Latokartanonkaari 9 A, 00790 Helsinki",
+        "lat": "60.2312261",
+        "lon": "25.0231846",
+        "open_hours": "07.45 - 15.00",
+        "lunch_hours": "10.30 - 14.00",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "178",
+        "url_id": "ravintola-sisapiha",
+        "name": "Ravintola Sisäpiha",
+        "location": "Lapinlahdenkatu 1 B, 00180 Helsinki",
+        "lat": "60.16651065",
+        "lon": "24.931656866628188",
+        "open_hours": "08.00 - 13.30",
+        "lunch_hours": "11.00 - 13.30",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "65",
+        "url_id": "ravintola-tk21",
+        "name": "Ravintola TK21",
+        "location": "Teollisuuskatu 21, 00520 HELSINKI",
+        "lat": "60.1943504",
+        "lon": "24.9476088",
+        "open_hours": "08.00 - 14.00",
+        "lunch_hours": "10.30 - 13.30",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "190",
+        "url_id": "ravintola-valaja",
+        "name": "Ravintola Valaja",
+        "location": "Valimotie 21, 00380 Helsinki",
+        "lat": "60.220108",
+        "lon": "24.8788298",
+        "open_hours": "10.30 - 13.00",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "85",
+        "url_id": "stadin-ao-hattulantie-2",
+        "name": "Stadin AO - Hattulantie 2",
+        "location": "Hattulantie 2, 00550 Helsinki",
+        "lat": "60.1964841",
+        "lon": "24.9564982",
+        "open_hours": "07.45 - 14.30",
+        "lunch_hours": "11.00 - 13.30",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "179",
+        "url_id": "stadin-ao-kullervonkatu",
+        "name": "Stadin AO Kullervonkatu",
+        "location": "Kullervonkatu 11, 00610 Helsinki",
+        "lat": "60.21869755",
+        "lon": "24.94855855131742",
+        "open_hours": "07.45 - 14.15",
+        "lunch_hours": "10.45 - 12.30",
+        "type": [
+            "student",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "2734905",
+        "url_id": "stadin-ao-meritalo",
+        "name": "Stadin AO Meritalo",
+        "location": "Haapaniemenkatu 7-9, 00530 Helsinki",
+        "lat": "60.1796731",
+        "lon": "24.9588779",
+        "open_hours": "10.45 - 13.30",
+        "lunch_hours": "10.45 - 13.30",
+        "type": [
+            "student",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "2734896",
+        "url_id": "stadin-ao-savonkatu",
+        "name": "Stadin AO Savonkatu",
+        "location": "Savonkatu 4, Savonkatu 4 00520",
+        "lat": "60.1674881",
+        "lon": "24.9427473",
+        "open_hours": "08.00 - 14.30",
+        "lunch_hours": "08.00 - 10.00",
+        "type": [
+            "student",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "157",
+        "url_id": "stadin-ao-tk23",
+        "name": "Stadin AO TK 23",
+        "location": "Teollisuuskatu 23-25, 00510 Helsinki",
+        "lat": "60.1947014",
+        "lon": "24.9468472",
+        "open_hours": "08.00 - 16.00",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "180",
+        "url_id": "stadin-ao-vilppulantie",
+        "name": "Stadin AO Vilppulantie",
+        "location": "Vilppulantie 14, 00700 Helsinki",
+        "lat": "60.2501656",
+        "lon": "25.01744336545932",
+        "open_hours": "08.00 - 14.30",
+        "lunch_hours": "11.00 - 13.00",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "1872121",
+        "url_id": "ravintola-onnenmaa",
+        "name": "Ravintola Onnenmaa",
+        "location": "Niinistönkatu 16, 05800 Hyvinkää",
+        "lat": "60.6489526",
+        "lon": "24.86313",
+        "open_hours": "07.30 - 09.00",
+        "lunch_hours": "10.00 - 12.30",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "2553505",
+        "url_id": "ravintola-willava",
+        "name": "Ravintola Willava",
+        "location": "Kerkkolankatu 37-39, 05800 Hyvinkää",
+        "lat": "60.6403497",
+        "lon": "24.8494227",
+        "open_hours": "07.00 - 13.30",
+        "lunch_hours": "10.00 - 12.15",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "115",
+        "url_id": "ikaalisten-kasi-ja-taideteollisuusoppilaitos-ilona",
+        "name": "Ravintola Ilona",
+        "location": "Eino Salmelaisen katu 20, 39500 Ikaalinen",
+        "lat": "61.7649279",
+        "lon": "23.066605446730797",
+        "open_hours": "08.30 - 15.00",
+        "lunch_hours": "10.30 - 12.30",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "162",
+        "url_id": "stora-enso",
+        "name": "Stora Enso Imatra",
+        "location": "Kattilatie 100, 55800 Imatra",
+        "lat": "61.1923342",
+        "lon": "28.7716996",
+        "open_hours": "11.00 - 13.00",
+        "lunch_hours": "11.00 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "119",
+        "url_id": "stora-enso-vieraskerhot-torna",
+        "name": "Stora Enso Imatran Tehtaiden Vieraskerhot, Tornan kerho",
+        "location": "Kerhokuja 3, 55400 Imatra",
+        "lat": "61.21175835",
+        "lon": "28.778314251212965",
+        "open_hours": "07.00 - 15.00",
+        "lunch_hours": "07.00 - 15.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "1491010",
+        "url_id": "ravintola-optimes-business-garden",
+        "name": "Ravintola Optimes Business Garden",
+        "location": "Paperitehtaankatu 9, 40100 Jyväskylä",
+        "lat": "62.2521639",
+        "lon": "25.7596555",
+        "open_hours": "08.00 - 14.00",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "128",
+        "url_id": "ylistonmaki",
+        "name": "Ravintola Ylistönmäki",
+        "location": "Ylistönmäentie 33, 40500 Jyväskylä",
+        "lat": "62.22648745",
+        "lon": "25.744124016977615",
+        "open_hours": "08.00 - 14.00",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "123",
+        "url_id": "tietotalo",
+        "name": "Tietotalon ravintola",
+        "location": "Kilpisenkatu 1, 40100 Jyväskylä",
+        "lat": "62.239729100000005",
+        "lon": "25.748607956554608",
+        "open_hours": "08.00 - 13.30",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "2509349",
+        "url_id": "ravintola-metsa-group-kemin-tehtaat",
+        "name": "Ravintola Metsä Group Kemin tehtaat",
+        "location": "Tehdastie 94, 96200 Kemi",
+        "lat": "65.7624745",
+        "lon": "24.5296418",
+        "open_hours": "07.00 - 14.30",
+        "lunch_hours": "09.45 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "189",
+        "url_id": "vihikari-10",
+        "name": "Ravintola Vihikari 10",
+        "location": "Vihikari 10, 90440 Kempele",
+        "lat": "64.9397748",
+        "lon": "25.4429197",
+        "open_hours": "08.00 - 13.00",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "129",
+        "url_id": "savonia-amk-centria-campus",
+        "name": "Campusravintola",
+        "location": "Talonpojankatu 2, 67100 Kokkola",
+        "lat": "63.833661250000006",
+        "lon": "23.162068173802083",
+        "open_hours": "10.30 - 13.30",
+        "lunch_hours": "08.00 - 15.00",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "1872125",
+        "url_id": "ravintola-k-auto-lahti",
+        "name": "Ravintola K-Auto Lahti",
+        "location": "Ajokatu 261, 15610 Lahti",
+        "lat": "60.94715335",
+        "lon": "25.64824587157118",
+        "open_hours": "07.45 - 14.00",
+        "lunch_hours": "11.00 - 13.30",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "1924246",
+        "url_id": "ravintola-metsa-fibre-joutseno",
+        "name": "Ravintola Metsä Fibre Joutseno",
+        "location": "Haukilahdentie 27, 54120 PULP",
+        "lat": "61.1264944",
+        "lon": "28.4278274",
+        "open_hours": "07.00 - 14.30",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "597738",
+        "url_id": "nammo-lapua",
+        "name": "Nammo Lapua",
+        "location": "Patruunatehtaantie 15, 62100 Lapua",
+        "lat": "62.9367358",
+        "lon": "23.0440215",
+        "open_hours": "08.00 - 14.00",
+        "lunch_hours": "09.45 - 12.30",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "187",
+        "url_id": "rengasterassi",
+        "name": "Ravintola Rengasterassi",
+        "location": "Nosturikatu 18, 37150 Nokia",
+        "lat": "61.4970614",
+        "lon": "23.5456217",
+        "open_hours": "07.30 - 14.00",
+        "lunch_hours": "07.30 - 09.30",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "121",
+        "url_id": "louhi",
+        "name": "Louhi",
+        "location": "Elektroniikkatie 3, 90590 Oulu",
+        "lat": "65.0584827",
+        "lon": "25.4399812",
+        "open_hours": null,
+        "lunch_hours": null,
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "2658978",
+        "url_id": "oulun-yliopisto-kontinkangas-ravintola-medisiina",
+        "name": "Oulun Yliopisto Kontinkangas Ravintola Medisiina",
+        "location": "Aapistie 5 A, 90220 Oulu",
+        "lat": "65.0072498",
+        "lon": "25.5250874",
+        "open_hours": "08.00 - 14.00",
+        "lunch_hours": "10.30 - 13.30",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "120",
+        "url_id": "ravintola-elektra",
+        "name": "Ravintola Elektra",
+        "location": "Elektroniikkatie 2, 90590 OULU",
+        "lat": "65.0570043",
+        "lon": "25.44335930030673",
+        "open_hours": "10.30 - 12.30",
+        "lunch_hours": "10.30 - 12.30",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "121",
+        "url_id": "ravintola-galaksi",
+        "name": "Ravintola Galaksi",
+        "location": "Elektroniikkatie 10, 90590 Oulu",
+        "lat": "65.0616597",
+        "lon": "25.4394964",
+        "open_hours": "10.30 - 13.00",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "1461459",
+        "url_id": "ravintola-matriitti",
+        "name": "Ravintola Matriitti",
+        "location": "Valtatie 37, 90500 Oulu",
+        "lat": "65.0270774",
+        "lon": "25.466441564732023",
+        "open_hours": "11.00 - 12.30",
+        "lunch_hours": "11.00 - 12.30",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "1532933",
+        "url_id": "ravintola-muskotti",
+        "name": "Ravintola Muskotti",
+        "location": "Teollisuustie 1 Haukipudas",
+        "lat": "65.1748327",
+        "lon": "25.3834661",
+        "open_hours": "08.00 - 13.00",
+        "lunch_hours": "10.30 - 12.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "232",
+        "url_id": "ravintola-technopolis-myrsky",
+        "name": "Ravintola Technopolis Myrsky",
+        "location": "Yrttipellontie 1, 90230 Oulu",
+        "lat": "65.0127772",
+        "lon": "25.511728813666664",
+        "open_hours": "10.30 - 13.00",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "1461460",
+        "url_id": "ravintola-vanha-varikko",
+        "name": "Ravintola Vanha Varikko",
+        "location": "Lapinkatu 1, 96140 Rovaniemi",
+        "lat": "66.5101525",
+        "lon": "25.7066673",
+        "open_hours": "08.00 - 13.30",
+        "lunch_hours": "11.00 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "2866094",
+        "url_id": "seniorlounasravintola-kulmasali",
+        "name": "Seniorlounasravintola Kulmasali",
+        "location": "Riistatie 3 C, 96100 Rovaniemi",
+        "lat": "66.5024724",
+        "lon": "25.718479",
+        "open_hours": "10.30 - 13.30",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "108",
+        "url_id": "ravintola-frami",
+        "name": "Ravintola Frami",
+        "location": "Kampusranta 11, 60320 Seinäjoki",
+        "lat": "62.790202300000004",
+        "lon": "22.821888010814142",
+        "open_hours": "09.00 - 13.30",
+        "lunch_hours": "10.30 - 13.30",
+        "type": [
+            "student",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "109",
+        "url_id": "ravintola-ja-kahvila-kampustalo",
+        "name": "Ravintola ja kahvila Kampustalo",
+        "location": "Kalevankatu 35, 60100 Seinäjoki",
+        "lat": "62.7892352",
+        "lon": "22.8256585",
+        "open_hours": "07.30 - 16.00",
+        "lunch_hours": "10.30 - 13.30",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "107",
+        "url_id": "ravintola-hermia-5",
+        "name": "Ravintola Hermia 5",
+        "location": "Visiokatu 1, 33720 Tampere",
+        "lat": "61.448191",
+        "lon": "23.8635635",
+        "open_hours": "08.00 - 13.00",
+        "lunch_hours": "11.00 - 13.00",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "110",
+        "url_id": "hermia-6",
+        "name": "Ravintola Hermia 6",
+        "location": "Visiokatu 3, 33720 Tampere",
+        "lat": "61.4472192",
+        "lon": "23.8642931",
+        "open_hours": "07.30 - 09.30",
+        "lunch_hours": "10.30 - 13.30",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "111",
+        "url_id": "ravintola-hertsi",
+        "name": "Ravintola Hertsi",
+        "location": "Korkeakoulunkatu 1, 33720 Tampere",
+        "lat": "61.4486583",
+        "lon": "23.8546692",
+        "open_hours": "08.00 - 16.00",
+        "lunch_hours": "08.00 - 10.00",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "1872126",
+        "url_id": "ravintola-k-auto-tampere",
+        "name": "Ravintola K-Auto Tampere",
+        "location": "Hatanpään valtatie 42, 33900 Tampere",
+        "lat": "61.4829225",
+        "lon": "23.7629558",
+        "open_hours": "08.00 - 15.00",
+        "lunch_hours": "11.00 - 13.00",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "106",
+        "url_id": "kulmasarvis",
+        "name": "Ravintola Kulmasarvis",
+        "location": "Hatanpäänkatu 1 A, 33900 Tampere",
+        "lat": "61.4856935",
+        "lon": "23.7623506",
+        "open_hours": "08.00 - 13.00",
+        "lunch_hours": "10.45 - 13.00",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "116",
+        "url_id": "ravintola-linna",
+        "name": "Ravintola Linna",
+        "location": "Kalevantie 5, 33100 Tampere",
+        "lat": "61.4952774",
+        "lon": "23.7780918",
+        "open_hours": "08.30 - 17.00",
+        "lunch_hours": "10.30 - 16.30",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": null,
+        "url_id": "ravintola-volvo-truck",
+        "name": "Ravintola Volvo Truck",
+        "location": "Nuutisarankatu 19, 33900 Tampere",
+        "lat": "61.4580928",
+        "lon": "23.72630905381559",
+        "open_hours": null,
+        "lunch_hours": null,
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "104",
+        "url_id": "tampereen-oikeustalo-rooteli",
+        "name": "Tampereen Oikeustalo",
+        "location": "Kelloportinkatu 5, 33100 Tampere",
+        "lat": "61.5028232",
+        "lon": "23.7624552",
+        "open_hours": "08.30 - 13.30",
+        "lunch_hours": "11.00 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "102",
+        "url_id": "flavoria-medisiina-d",
+        "name": "Flavoria Medisiina D",
+        "location": "Kiinamyllynkatu 10 D, 20520 Turku",
+        "lat": "60.4516649",
+        "lon": "22.2891421",
+        "open_hours": "10.30 - 13.30",
+        "lunch_hours": "07.30 - 15.30",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "100",
+        "url_id": "ravintola-fiskarholmen-auriga-business-center",
+        "name": "Ravintola Fiskarholmen - Auriga Business Center",
+        "location": "Juhana Herttuan Puistokatu 21, 20100 Turku",
+        "lat": "60.4398042",
+        "lon": "22.2261597",
+        "open_hours": "07.45 - 13.00",
+        "lunch_hours": "07.45 - 09.30",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "1872127",
+        "url_id": "ravintola-k-auto-turku",
+        "name": "Ravintola K-Auto Turku",
+        "location": "Rieskalähteentie 89, 20300 Turku",
+        "lat": "60.4751988",
+        "lon": "22.2586247",
+        "open_hours": "07.30 - 14.30",
+        "lunch_hours": "11.00 - 13.30",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "160",
+        "url_id": "turun-amk-lemminkaisenkatu",
+        "name": "Turun AMK Lemminkäisenkatu",
+        "location": "Lemminkäisenkatu 30, 20520 Turku",
+        "lat": "60.4466362",
+        "lon": "22.2996805",
+        "open_hours": "07.45 - 14.30",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "2930870",
+        "url_id": "leko-7",
+        "name": "Leko 7",
+        "location": "Turbiinikuja 4, 01530 Vantaa",
+        "lat": "60.3073873",
+        "lon": "24.952650832188127",
+        "open_hours": "07.30 - 14.00",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "152",
+        "url_id": "metropolia-myyrmaki",
+        "name": "Metropolia Myyrmäki",
+        "location": "Leiritie 1, 01600 Vantaa",
+        "lat": "60.25813455",
+        "lon": "24.84423258858736",
+        "open_hours": "10.30 - 17.00",
+        "lunch_hours": "10.30 - 13.30",
+        "type": [
+            "cafe",
+            "lunch",
+            "student"
+        ]
+    },
+    {
+        "json_id": "62",
+        "url_id": "ravintola-hott-house-travel-and-transportation",
+        "name": "Ravintola HOTT - House of Travel and Transportation",
+        "location": "Tietotie 9, 01530 Vantaa",
+        "lat": "60.308974649999996",
+        "lon": "24.964345265467863",
+        "open_hours": "07.45 - 14.00",
+        "lunch_hours": "11.00 - 13.30",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "171",
+        "url_id": "parkki",
+        "name": "Ravintola Parkki",
+        "location": "Katriinantie 16, 01530 VANTAA",
+        "lat": "60.31950185",
+        "lon": "24.909318632988242",
+        "open_hours": "08.00 - 14.30",
+        "lunch_hours": "10.30 - 13.15",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "54",
+        "url_id": "ravintola-tuuli",
+        "name": "Ravintola Tuuli",
+        "location": "Pakkalankuja 6, 01510 Vantaa",
+        "lat": "60.2882686",
+        "lon": "24.9564553",
+        "open_hours": "08.00 - 14.15",
+        "lunch_hours": "11.00 - 13.00",
+        "type": [
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "118",
+        "url_id": "ravintola-navitas",
+        "name": "Ravintola Navitas",
+        "location": "Wredenkatu 2, 78250 Varkaus",
+        "lat": "62.31240665",
+        "lon": "27.888347852176096",
+        "open_hours": "09.00 - 13.30",
+        "lunch_hours": "11.00 - 12.30",
+        "type": [
+            "cafe",
+            "lunch"
+        ]
+    },
+    {
+        "json_id": "1580536",
+        "url_id": "ravintola-stadin-ao-ilkantie",
+        "name": "Ravintola Stadin AO Ilkantie",
+        "location": "Ilkantie 3, 00400 Helsinki",
+        "lat": "60.2207035",
+        "lon": "24.90577596477256",
+        "open_hours": "07.45 - 14.15",
+        "lunch_hours": "10.45 - 12.30",
+        "type": [
+            "student"
+        ]
+    },
+    {
+        "json_id": null,
+        "url_id": "cafe-panorama",
+        "name": "Cafe Panorama",
+        "location": "Hevosenkenkä 3, 02600 Espoo",
+        "lat": "60.2182033",
+        "lon": "24.814383772450306",
+        "open_hours": null,
+        "lunch_hours": null,
+        "type": [
+            "cafe"
+        ]
+    },
+    {
+        "json_id": null,
+        "url_id": "kahvila-kylteri",
+        "name": "Kahvila Kylteri",
+        "location": "Ekonominaukio 1, 02150 Espoo",
+        "lat": "60.1858612",
+        "lon": "24.8236621",
+        "open_hours": null,
+        "lunch_hours": null,
+        "type": [
+            "cafe"
+        ]
+    },
+    {
+        "json_id": "3059953",
+        "url_id": "ravintola-hiekkis",
+        "name": "Ravintola Hiekkis",
+        "open_hours": "08.00 - 13.30",
+        "lunch_hours": "10.30 - 13.00",
+        "type": [
+            "lunch"
+        ],
+        "location": "Hiekkakiventie 5, 00710 Helsinki",
+        "lat": "60.2404485",
+        "lon": "25.017495951756842"
+    }
+]
