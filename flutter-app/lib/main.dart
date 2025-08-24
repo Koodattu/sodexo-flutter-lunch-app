@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sodexo_flutter_lunch_app/pages/main_screen_page.dart';
 import 'providers/lunch_app_state.dart';
+import 'icon_references.dart';
 
 void main() {
+  // Ensure all icons are included in web builds
+  IconReferences.ensureIconsAreIncluded();
   runApp(const MyApp());
 }
 
