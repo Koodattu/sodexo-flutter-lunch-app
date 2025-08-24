@@ -39,6 +39,11 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
     final String jsonString = await rootBundle.loadString('assets/sodexo_restaurants.json');
     final List<dynamic> jsonResponse = json.decode(jsonString);
     List<Restaurant> restaurants = jsonResponse.map((data) => Restaurant.fromJson(data)).toList();
+
+    // Filter out restaurants with null jsonId (no menu data available)
+    restaurants =
+        restaurants.where((restaurant) => restaurant.jsonId != null && restaurant.jsonId!.isNotEmpty).toList();
+
     restaurants.sort((a, b) => a.name.compareTo(b.name));
     setState(() {
       _allRestaurants = restaurants;

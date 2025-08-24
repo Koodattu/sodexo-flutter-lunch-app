@@ -74,12 +74,13 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
     for (final restaurant in favoriteRestaurants) {
       final jsonId = restaurant.jsonId ?? '';
       if (jsonId.isNotEmpty && !_menuCache.containsKey(jsonId)) {
-        try {
-          final menuData = await MenuService.fetchMenuWithFallback(jsonId);
+        final menuData = await MenuService.fetchMenuWithFallback(jsonId);
+        if (menuData != null) {
+          // menuData can be either valid data or empty map {}
           _menuCache[jsonId] = menuData;
           _errorMenus.remove(jsonId);
-        } catch (e) {
-          // Store empty map to indicate failed attempt and mark as error
+        } else {
+          // null indicates an error occurred
           _menuCache[jsonId] = {};
           _errorMenus.add(jsonId);
         }
@@ -94,20 +95,19 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
       _errorMenus.remove(jsonId);
     });
 
-    try {
-      final menuData = await MenuService.fetchMenuWithFallback(jsonId);
-      setState(() {
+    final menuData = await MenuService.fetchMenuWithFallback(jsonId);
+    setState(() {
+      if (menuData != null) {
+        // menuData can be either valid data or empty map {}
         _menuCache[jsonId] = menuData;
         _refreshingMenus.remove(jsonId);
-      });
-    } catch (e) {
-      setState(() {
-        // Store empty map to indicate failed attempt and mark as error
+      } else {
+        // null indicates an error occurred
         _menuCache[jsonId] = {};
         _errorMenus.add(jsonId);
         _refreshingMenus.remove(jsonId);
-      });
-    }
+      }
+    });
   }
 
   void _ensureFavoriteMenusLoaded(List<Restaurant> favoriteRestaurants) {
@@ -118,16 +118,15 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
         MenuService.fetchMenuWithFallback(jsonId).then((menuData) {
           if (mounted) {
             setState(() {
-              _menuCache[jsonId] = menuData;
-              _errorMenus.remove(jsonId);
-            });
-          }
-        }).catchError((e) {
-          if (mounted) {
-            setState(() {
-              // Store empty map to indicate failed attempt and mark as error
-              _menuCache[jsonId] = {};
-              _errorMenus.add(jsonId);
+              if (menuData != null) {
+                // menuData can be either valid data or empty map {}
+                _menuCache[jsonId] = menuData;
+                _errorMenus.remove(jsonId);
+              } else {
+                // null indicates an error occurred
+                _menuCache[jsonId] = {};
+                _errorMenus.add(jsonId);
+              }
             });
           }
         });
