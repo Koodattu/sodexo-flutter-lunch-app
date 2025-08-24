@@ -188,6 +188,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
         child: Scaffold(
           backgroundColor: const Color.fromARGB(255, 17, 17, 17),
           body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildHeader(),
               // Restaurant header.
