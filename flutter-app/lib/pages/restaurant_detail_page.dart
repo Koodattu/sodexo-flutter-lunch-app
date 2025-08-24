@@ -141,7 +141,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
         children: [
           Text(
             dayTitle,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           const SizedBox(height: 4),
           if (courses == null || courses.isEmpty)
@@ -189,7 +189,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 17, 17, 17),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 223, 0, 0),
+        backgroundColor: Colors.transparent,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Color.fromARGB(132, 0, 0, 0),
         ),
@@ -199,12 +199,14 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
         ),
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Colors.white,
-          labelStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          indicator: const BoxDecoration(), // Remove the underline indicator
+          dividerColor: Colors.transparent, // Remove the separator line
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.grey,
+          labelStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          unselectedLabelStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          overlayColor: MaterialStateProperty.all(Colors.transparent), // Remove tap ripple effect
+          splashFactory: NoSplash.splashFactory, // Remove splash effect
           tabs: const [
             Tab(text: 'Tämä viikko'),
             Tab(text: 'Seuraava viikko'),
