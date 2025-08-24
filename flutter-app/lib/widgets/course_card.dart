@@ -14,19 +14,19 @@ class CourseCard extends StatelessWidget {
   Color _getDietCodeColor(String code) {
     switch (code.trim().toUpperCase()) {
       case 'G':
-        return const Color.fromARGB(255, 76, 175, 80); // Green for gluten-free
+        return Colors.green; // Green for gluten-free
       case 'L':
-        return const Color.fromARGB(255, 33, 150, 243); // Blue for lactose-free
+        return Colors.blue; // Blue for lactose-free
       case 'M':
-        return const Color.fromARGB(255, 156, 39, 176); // Purple for milk-free
+        return Colors.purple; // Purple for milk-free
       case 'VE':
-        return const Color.fromARGB(255, 139, 195, 74); // Light green for vegan
+        return Colors.lightGreen; // Light green for vegan
       case 'VL':
-        return const Color.fromARGB(255, 104, 159, 56); // Darker green for low-lactose
+        return Colors.teal; // Teal for low-lactose
       case 'S':
-        return const Color.fromARGB(255, 255, 152, 0); // Orange for contains soy
+        return Colors.orange; // Orange for contains soy
       default:
-        return const Color.fromARGB(255, 96, 125, 139); // Blue grey for unknown codes
+        return Colors.grey; // Grey for unknown codes
     }
   }
 
@@ -36,18 +36,18 @@ class CourseCard extends StatelessWidget {
 
     return codes
         .map((code) => Container(
-              margin: const EdgeInsets.only(right: 6),
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              margin: const EdgeInsets.only(right: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: _getDietCodeColor(code),
-                borderRadius: BorderRadius.circular(12),
+                color: _getDietCodeColor(code).withOpacity(0.5),
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Text(
                 code,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
             ))
@@ -75,13 +75,13 @@ class CourseCard extends StatelessWidget {
               Text(
                 course['title_fi'] ?? 'Ei otsikkoa',
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   height: 1.2,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
 
               // Category and Diet codes row
               Row(
@@ -91,18 +91,29 @@ class CourseCard extends StatelessWidget {
                   // Category chip on the left
                   if (course['category'] != null)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 223, 0, 0),
-                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.deepOrange.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                      child: Text(
-                        course['category'],
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.restaurant_menu,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            course['category'],
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   else
@@ -123,45 +134,44 @@ class CourseCard extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
 
               // Price section
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (course['price'] != null) ...[
+                    const Icon(
+                      Icons.euro,
+                      color: Colors.white70,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 4),
                     Expanded(
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.euro,
-                            color: Color.fromARGB(255, 255, 193, 7),
-                            size: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: Text(
-                              course['price'],
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 255, 193, 7),
-                              ),
-                            ),
-                          ),
-                        ],
+                      child: Text(
+                        course['price'],
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.white70,
+                        ),
                       ),
                     ),
                   ] else ...[
-                    const Text(
-                      'Hinta ei saatavilla',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white54,
+                    const Icon(
+                      Icons.euro,
+                      color: Colors.white54,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 4),
+                    const Expanded(
+                      child: Text(
+                        'Hinta ei saatavilla',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white54,
+                        ),
                       ),
                     ),
                   ],
-
                   // Tap indicator
                   const Icon(
                     Icons.info_outline,
