@@ -120,7 +120,6 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(dayTitle, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
-              const SizedBox(height: 8),
               ...courses.entries.map((courseEntry) {
                 final course = courseEntry.value;
                 return CourseCard(course: course);
@@ -239,6 +238,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
                 unselectedLabelStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 overlayColor: MaterialStateProperty.all(Colors.transparent), // Remove tap ripple effect
                 splashFactory: NoSplash.splashFactory, // Remove splash effect
+                labelPadding: const EdgeInsets.symmetric(horizontal: 8.0), // Reduce horizontal padding between tabs
                 tabs: favoriteRestaurants.map((restaurant) {
                   return Tab(
                     text: restaurant.name,
