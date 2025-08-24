@@ -19,6 +19,9 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
   List<Restaurant> _allRestaurants = [];
   bool _isLoading = true;
   TabController? _tabController;
+  int _refreshKey = 0;
+  Map<String, ValueNotifier<int>> _tabNotifiers = {};
+  Map<String, Map<String, dynamic>?> _menuCache = {};
 
   Widget _buildHeader() {
     return Padding(
@@ -37,7 +40,38 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
           ),
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.white),
-            onPressed: () {}, // No functionality yet
+            onPressed: () {
+              final favorites = Provider.of<LunchAppState>(context, listen: false).favorites;
+              final favoriteRestaurants = _allRestaurants.where((r) => favorites.contains(r.urlId)).toList();
+
+              if (favoriteRestaurants.isNotEmpty) {
+                if (favoriteRestaurants.length == 1) {
+                  // Single tab case - clear cache and refresh
+                  final restaurantJsonId = favoriteRestaurants[0].jsonId ?? '';
+                  _menuCache.remove(restaurantJsonId);
+                  setState(() {
+                    _refreshKey++;
+                  });
+                } else {
+                  // Multiple tabs case - use ValueNotifier to avoid full rebuild
+                  final currentIndex = _tabController?.index ?? 0;
+                  if (currentIndex < favoriteRestaurants.length) {
+                    final restaurantJsonId = favoriteRestaurants[currentIndex].jsonId ?? '';
+
+                    // Clear cache for this restaurant
+                    _menuCache.remove(restaurantJsonId);
+
+                    // Initialize notifier if it doesn't exist
+                    if (!_tabNotifiers.containsKey(restaurantJsonId)) {
+                      _tabNotifiers[restaurantJsonId] = ValueNotifier<int>(0);
+                    }
+
+                    // Update the notifier (this will trigger rebuild of only the listening widget)
+                    _tabNotifiers[restaurantJsonId]!.value = _tabNotifiers[restaurantJsonId]!.value + 1;
+                  }
+                }
+              }
+            },
             tooltip: 'Refresh',
           ),
           IconButton(
@@ -69,6 +103,10 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
   @override
   void dispose() {
     _tabController?.dispose();
+    // Dispose all ValueNotifiers
+    for (var notifier in _tabNotifiers.values) {
+      notifier.dispose();
+    }
     super.dispose();
   }
 
@@ -91,17 +129,29 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
     });
   }
 
-  Future<Map<String, dynamic>?> _fetchWeeklyMenu(String jsonId) async {
+  Future<Map<String, dynamic>?> _fetchWeeklyMenu(String jsonId, {bool forceRefresh = false}) async {
+    // Check cache first if not forcing refresh
+    if (!forceRefresh && _menuCache.containsKey(jsonId)) {
+      return _menuCache[jsonId];
+    }
+
     try {
       final response = await http.get(Uri.parse('https://www.sodexo.fi/ruokalistat/output/weekly_json/$jsonId'));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+        // Cache the result
+        _menuCache[jsonId] = data;
         return data;
       }
     } catch (e) {
       // Handle error as needed.
     }
     return null;
+  }
+
+  Future<Map<String, dynamic>?> _getMenuForRestaurant(String restaurantJsonId, int refreshKey) async {
+    // If cache is empty (first time) or refreshKey changed (refresh was pressed), fetch new data
+    return _fetchWeeklyMenu(restaurantJsonId);
   }
 
   Widget _buildWeeklyMenu(Map<String, dynamic> menuData) {
@@ -202,6 +252,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
               // Weekly menu for the restaurant.
               Expanded(
                 child: FutureBuilder<Map<String, dynamic>?>(
+                  key: ValueKey(_refreshKey),
                   future: _fetchWeeklyMenu(restaurant.jsonId ?? ''),
                   builder: (context, menuSnapshot) {
                     if (menuSnapshot.connectionState != ConnectionState.done) {
@@ -257,18 +308,33 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
               child: TabBarView(
                 controller: _tabController,
                 children: favoriteRestaurants.map((restaurant) {
-                  return FutureBuilder<Map<String, dynamic>?>(
-                    future: _fetchWeeklyMenu(restaurant.jsonId ?? ''),
-                    builder: (context, menuSnapshot) {
-                      if (menuSnapshot.connectionState != ConnectionState.done) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      if (!menuSnapshot.hasData || menuSnapshot.data == null || (menuSnapshot.data?.isEmpty ?? true)) {
-                        return const Center(
-                          child: Text("No menu available.", style: TextStyle(color: Colors.white)),
-                        );
-                      }
-                      return _buildWeeklyMenu(menuSnapshot.data!);
+                  final restaurantJsonId = restaurant.jsonId ?? '';
+
+                  // Initialize notifier if it doesn't exist
+                  if (!_tabNotifiers.containsKey(restaurantJsonId)) {
+                    _tabNotifiers[restaurantJsonId] = ValueNotifier<int>(0);
+                  }
+
+                  return ValueListenableBuilder<int>(
+                    valueListenable: _tabNotifiers[restaurantJsonId]!,
+                    builder: (context, refreshKey, child) {
+                      return FutureBuilder<Map<String, dynamic>?>(
+                        key: ValueKey('$restaurantJsonId-$refreshKey'),
+                        future: _getMenuForRestaurant(restaurantJsonId, refreshKey),
+                        builder: (context, menuSnapshot) {
+                          if (menuSnapshot.connectionState != ConnectionState.done) {
+                            return const Center(child: CircularProgressIndicator());
+                          }
+                          if (!menuSnapshot.hasData ||
+                              menuSnapshot.data == null ||
+                              (menuSnapshot.data?.isEmpty ?? true)) {
+                            return const Center(
+                              child: Text("No menu available.", style: TextStyle(color: Colors.white)),
+                            );
+                          }
+                          return _buildWeeklyMenu(menuSnapshot.data!);
+                        },
+                      );
                     },
                   );
                 }).toList(),
