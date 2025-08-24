@@ -8,7 +8,6 @@ import '../providers/lunch_app_state.dart';
 import '../services/menu_service.dart';
 import '../widgets/favorites_header.dart';
 import '../widgets/custom_tab_bar.dart';
-import '../widgets/menu_tab_view.dart';
 import '../widgets/weekly_menu_list.dart';
 import '../widgets/menu_state_builder.dart';
 
@@ -22,8 +21,10 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
   List<Restaurant> _allRestaurants = [];
   bool _isLoading = true;
   TabController? _tabController;
-  int _refreshKey = 0;
-  Map<String, ValueNotifier<int>> _tabNotifiers = {};
+  final Map<String, Map<String, dynamic>?> _menuCache = {};
+  final Set<String> _refreshingMenus = {};
+  Set<String> _previousFavorites = {};
+  int _previousTabCount = 0;
 
   @override
   void initState() {
@@ -34,17 +35,18 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
   @override
   void dispose() {
     _tabController?.dispose();
-    // Dispose all ValueNotifiers
-    for (var notifier in _tabNotifiers.values) {
-      notifier.dispose();
-    }
     super.dispose();
   }
 
   void _updateTabController(int length) {
+    final currentIndex = _tabController?.index ?? 0;
     _tabController?.dispose();
-    if (length >= 2) {
-      _tabController = TabController(length: length, vsync: this);
+    if (length >= 1) {
+      _tabController = TabController(
+        length: length,
+        vsync: this,
+        initialIndex: currentIndex < length ? currentIndex : 0,
+      );
     } else {
       _tabController = null;
     }
@@ -58,31 +60,70 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
       _allRestaurants = restaurants;
       _isLoading = false;
     });
+
+    // Pre-load menus for favorite restaurants
+    _loadFavoriteMenus();
   }
 
-  void _handleRefresh() {
+  Future<void> _loadFavoriteMenus() async {
+    final favorites = Provider.of<LunchAppState>(context, listen: false).favorites;
+    final favoriteRestaurants = _allRestaurants.where((r) => favorites.contains(r.urlId)).toList();
+
+    for (final restaurant in favoriteRestaurants) {
+      final jsonId = restaurant.jsonId ?? '';
+      if (jsonId.isNotEmpty && !_menuCache.containsKey(jsonId)) {
+        final menuData = await MenuService.fetchMenuWithFallback(jsonId);
+        _menuCache[jsonId] = menuData;
+      }
+    }
+    setState(() {});
+  }
+
+  Future<void> _refreshMenu(String jsonId) async {
+    setState(() {
+      _refreshingMenus.add(jsonId);
+    });
+
+    try {
+      final menuData = await MenuService.fetchMenuWithFallback(jsonId);
+      setState(() {
+        _menuCache[jsonId] = menuData;
+        _refreshingMenus.remove(jsonId);
+      });
+    } catch (e) {
+      setState(() {
+        _refreshingMenus.remove(jsonId);
+      });
+    }
+  }
+
+  void _ensureFavoriteMenusLoaded(List<Restaurant> favoriteRestaurants) {
+    for (final restaurant in favoriteRestaurants) {
+      final jsonId = restaurant.jsonId ?? '';
+      if (jsonId.isNotEmpty && !_menuCache.containsKey(jsonId)) {
+        // Load menu asynchronously without blocking the UI
+        MenuService.fetchMenuWithFallback(jsonId).then((menuData) {
+          if (mounted) {
+            setState(() {
+              _menuCache[jsonId] = menuData;
+            });
+          }
+        });
+      }
+    }
+  }
+
+  void _handleRefresh() async {
     final favorites = Provider.of<LunchAppState>(context, listen: false).favorites;
     final favoriteRestaurants = _allRestaurants.where((r) => favorites.contains(r.urlId)).toList();
 
     if (favoriteRestaurants.isNotEmpty) {
-      if (favoriteRestaurants.length == 1) {
-        // Single tab case - refresh entire page
-        setState(() {
-          _refreshKey++;
-        });
-      } else {
-        // Multiple tabs case - use ValueNotifier to avoid full rebuild
-        final currentIndex = _tabController?.index ?? 0;
-        if (currentIndex < favoriteRestaurants.length) {
-          final restaurantJsonId = favoriteRestaurants[currentIndex].jsonId ?? '';
-
-          // Initialize notifier if it doesn't exist
-          if (!_tabNotifiers.containsKey(restaurantJsonId)) {
-            _tabNotifiers[restaurantJsonId] = ValueNotifier<int>(0);
-          }
-
-          // Update the notifier (this will trigger rebuild of only the listening widget)
-          _tabNotifiers[restaurantJsonId]!.value = _tabNotifiers[restaurantJsonId]!.value + 1;
+      // Refresh current tab's menu
+      final currentIndex = _tabController?.index ?? 0;
+      if (currentIndex < favoriteRestaurants.length) {
+        final jsonId = favoriteRestaurants[currentIndex].jsonId ?? '';
+        if (jsonId.isNotEmpty) {
+          await _refreshMenu(jsonId);
         }
       }
     }
@@ -95,8 +136,22 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
     // Filter the loaded restaurants based on the current favorites.
     final favoriteRestaurants = _allRestaurants.where((r) => favorites.contains(r.urlId)).toList();
 
-    // Update tab controller when favorites change
-    _updateTabController(favoriteRestaurants.length);
+    // Update tab controller only when the tab count changes
+    final currentTabCount = favoriteRestaurants.length;
+    if (currentTabCount != _previousTabCount) {
+      _updateTabController(currentTabCount);
+      _previousTabCount = currentTabCount;
+    }
+
+    // Only load menus for new favorites if the favorites set has actually changed
+    final currentFavorites = favorites.toSet();
+    if (!_previousFavorites.containsAll(currentFavorites) || !currentFavorites.containsAll(_previousFavorites)) {
+      _previousFavorites = currentFavorites;
+      // Load menus for any new favorite restaurants (but don't call setState here)
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _ensureFavoriteMenusLoaded(favoriteRestaurants);
+      });
+    }
 
     if (_isLoading) {
       return SafeArea(
@@ -133,49 +188,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
       );
     }
 
-    // Single favorite - show as before
-    if (favoriteRestaurants.length == 1) {
-      final restaurant = favoriteRestaurants[0];
-      return SafeArea(
-        child: Scaffold(
-          backgroundColor: const Color.fromARGB(255, 17, 17, 17),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FavoritesHeader(onRefresh: _handleRefresh),
-              // Restaurant header.
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  restaurant.name,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
-              // Weekly menu for the restaurant.
-              Expanded(
-                child: FutureBuilder<Map<String, dynamic>?>(
-                  key: ValueKey(_refreshKey),
-                  future: MenuService.fetchMenuWithFallback(restaurant.jsonId ?? ''),
-                  builder: (context, menuSnapshot) {
-                    return MenuStateBuilder(
-                      isLoading: menuSnapshot.connectionState != ConnectionState.done,
-                      hasError: false,
-                      isEmpty:
-                          !menuSnapshot.hasData || menuSnapshot.data == null || (menuSnapshot.data?.isEmpty ?? true),
-                      errorMessage: "No menu available.",
-                      emptyMessage: "No menu available.",
-                      contentBuilder: () => WeeklyMenuList(menuData: menuSnapshot.data!),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    // Multiple favorites - show with tabs
+    // Show with tabs (works for both single and multiple favorites)
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 17, 17, 17),
@@ -194,15 +207,16 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
                 controller: _tabController,
                 children: favoriteRestaurants.map((restaurant) {
                   final restaurantJsonId = restaurant.jsonId ?? '';
+                  final cachedMenu = _menuCache[restaurantJsonId];
+                  final isRefreshing = _refreshingMenus.contains(restaurantJsonId);
 
-                  // Initialize notifier if it doesn't exist
-                  if (!_tabNotifiers.containsKey(restaurantJsonId)) {
-                    _tabNotifiers[restaurantJsonId] = ValueNotifier<int>(0);
-                  }
-
-                  return MenuTabView(
-                    restaurantJsonId: restaurantJsonId,
-                    refreshNotifier: _tabNotifiers[restaurantJsonId]!,
+                  return MenuStateBuilder(
+                    isLoading: isRefreshing || cachedMenu == null,
+                    hasError: false,
+                    isEmpty: !isRefreshing && (cachedMenu == null || cachedMenu.isEmpty),
+                    errorMessage: "Ruokalistan lataaminen epäonnistui.",
+                    emptyMessage: "Ei ruokalistaa saatavilla.",
+                    contentBuilder: () => WeeklyMenuList(menuData: cachedMenu!),
                   );
                 }).toList(),
               ),
