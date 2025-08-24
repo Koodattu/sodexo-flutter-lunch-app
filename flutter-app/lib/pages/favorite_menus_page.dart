@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 import '../models/restaurant.dart';
 import '../providers/lunch_app_state.dart';
+import '../widgets/course_card.dart';
 
 class FavoriteMenusPage extends StatefulWidget {
   const FavoriteMenusPage({super.key});
@@ -46,68 +47,6 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> {
     return null;
   }
 
-  Widget _buildFancyCourseCard(Map<String, dynamic> course) {
-    return Card(
-      color: const Color(0xFF2E2E2E),
-      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 6,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              course['title_fi'] ?? 'No Title',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-            if (course['title_en'] != null)
-              Text(
-                course['title_en'],
-                style: const TextStyle(fontSize: 16, color: Colors.white70),
-              ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              children: [
-                Chip(
-                  label: Text(
-                    'Category: ${course['category'] ?? 'N/A'}',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  backgroundColor: Colors.deepOrangeAccent,
-                ),
-                if (course['price'] != null)
-                  Chip(
-                    label: Text(
-                      'Price: ${course['price']}',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.teal,
-                  ),
-                if (course['dietcodes'] != null)
-                  Chip(
-                    label: Text(
-                      'Diet: ${course['dietcodes']}',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.blueGrey,
-                  ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            if (course['properties'] != null)
-              Text(
-                'Properties: ${course['properties']}',
-                style: const TextStyle(color: Colors.white54),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildWeeklyMenu(Map<String, dynamic> menuData) {
     final List<dynamic> mealdates = menuData['mealdates'];
     return ListView.builder(
@@ -126,7 +65,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> {
               const SizedBox(height: 8),
               ...courses.entries.map((courseEntry) {
                 final course = courseEntry.value;
-                return _buildFancyCourseCard(course);
+                return CourseCard(course: course);
               }),
             ],
           ),
