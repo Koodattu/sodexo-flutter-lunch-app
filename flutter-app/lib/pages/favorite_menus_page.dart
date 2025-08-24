@@ -235,8 +235,8 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
                 dividerColor: Colors.transparent, // Remove the separator line
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.grey,
-                labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                unselectedLabelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                labelStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                unselectedLabelStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 overlayColor: MaterialStateProperty.all(Colors.transparent), // Remove tap ripple effect
                 splashFactory: NoSplash.splashFactory, // Remove splash effect
                 tabs: favoriteRestaurants.map((restaurant) {
