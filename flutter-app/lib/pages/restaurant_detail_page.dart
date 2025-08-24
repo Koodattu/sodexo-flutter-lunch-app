@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 import '../models/restaurant.dart';
 
@@ -111,6 +110,112 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
 
   String _twoDigits(int n) {
     return n.toString().padLeft(2, '0');
+  }
+
+  /// Returns Finnish weekday name for given date
+  String _getFinnishWeekdayName(DateTime date) {
+    const weekdays = ['Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai', 'Sunnuntai'];
+    return weekdays[date.weekday - 1];
+  }
+
+  /// Builds a course card widget that can be tapped to show details
+  Widget _buildCourseCard(Map<String, dynamic> course) {
+    return Card(
+      color: const Color.fromARGB(255, 46, 46, 46),
+      child: InkWell(
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        onTap: () {
+          _showCourseDetailDialog(context, course);
+        },
+        child: SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  course['title_fi'] ?? 'Ei otsikkoa',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  course['title_en'] ?? 'No English Title',
+                  style: const TextStyle(fontSize: 16, color: Colors.white70),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  course['category'] ?? 'Ei kategoriaa',
+                  style: const TextStyle(fontSize: 14, color: Colors.white54),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Hinta: ${course['price'] ?? 'N/A'}',
+                  style: const TextStyle(fontSize: 14, color: Colors.white54),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Builds the day section with title and courses
+  Widget _buildDaySection(String dayTitle, Map<String, dynamic>? courses) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            dayTitle,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          if (courses == null || courses.isEmpty)
+            const Text(
+              "Ei valikkoa saatavilla tälle päivälle.",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            )
+          else
+            ...courses.entries.map<Widget>((courseEntry) {
+              final course = courseEntry.value;
+              return _buildCourseCard(course);
+            }).toList(),
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+
+  /// Generic method to build loading/error/empty states
+  Widget _buildMenuState({
+    required bool isLoading,
+    required bool hasError,
+    required bool isEmpty,
+    required String errorMessage,
+    required String emptyMessage,
+    required Widget Function() contentBuilder,
+  }) {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (hasError) {
+      return Center(child: Text(errorMessage));
+    }
+    if (isEmpty) {
+      return Center(child: Text(emptyMessage));
+    }
+    return contentBuilder();
   }
 
   void _showCourseDetailDialog(BuildContext context, Map<String, dynamic> course) {
@@ -318,213 +423,58 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
   }
 
   Widget _buildCurrentWeekMenu() {
-    if (_isLoadingCurrentWeek) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (_errorFetchingCurrentWeek) {
-      return const Center(
-        child: Text("Valikon lataaminen tälle viikolle epäonnistui."),
-      );
-    }
-    if (_currentWeekMenuData!.isEmpty) {
-      return const Center(
-        child: Text("Ei valikkoa saatavilla tälle viikolle."),
-      );
-    }
+    return _buildMenuState(
+      isLoading: _isLoadingCurrentWeek,
+      hasError: _errorFetchingCurrentWeek,
+      isEmpty: _currentWeekMenuData?.isEmpty ?? true,
+      errorMessage: "Valikon lataaminen tälle viikolle epäonnistui.",
+      emptyMessage: "Ei valikkoa saatavilla tälle viikolle.",
+      contentBuilder: () {
+        final DateTime startOfWeek = DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
 
-    final DateTime startOfWeek = DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
+        return ListView.builder(
+          itemCount: _currentWeekMenuData!['mealdates'].length,
+          itemBuilder: (context, index) {
+            final dayData = _currentWeekMenuData!['mealdates'][index];
+            final DateTime currentDayDate = startOfWeek.add(Duration(days: index));
+            final String dayName = dayData['date'];
+            final String dayDate =
+                "${_twoDigits(currentDayDate.day)}.${_twoDigits(currentDayDate.month)}.${currentDayDate.year}";
+            final String dayTitle = '$dayName - $dayDate';
+            final courses = dayData['courses'];
 
-    return ListView.builder(
-      itemCount: _currentWeekMenuData!['mealdates'].length,
-      itemBuilder: (context, index) {
-        final dayData = _currentWeekMenuData!['mealdates'][index];
-        final DateTime currentDayDate = startOfWeek.add(Duration(days: index));
-        final String dayName = dayData['date'];
-        final String dayDate =
-            "${_twoDigits(currentDayDate.day)}.${_twoDigits(currentDayDate.month)}.${currentDayDate.year}";
-        final String dayTitle = '$dayName - $dayDate';
-        final courses = dayData['courses'];
-
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                dayTitle,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              ...courses.entries.map<Widget>((courseEntry) {
-                final course = courseEntry.value;
-                return Card(
-                  color: const Color.fromARGB(255, 46, 46, 46),
-                  child: InkWell(
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    onTap: () {
-                      _showCourseDetailDialog(context, course);
-                    },
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              course['title_fi'] ?? 'Ei otsikkoa',
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              course['title_en'] ?? 'No English Title',
-                              style: const TextStyle(fontSize: 16, color: Colors.white70),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              course['category'] ?? 'Ei kategoriaa',
-                              style: const TextStyle(fontSize: 14, color: Colors.white54),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Hinta: ${course['price'] ?? 'N/A'}',
-                              style: const TextStyle(fontSize: 14, color: Colors.white54),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-              const SizedBox(height: 20),
-            ],
-          ),
+            return _buildDaySection(dayTitle, courses);
+          },
         );
       },
     );
   }
 
   Widget _buildNextWeekMenu() {
-    if (_isLoadingNextWeek) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (_errorFetchingNextWeek) {
-      return const Center(
-        child: Text("Valikon lataaminen seuraavalle viikolle epäonnistui."),
-      );
-    }
-    if (_nextWeekMenuData!.isEmpty || _nextWeekMenuData!.every((day) => day.isEmpty)) {
-      return const Center(
-        child: Text("Ei valikkoa saatavilla seuraavalle viikolle."),
-      );
-    }
+    return _buildMenuState(
+      isLoading: _isLoadingNextWeek,
+      hasError: _errorFetchingNextWeek,
+      isEmpty: (_nextWeekMenuData?.isEmpty ?? true) || (_nextWeekMenuData?.every((day) => day.isEmpty) ?? true),
+      errorMessage: "Valikon lataaminen seuraavalle viikolle epäonnistui.",
+      emptyMessage: "Ei valikkoa saatavilla seuraavalle viikolle.",
+      contentBuilder: () {
+        final DateTime nextMonday = DateTime.now().weekday == DateTime.monday
+            ? DateTime.now().add(const Duration(days: 7))
+            : DateTime.now().add(Duration(days: (8 - DateTime.now().weekday) % 7));
 
-    final DateTime nextMonday = DateTime.now().weekday == DateTime.monday
-        ? DateTime.now().add(const Duration(days: 7))
-        : DateTime.now().add(Duration(days: (8 - DateTime.now().weekday) % 7));
+        return ListView.builder(
+          itemCount: _nextWeekMenuData!.length,
+          itemBuilder: (context, index) {
+            final dayData = _nextWeekMenuData![index];
+            final DateTime currentDayDate = nextMonday.add(Duration(days: index));
+            final String dayName = _getFinnishWeekdayName(currentDayDate);
+            final String dayDate =
+                "${_twoDigits(currentDayDate.day)}.${_twoDigits(currentDayDate.month)}.${currentDayDate.year}";
+            final String dayTitle = '$dayName - $dayDate';
+            final courses = dayData['courses'];
 
-    return ListView.builder(
-      itemCount: _nextWeekMenuData!.length,
-      itemBuilder: (context, index) {
-        final dayData = _nextWeekMenuData![index];
-        final DateTime currentDayDate = nextMonday.add(Duration(days: index));
-        final String dayName = DateFormat('EEEE').format(currentDayDate);
-        final String dayDate =
-            "${_twoDigits(currentDayDate.day)}.${_twoDigits(currentDayDate.month)}.${currentDayDate.year}";
-        final String dayTitle = '$dayName - $dayDate';
-        final courses = dayData['courses'];
-
-        if (courses == null || courses.isEmpty) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    dayTitle,
-                    textAlign: TextAlign.start,
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  "Ei valikkoa saatavilla tälle päivälle.",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                dayTitle,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              ...courses.entries.map<Widget>((courseEntry) {
-                final course = courseEntry.value;
-                return Card(
-                  color: const Color.fromARGB(255, 46, 46, 46),
-                  child: InkWell(
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    onTap: () {
-                      _showCourseDetailDialog(context, course);
-                    },
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              course['title_fi'] ?? 'Ei otsikkoa',
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              course['title_en'] ?? 'No English Title',
-                              style: const TextStyle(fontSize: 16, color: Colors.white70),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              course['category'] ?? 'Ei kategoriaa',
-                              style: const TextStyle(fontSize: 14, color: Colors.white54),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Hinta: ${course['price'] ?? 'N/A'}',
-                              style: const TextStyle(fontSize: 14, color: Colors.white54),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-              const SizedBox(height: 20),
-            ],
-          ),
+            return _buildDaySection(dayTitle, courses);
+          },
         );
       },
     );
