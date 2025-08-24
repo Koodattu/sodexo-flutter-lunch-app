@@ -10,6 +10,22 @@ class CourseCard extends StatelessWidget {
     required this.course,
   });
 
+  /// Cleans up category text by removing numbers and text in parentheses
+  String _cleanCategory(String category) {
+    String cleaned = category;
+
+    // Remove numbers
+    cleaned = cleaned.replaceAll(RegExp(r'\d+'), '');
+
+    // Split at first opening parenthesis and take only the first part
+    if (cleaned.contains('(')) {
+      cleaned = cleaned.split('(')[0];
+    }
+
+    // Trim whitespace and convert to uppercase
+    return cleaned.trim().toUpperCase();
+  }
+
   /// Returns color for different diet codes
   Color _getDietCodeColor(String code) {
     switch (code.trim().toUpperCase()) {
@@ -138,7 +154,7 @@ class CourseCard extends StatelessWidget {
                     // Category row
                     if (course['category'] != null)
                       Text(
-                        course['category'],
+                        _cleanCategory(course['category'].toString()),
                         style: const TextStyle(
                           color: Colors.white70,
                           fontSize: 14,
