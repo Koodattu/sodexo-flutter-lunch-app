@@ -314,7 +314,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                         'Lounas: ${restaurant.lunchHours!}',
                         style: const TextStyle(color: Colors.white),
                       ),
-                      backgroundColor: Colors.deepOrange.withOpacity(0.5),
+                      backgroundColor: Colors.deepOrange.withValues(alpha: 0.5),
                       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),
@@ -332,7 +332,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                         'Auki: ${restaurant.openHours!}',
                         style: const TextStyle(color: Colors.white),
                       ),
-                      backgroundColor: Colors.tealAccent.withOpacity(0.5),
+                      backgroundColor: Colors.tealAccent.withValues(alpha: 0.5),
                       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),
@@ -391,7 +391,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.5),
+        color: color.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(

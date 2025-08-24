@@ -39,7 +39,7 @@ class CourseCard extends StatelessWidget {
               margin: const EdgeInsets.only(right: 4),
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: _getDietCodeColor(code).withOpacity(0.5),
+                color: _getDietCodeColor(code).withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Text(
@@ -52,6 +52,66 @@ class CourseCard extends StatelessWidget {
               ),
             ))
         .toList();
+  }
+
+  /// Builds price chips based on the price format
+  List<Widget> _buildPriceChips(String price) {
+    final prices = price.split('/').map((p) => p.trim()).where((p) => p.isNotEmpty).toList();
+
+    if (prices.length == 3) {
+      // Student / Staff / Guest format
+      return [
+        _buildSinglePriceChip(prices[0], Icons.school, Colors.indigo, 'Opiskelija'),
+        const SizedBox(width: 4),
+        _buildSinglePriceChip(prices[1], Icons.work, Colors.amber, 'Henkilökunta'),
+        const SizedBox(width: 4),
+        _buildSinglePriceChip(prices[2], Icons.person, Colors.pink, 'Vieras'),
+      ];
+    } else if (prices.length == 2) {
+      // Staff / Guest format
+      return [
+        _buildSinglePriceChip(prices[0], Icons.work, Colors.amber, 'Henkilökunta'),
+        const SizedBox(width: 4),
+        _buildSinglePriceChip(prices[1], Icons.person, Colors.pink, 'Vieras'),
+      ];
+    } else if (prices.length == 1) {
+      // Single price format
+      return [
+        _buildSinglePriceChip(prices[0], Icons.local_dining, Colors.deepPurple, 'Hinta'),
+      ];
+    }
+
+    return [];
+  }
+
+  /// Builds a single price chip with icon and price
+  Widget _buildSinglePriceChip(String price, IconData icon, Color color, String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: Colors.white,
+            size: 14,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            price,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -83,7 +143,7 @@ class CourseCard extends StatelessWidget {
                       height: 1.2,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
 
                   // Category and Diet codes row
                   Row(
@@ -95,14 +155,14 @@ class CourseCard extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
-                            color: Colors.deepOrange.withOpacity(0.5),
+                            color: Colors.cyan.withValues(alpha: 0.5),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(
-                                Icons.restaurant_menu,
+                                Icons.label,
                                 size: 16,
                                 color: Colors.white,
                               ),
@@ -120,7 +180,6 @@ class CourseCard extends StatelessWidget {
                         )
                       else
                         const SizedBox.shrink(),
-
                       // Diet codes chips on the right
                       if (course['dietcodes'] != null)
                         Flexible(
@@ -136,65 +195,24 @@ class CourseCard extends StatelessWidget {
                     ],
                   ),
 
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
 
                   // Price section
-                  Row(
-                    children: [
-                      if (course['price'] != null) ...[
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.blue.withOpacity(0.8),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Icon(
-                            Icons.euro,
-                            color: Colors.yellow.shade400,
-                            size: 16,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          course['price'],
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ] else ...[
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: const Icon(
-                            Icons.euro,
-                            color: Colors.white54,
-                            size: 16,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        const Text(
-                          'Hinta ei saatavilla',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.white54,
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
+                  if (course['price'] != null)
+                    Wrap(
+                      spacing: 4,
+                      runSpacing: 4,
+                      children: _buildPriceChips(course['price']),
+                    ),
                 ],
               ),
-              // Absolutely positioned info icon in top right corner
+              // Absolutely positioned info icon in bottom right corner
               Positioned(
-                top: 0,
+                bottom: 0,
                 right: 0,
                 child: Icon(
                   Icons.info_outline,
-                  color: Colors.white54,
+                  color: Colors.white70,
                   size: 20,
                 ),
               ),
