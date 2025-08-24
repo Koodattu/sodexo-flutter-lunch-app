@@ -34,23 +34,30 @@ class FavoritesHeader extends StatelessWidget {
             onPressed: onRefresh,
             tooltip: 'Refresh',
           ),
-          if (onReorder != null)
-            IconButton(
-              icon: const Icon(Icons.reorder, color: Colors.white),
-              onPressed: onReorder,
-              tooltip: 'Reorder favorites',
-            ),
           IconButton(
+            key: const Key('reorder_button'),
+            icon: Icon(
+              Icons.reorder,
+              color: onReorder != null ? Colors.white : Colors.transparent,
+            ),
+            onPressed: onReorder,
+            tooltip: onReorder != null ? 'Reorder favorites' : null,
+          ),
+          IconButton(
+            key: const Key('language_button'),
             icon: const Icon(Icons.language, color: Colors.white),
             onPressed: () {}, // No functionality yet
             tooltip: 'Language',
           ),
-          if (onFilter != null)
-            IconButton(
-              icon: const Icon(Icons.filter_list, color: Colors.white),
-              onPressed: onFilter,
-              tooltip: 'Filters',
+          IconButton(
+            key: const Key('filter_button'),
+            icon: Icon(
+              Icons.filter_list,
+              color: onFilter != null ? Colors.white : Colors.transparent,
             ),
+            onPressed: onFilter,
+            tooltip: onFilter != null ? 'Filters' : null,
+          ),
         ],
       ),
     );
