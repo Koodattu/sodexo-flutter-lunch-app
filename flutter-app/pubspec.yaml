@@ -19,7 +19,7 @@ dependencies:
   shared_preferences: ^2.4.0
   flutter_svg: ^2.0.17
   flutter_native_splash: ^2.4.5
-  freezed_annotation: ^2.4.4
+  freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
 
 flutter_native_splash:
@@ -31,10 +31,10 @@ flutter_native_splash:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   flutter_launcher_icons: "^0.14.3"
   build_runner: ^2.4.15
-  freezed: ^2.5.8
+  freezed: ^3.2.0
   json_serializable: ^6.9.4
 
 flutter:
