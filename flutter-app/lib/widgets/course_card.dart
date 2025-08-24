@@ -322,22 +322,60 @@ class CourseCard extends StatelessWidget {
             ),
           );
         }
-        // Nutrients
+        // Nutrients as a grid
         if (recipe['nutrients'] != null) {
-          details.add(
-            RichText(
-              text: TextSpan(
-                text: 'Ravintosisältö:\n',
-                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: '${recipe['nutrients']}\n'.replaceAll("|", "\n"),
-                    style: const TextStyle(fontWeight: FontWeight.normal),
+          final nutrientPairs = _parseNutrients(recipe['nutrients']);
+          if (nutrientPairs.isNotEmpty) {
+            details.add(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Ravintoarvotiedot / 100 g:',
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                  const SizedBox(height: 4),
+                  Table(
+                    columnWidths: const {
+                      0: FlexColumnWidth(2),
+                      1: FlexColumnWidth(1),
+                    },
+                    border: TableBorder.all(color: Colors.white24, width: 0.5),
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    children: [
+                      TableRow(
+                        decoration: const BoxDecoration(color: Color(0xFF333333)),
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                            child: Text('Ravintoaine',
+                                style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 13)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                            child: Text('Määrä',
+                                style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 13)),
+                          ),
+                        ],
+                      ),
+                      ...nutrientPairs.map((pair) => TableRow(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                                child: Text(pair.key, style: TextStyle(color: Colors.white, fontSize: 13)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                                child: Text(pair.value, style: TextStyle(color: Colors.white, fontSize: 13)),
+                              ),
+                            ],
+                          )),
+                    ],
                   ),
                 ],
               ),
-            ),
-          );
+            );
+          }
         }
         // Ingredients
         if (recipe['ingredients'] != null) {
@@ -360,5 +398,25 @@ class CourseCard extends StatelessWidget {
     });
 
     return details;
+  }
+
+  /// Parses a nutrients string like "Energy 100kcal | Protein 5g" into a list of key-value pairs
+  List<MapEntry<String, String>> _parseNutrients(String nutrients) {
+    final pairs = <MapEntry<String, String>>[];
+    final items = nutrients.split('|');
+    for (var item in items) {
+      final trimmed = item.trim();
+      if (trimmed.isEmpty) continue;
+      // Split by the first colon for key-value
+      final colonIndex = trimmed.indexOf(':');
+      if (colonIndex > 0) {
+        final key = trimmed.substring(0, colonIndex).trim();
+        final value = trimmed.substring(colonIndex + 1).trim();
+        pairs.add(MapEntry(key, value));
+      } else {
+        pairs.add(MapEntry(trimmed, ''));
+      }
+    }
+    return pairs;
   }
 }
