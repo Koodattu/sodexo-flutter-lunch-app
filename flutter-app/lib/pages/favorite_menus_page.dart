@@ -136,7 +136,18 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
 
   void _handleRefresh() async {
     final favorites = Provider.of<LunchAppState>(context, listen: false).favorites;
-    final favoriteRestaurants = _allRestaurants.where((r) => favorites.contains(r.urlId)).toList();
+    // Use the same ordering logic as in build method to maintain consistency
+    final favoriteRestaurants = favorites
+        .map((urlId) {
+          try {
+            return _allRestaurants.firstWhere((r) => r.urlId == urlId);
+          } catch (e) {
+            return null;
+          }
+        })
+        .where((restaurant) => restaurant != null)
+        .cast<Restaurant>()
+        .toList();
 
     if (favoriteRestaurants.isNotEmpty) {
       // Refresh current tab's menu
