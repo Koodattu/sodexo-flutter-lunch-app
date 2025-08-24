@@ -15,8 +15,44 @@ class FavoriteMenusPage extends StatefulWidget {
 }
 
 class _FavoriteMenusPageState extends State<FavoriteMenusPage> {
+  String _twoDigits(int n) => n.toString().padLeft(2, '0');
   List<Restaurant> _allRestaurants = [];
   bool _isLoading = true;
+
+  Widget _buildHeader() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              "Favorites",
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.refresh, color: Colors.white),
+            onPressed: () {}, // No functionality yet
+            tooltip: 'Refresh',
+          ),
+          IconButton(
+            icon: const Icon(Icons.language, color: Colors.white),
+            onPressed: () {}, // No functionality yet
+            tooltip: 'Language',
+          ),
+          IconButton(
+            icon: const Icon(Icons.filter_list, color: Colors.white),
+            onPressed: () {}, // No functionality yet
+            tooltip: 'Filters',
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -49,12 +85,18 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> {
 
   Widget _buildWeeklyMenu(Map<String, dynamic> menuData) {
     final List<dynamic> mealdates = menuData['mealdates'];
+    final DateTime startOfWeek = DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
+
     return ListView.builder(
       padding: const EdgeInsets.only(bottom: 20),
       itemCount: mealdates.length,
       itemBuilder: (context, dayIndex) {
         final dayData = mealdates[dayIndex];
-        final dayTitle = dayData['date'] ?? '';
+        final DateTime currentDayDate = startOfWeek.add(Duration(days: dayIndex));
+        final String dayName = dayData['date'];
+        final String dayDate =
+            "${_twoDigits(currentDayDate.day)}.${_twoDigits(currentDayDate.month)}.${currentDayDate.year}";
+        final String dayTitle = '$dayName - $dayDate';
         final courses = dayData['courses'] as Map<String, dynamic>;
         return Padding(
           padding: const EdgeInsets.all(8),
@@ -85,7 +127,12 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> {
       return SafeArea(
         child: Scaffold(
           backgroundColor: const Color.fromARGB(255, 17, 17, 17),
-          body: const Center(child: CircularProgressIndicator()),
+          body: Column(
+            children: [
+              _buildHeader(),
+              const Expanded(child: Center(child: CircularProgressIndicator())),
+            ],
+          ),
         ),
       );
     }
@@ -94,11 +141,18 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> {
       return SafeArea(
         child: Scaffold(
           backgroundColor: const Color.fromARGB(255, 17, 17, 17),
-          body: const Center(
-            child: Text(
-              "You have no favorite restaurants.",
-              style: TextStyle(color: Colors.white),
-            ),
+          body: Column(
+            children: [
+              _buildHeader(),
+              const Expanded(
+                child: Center(
+                  child: Text(
+                    "You have no favorite restaurants.",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       );
@@ -107,42 +161,51 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 17, 17, 17),
-        body: PageView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: favoriteRestaurants.length,
-          itemBuilder: (context, index) {
-            final restaurant = favoriteRestaurants[index];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Restaurant header.
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    restaurant.name,
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ),
-                // Weekly menu for the restaurant.
-                Expanded(
-                  child: FutureBuilder<Map<String, dynamic>?>(
-                    future: _fetchWeeklyMenu(restaurant.jsonId ?? ''),
-                    builder: (context, menuSnapshot) {
-                      if (menuSnapshot.connectionState != ConnectionState.done) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      if (!menuSnapshot.hasData || menuSnapshot.data == null || (menuSnapshot.data?.isEmpty ?? true)) {
-                        return const Center(
-                          child: Text("No menu available.", style: TextStyle(color: Colors.white)),
-                        );
-                      }
-                      return _buildWeeklyMenu(menuSnapshot.data!);
-                    },
-                  ),
-                ),
-              ],
-            );
-          },
+        body: Column(
+          children: [
+            _buildHeader(),
+            Expanded(
+              child: PageView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: favoriteRestaurants.length,
+                itemBuilder: (context, index) {
+                  final restaurant = favoriteRestaurants[index];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Restaurant header.
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          restaurant.name,
+                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                      ),
+                      // Weekly menu for the restaurant.
+                      Expanded(
+                        child: FutureBuilder<Map<String, dynamic>?>(
+                          future: _fetchWeeklyMenu(restaurant.jsonId ?? ''),
+                          builder: (context, menuSnapshot) {
+                            if (menuSnapshot.connectionState != ConnectionState.done) {
+                              return const Center(child: CircularProgressIndicator());
+                            }
+                            if (!menuSnapshot.hasData ||
+                                menuSnapshot.data == null ||
+                                (menuSnapshot.data?.isEmpty ?? true)) {
+                              return const Center(
+                                child: Text("No menu available.", style: TextStyle(color: Colors.white)),
+                              );
+                            }
+                            return _buildWeeklyMenu(menuSnapshot.data!);
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
