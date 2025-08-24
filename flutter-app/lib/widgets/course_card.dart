@@ -304,18 +304,13 @@ class CourseCard extends StatelessWidget {
         }
         firstRecipe = false;
         details.add(const SizedBox(height: 8));
-        // Recipe name
+        // Recipe name only, bold
         details.add(
-          RichText(
-            text: TextSpan(
-              text: 'Resepti: ',
-              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-              children: <TextSpan>[
-                TextSpan(
-                  text: '${recipe['name'] ?? 'Ei nimeä'}\n',
-                  style: const TextStyle(fontWeight: FontWeight.normal),
-                ),
-              ],
+          Padding(
+            padding: const EdgeInsets.only(bottom: 2.0),
+            child: Text(
+              recipe['name'] ?? 'Ei nimeä',
+              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 16),
             ),
           ),
         );
@@ -357,33 +352,24 @@ class CourseCard extends StatelessWidget {
                     border: TableBorder.all(color: Colors.white24, width: 0.5),
                     defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                     children: [
-                      TableRow(
-                        decoration: const BoxDecoration(color: Color(0xFF333333)),
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
-                            child: Text('Ravintoaine',
-                                style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 13)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
-                            child: Text('Määrä',
-                                style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 13)),
-                          ),
-                        ],
-                      ),
-                      ...nutrientPairs.map((pair) => TableRow(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
-                                child: Text(pair.key, style: TextStyle(color: Colors.white, fontSize: 13)),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
-                                child: Text(pair.value, style: TextStyle(color: Colors.white, fontSize: 13)),
-                              ),
-                            ],
-                          )),
+                      ...nutrientPairs.asMap().entries.map((entry) {
+                        final i = entry.key;
+                        final pair = entry.value;
+                        final rowColor = i % 2 == 0 ? const Color(0xFF232323) : const Color(0xFF292929);
+                        return TableRow(
+                          decoration: BoxDecoration(color: rowColor),
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                              child: Text(pair.key, style: TextStyle(color: Colors.white, fontSize: 13)),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                              child: Text(pair.value, style: TextStyle(color: Colors.white, fontSize: 13)),
+                            ),
+                          ],
+                        );
+                      }),
                     ],
                   ),
                 ],
@@ -391,19 +377,14 @@ class CourseCard extends StatelessWidget {
             );
           }
         }
-        // Ingredients
+        // Ingredients (just the value)
         if (recipe['ingredients'] != null) {
           details.add(
-            RichText(
-              text: TextSpan(
-                text: 'Ainesosat: ',
-                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: '${recipe['ingredients']}\n',
-                    style: const TextStyle(fontWeight: FontWeight.normal),
-                  ),
-                ],
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Text(
+                recipe['ingredients'],
+                style: const TextStyle(color: Colors.white, fontSize: 14),
               ),
             ),
           );
