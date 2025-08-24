@@ -230,59 +230,27 @@ class CourseCard extends StatelessWidget {
         return AlertDialog(
           backgroundColor: Colors.grey[850],
           elevation: 8,
-          title: Text(
-            course['title_fi'] ?? course['title_en'] ?? 'Tuntematon Ruoka',
-            style: const TextStyle(color: Colors.white),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Raaka-aineet ja ravintoarvot',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                course['title_fi'] ?? course['title_en'] ?? 'Tuntematon Ruoka',
+                style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                RichText(
-                  text: TextSpan(
-                    text: 'Kategoria: ',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: '${course['category'] ?? 'Ei kategoriaa'}\n',
-                        style: const TextStyle(fontWeight: FontWeight.normal),
-                      ),
-                    ],
-                  ),
-                ),
-                RichText(
-                  text: TextSpan(
-                    text: 'Hinta: ',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: '${course['price'] ?? 'Ei hintaa'}\n',
-                        style: const TextStyle(fontWeight: FontWeight.normal),
-                      ),
-                    ],
-                  ),
-                ),
-                if (course['dietcodes'] != null)
-                  RichText(
-                    text: TextSpan(
-                      text: 'Ravintosisältö: ',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: '${course['dietcodes']}\n',
-                          style: const TextStyle(fontWeight: FontWeight.normal),
-                        ),
-                      ],
-                    ),
-                  ),
                 if (course['additionalDietInfo'] != null && course['additionalDietInfo']['allergens'] != null)
                   RichText(
                     text: TextSpan(
@@ -294,22 +262,6 @@ class CourseCard extends StatelessWidget {
                       children: <TextSpan>[
                         TextSpan(
                           text: '${course['additionalDietInfo']['allergens']}\n',
-                          style: const TextStyle(fontWeight: FontWeight.normal),
-                        ),
-                      ],
-                    ),
-                  ),
-                if (course['properties'] != null)
-                  RichText(
-                    text: TextSpan(
-                      text: 'Ominaisuudet: ',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: '${course['properties']}\n',
                           style: const TextStyle(fontWeight: FontWeight.normal),
                         ),
                       ],
@@ -360,7 +312,7 @@ class CourseCard extends StatelessWidget {
                 style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                 children: <TextSpan>[
                   TextSpan(
-                    text: '${recipe['ingredients']}\n'.replaceAll(", ", "\n"),
+                    text: '${recipe['ingredients']}\n',
                     style: const TextStyle(fontWeight: FontWeight.normal),
                   ),
                 ],
