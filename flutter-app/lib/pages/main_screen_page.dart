@@ -78,12 +78,12 @@ class _MainScreenState extends State<MainScreen> {
                 NavigationDestination(
                   icon: FaIcon(FontAwesomeIcons.heartCrack),
                   selectedIcon: FaIcon(FontAwesomeIcons.solidHeart),
-                  label: 'Favorites',
+                  label: 'Suosikit',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.restaurant_menu),
                   selectedIcon: Icon(Icons.restaurant),
-                  label: 'Restaurants',
+                  label: 'Ravintolat',
                 ),
               ],
             ),

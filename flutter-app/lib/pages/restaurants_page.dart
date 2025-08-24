@@ -51,33 +51,39 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
     setState(() {
       _isLocating = true;
     });
-    Location location = Location();
-    bool serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
+    try {
+      Location location = Location();
+      bool serviceEnabled = await location.serviceEnabled();
       if (!serviceEnabled) {
-        setState(() {
-          _isLocating = false;
-        });
-        return;
+        serviceEnabled = await location.requestService();
+        if (!serviceEnabled) {
+          setState(() {
+            _isLocating = false;
+          });
+          return;
+        }
       }
-    }
-    var permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        setState(() {
-          _isLocating = false;
-        });
-        return;
+      var permissionGranted = await location.hasPermission();
+      if (permissionGranted == PermissionStatus.denied) {
+        permissionGranted = await location.requestPermission();
+        if (permissionGranted != PermissionStatus.granted) {
+          setState(() {
+            _isLocating = false;
+          });
+          return;
+        }
       }
+      _userLocation = await location.getLocation();
+      setState(() {
+        _isLocating = false;
+        _sortByDistance = true;
+      });
+      setState(() {});
+    } catch (e) {
+      setState(() {
+        _isLocating = false;
+      });
     }
-    _userLocation = await location.getLocation();
-    setState(() {
-      _isLocating = false;
-      _sortByDistance = true;
-    });
-    setState(() {});
   }
 
   double _calculateDistance(double lat1, double lon1, double lat2, double lon2) {
@@ -154,11 +160,21 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                     focusNode: _searchFocusNode,
                     onChanged: _searchRestaurants,
                     decoration: InputDecoration(
-                      hintText: 'Search restaurants...',
+                      hintText: 'Etsi ravintoloita...',
                       hintStyle: const TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(32),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade900,
+                          width: 4,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32),
+                        borderSide: BorderSide(
+                          color: Colors.red.shade900,
+                          width: 2,
+                        ),
                       ),
                       filled: true,
                       fillColor: Colors.transparent,
@@ -166,11 +182,11 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                     ),
                   )
                 : Text(
-                    "All Restaurants",
+                    "Kaikki ravintolat",
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Colors.red[200],
+                      color: Colors.white,
                     ),
                   ),
           ),
@@ -295,7 +311,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                         color: Colors.white,
                       ),
                       label: Text(
-                        'Lunch: ${restaurant.lunchHours!}',
+                        'Lounas: ${restaurant.lunchHours!}',
                         style: const TextStyle(color: Colors.white),
                       ),
                       backgroundColor: Colors.deepOrange.withOpacity(0.5),
@@ -313,7 +329,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
                         color: Colors.white,
                       ),
                       label: Text(
-                        'Open: ${restaurant.openHours!}',
+                        'Auki: ${restaurant.openHours!}',
                         style: const TextStyle(color: Colors.white),
                       ),
                       backgroundColor: Colors.tealAccent.withOpacity(0.5),
@@ -353,17 +369,17 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
       case 'student':
         iconData = Icons.school;
         color = Colors.blueAccent;
-        label = 'Student Discount';
+        label = 'Opiskelija-alennus';
         break;
       case 'cafe':
         iconData = Icons.local_cafe;
         color = Colors.brown[500]!;
-        label = 'Cafe Services';
+        label = 'Kahvilapalvelut';
         break;
       case 'lunch':
         iconData = Icons.restaurant;
         color = Colors.deepOrangeAccent;
-        label = 'Lunch';
+        label = 'Lounas';
         break;
       default:
         iconData = Icons.category;

@@ -121,7 +121,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
           backgroundColor: Colors.grey[850],
           elevation: 8,
           title: Text(
-            course['title_fi'] ?? course['title_en'] ?? 'Unknown Dish',
+            course['title_fi'] ?? course['title_en'] ?? 'Tuntematon Ruoka',
             style: const TextStyle(color: Colors.white),
           ),
           content: SingleChildScrollView(
@@ -129,14 +129,14 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
               children: <Widget>[
                 RichText(
                   text: TextSpan(
-                    text: 'Category: ',
+                    text: 'Kategoria: ',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: '${course['category'] ?? 'No Category'}\n',
+                        text: '${course['category'] ?? 'Ei kategoriaa'}\n',
                         style: const TextStyle(fontWeight: FontWeight.normal),
                       ),
                     ],
@@ -144,14 +144,14 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
                 ),
                 RichText(
                   text: TextSpan(
-                    text: 'Price: ',
+                    text: 'Hinta: ',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: '${course['price'] ?? 'No Price'}\n',
+                        text: '${course['price'] ?? 'Ei hintaa'}\n',
                         style: const TextStyle(fontWeight: FontWeight.normal),
                       ),
                     ],
@@ -160,7 +160,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
                 if (course['dietcodes'] != null)
                   RichText(
                     text: TextSpan(
-                      text: 'Diet Codes: ',
+                      text: 'Ravintosisältö: ',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -173,17 +173,17 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
                       ],
                     ),
                   ),
-                if (course['allergens'] != null)
+                if (course['additionalDietInfo']['allergens'] != null)
                   RichText(
                     text: TextSpan(
-                      text: 'Allergens: ',
+                      text: 'Allergiat: ',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                          text: '${course['allergens']}\n',
+                          text: '${course['additionalDietInfo']['allergens']}\n',
                           style: const TextStyle(fontWeight: FontWeight.normal),
                         ),
                       ],
@@ -192,7 +192,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
                 if (course['properties'] != null)
                   RichText(
                     text: TextSpan(
-                      text: 'Properties: ',
+                      text: 'Ominaisuudet: ',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -211,7 +211,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Close'),
+              child: const Text('Sulje'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -231,11 +231,11 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
         details.add(
           RichText(
             text: TextSpan(
-              text: 'Recipe: ',
+              text: 'Resepti: ',
               style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               children: <TextSpan>[
                 TextSpan(
-                  text: '${recipe['name'] ?? 'No Name'}\n',
+                  text: '${recipe['name'] ?? 'Ei nimeä'}\n',
                   style: const TextStyle(fontWeight: FontWeight.normal),
                 ),
               ],
@@ -246,7 +246,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
           details.add(
             RichText(
               text: TextSpan(
-                text: 'Ingredients: ',
+                text: 'Ainesosat: ',
                 style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                 children: <TextSpan>[
                   TextSpan(
@@ -262,7 +262,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
           details.add(
             RichText(
               text: TextSpan(
-                text: 'Nutritional Info:\n',
+                text: 'Ravintosisältö:\n',
                 style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                 children: <TextSpan>[
                   TextSpan(
@@ -302,8 +302,8 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
             color: Colors.white,
           ),
           tabs: const [
-            Tab(text: 'Current Week'),
-            Tab(text: 'Next Week'),
+            Tab(text: 'Tämä viikko'),
+            Tab(text: 'Seuraava viikko'),
           ],
         ),
       ),
@@ -323,12 +323,12 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
     }
     if (_errorFetchingCurrentWeek) {
       return const Center(
-        child: Text("Failed to load the menu for the current week."),
+        child: Text("Valikon lataaminen tälle viikolle epäonnistui."),
       );
     }
     if (_currentWeekMenuData!.isEmpty) {
       return const Center(
-        child: Text("No menu available for this week."),
+        child: Text("Ei valikkoa saatavilla tälle viikolle."),
       );
     }
 
@@ -372,7 +372,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              course['title_fi'] ?? 'No Title',
+                              course['title_fi'] ?? 'Ei otsikkoa',
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -386,12 +386,12 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              course['category'] ?? 'No Category',
+                              course['category'] ?? 'Ei kategoriaa',
                               style: const TextStyle(fontSize: 14, color: Colors.white54),
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Price: ${course['price'] ?? 'N/A'}',
+                              'Hinta: ${course['price'] ?? 'N/A'}',
                               style: const TextStyle(fontSize: 14, color: Colors.white54),
                             ),
                           ],
@@ -415,12 +415,12 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
     }
     if (_errorFetchingNextWeek) {
       return const Center(
-        child: Text("Failed to load the menu for the next week."),
+        child: Text("Valikon lataaminen seuraavalle viikolle epäonnistui."),
       );
     }
     if (_nextWeekMenuData!.isEmpty || _nextWeekMenuData!.every((day) => day.isEmpty)) {
       return const Center(
-        child: Text("No menu available for the next week."),
+        child: Text("Ei valikkoa saatavilla seuraavalle viikolle."),
       );
     }
 
@@ -454,7 +454,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
                 ),
                 const SizedBox(height: 8),
                 const Text(
-                  "No menu available for this day.",
+                  "Ei valikkoa saatavilla tälle päivälle.",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -493,7 +493,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              course['title_fi'] ?? 'No Title',
+                              course['title_fi'] ?? 'Ei otsikkoa',
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -507,12 +507,12 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              course['category'] ?? 'No Category',
+                              course['category'] ?? 'Ei kategoriaa',
                               style: const TextStyle(fontSize: 14, color: Colors.white54),
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Price: ${course['price'] ?? 'N/A'}',
+                              'Hinta: ${course['price'] ?? 'N/A'}',
                               style: const TextStyle(fontSize: 14, color: Colors.white54),
                             ),
                           ],
