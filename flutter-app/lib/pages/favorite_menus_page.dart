@@ -8,9 +8,10 @@ import '../providers/lunch_app_state.dart';
 import '../services/menu_service.dart';
 import '../widgets/favorites_header.dart';
 import '../widgets/custom_tab_bar.dart';
-import '../widgets/weekly_menu_list.dart';
+import '../widgets/filtered_weekly_menu_list.dart';
 import '../widgets/menu_state_builder.dart';
 import '../widgets/reorder_favorites_dialog.dart';
+import '../widgets/category_filter_dialog.dart';
 
 class FavoriteMenusPage extends StatefulWidget {
   const FavoriteMenusPage({super.key});
@@ -188,6 +189,96 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
     }
   }
 
+  void _handleFilter() {
+    final appState = Provider.of<LunchAppState>(context, listen: false);
+    final availableCategories = _collectAvailableCategories();
+
+    if (availableCategories.isNotEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => CategoryFilterDialog(
+          availableCategories: availableCategories,
+          currentFilters: appState.categoryFilters,
+          onFiltersChanged: (newFilters) {
+            appState.updateCategoryFilters(newFilters);
+          },
+        ),
+      );
+    } else {
+      // Show snackbar if no categories are available
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Ei kategorioita saatavilla suodatettavaksi'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+    }
+  }
+
+  /// Collects unique categories from all cached menus
+  Set<String> _collectAvailableCategories() {
+    final Set<String> categories = {};
+
+    for (final menuData in _menuCache.values) {
+      if (menuData != null && menuData.isNotEmpty) {
+        // Handle both weekly and daily menu formats
+        if (menuData.containsKey('mealdates')) {
+          // Weekly menu format
+          final List<dynamic> mealdates = menuData['mealdates'];
+          for (final dayData in mealdates) {
+            final courses = dayData['courses'] as Map<String, dynamic>?;
+            if (courses != null) {
+              _extractCategoriesFromCourses(courses, categories);
+            }
+          }
+        } else if (menuData.containsKey('courses')) {
+          // Daily menu format
+          final courses = menuData['courses'];
+          if (courses is Map<String, dynamic>) {
+            _extractCategoriesFromCourses(courses, categories);
+          } else if (courses is List) {
+            // Handle list format from daily API
+            for (int i = 0; i < courses.length; i++) {
+              final course = courses[i] as Map<String, dynamic>?;
+              if (course != null && course['category'] != null) {
+                categories.add(_cleanCategory(course['category'].toString()));
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return categories;
+  }
+
+  /// Extracts categories from courses map and adds them to the categories set
+  void _extractCategoriesFromCourses(Map<String, dynamic> courses, Set<String> categories) {
+    for (final courseEntry in courses.entries) {
+      final course = courseEntry.value as Map<String, dynamic>?;
+      if (course != null && course['category'] != null) {
+        categories.add(_cleanCategory(course['category'].toString()));
+      }
+    }
+  }
+
+  /// Cleans up category text by removing numbers and text in parentheses
+  /// Uses the same logic as CourseCard for consistency
+  String _cleanCategory(String category) {
+    String cleaned = category;
+
+    // Remove numbers
+    cleaned = cleaned.replaceAll(RegExp(r'\d+'), '');
+
+    // Split at first opening parenthesis and take only the first part
+    if (cleaned.contains('(')) {
+      cleaned = cleaned.split('(')[0];
+    }
+
+    // Trim whitespace and convert to uppercase
+    return cleaned.trim().toUpperCase();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Listen to the favorites changes in the provider.
@@ -229,7 +320,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
           backgroundColor: const Color.fromARGB(255, 17, 17, 17),
           body: Column(
             children: [
-              FavoritesHeader(onRefresh: _handleRefresh, onReorder: _handleReorder),
+              FavoritesHeader(onRefresh: _handleRefresh, onReorder: _handleReorder, onFilter: _handleFilter),
               const Expanded(child: Center(child: CircularProgressIndicator())),
             ],
           ),
@@ -243,7 +334,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
           backgroundColor: const Color.fromARGB(255, 17, 17, 17),
           body: Column(
             children: [
-              FavoritesHeader(onRefresh: _handleRefresh), // No reorder when empty
+              FavoritesHeader(onRefresh: _handleRefresh), // No reorder or filter when empty
               const Expanded(
                 child: Center(
                   child: Text(
@@ -264,7 +355,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
         backgroundColor: const Color.fromARGB(255, 17, 17, 17),
         body: Column(
           children: [
-            FavoritesHeader(onRefresh: _handleRefresh, onReorder: _handleReorder),
+            FavoritesHeader(onRefresh: _handleRefresh, onReorder: _handleReorder, onFilter: _handleFilter),
             // Tab bar for restaurant names
             CustomTabBar(
               controller: _tabController,
@@ -290,7 +381,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
                     errorMessage: "Ruokalistan lataaminen epäonnistui.",
                     emptyMessage:
                         "Tälle ravintolalle ei ole saatavilla ruokalistaa tällä hetkellä. Tarkista myöhemmin uudelleen tai kokeile ravintolan omaa verkkosivustoa.",
-                    contentBuilder: () => WeeklyMenuList(menuData: cachedMenu!),
+                    contentBuilder: () => FilteredWeeklyMenuList(menuData: cachedMenu!),
                   );
                 }).toList(),
               ),

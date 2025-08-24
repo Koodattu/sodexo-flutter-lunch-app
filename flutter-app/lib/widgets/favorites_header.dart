@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class FavoritesHeader extends StatelessWidget {
   final VoidCallback onRefresh;
   final VoidCallback? onReorder;
+  final VoidCallback? onFilter;
 
   const FavoritesHeader({
     super.key,
     required this.onRefresh,
     this.onReorder,
+    this.onFilter,
   });
 
   @override
@@ -43,11 +45,12 @@ class FavoritesHeader extends StatelessWidget {
             onPressed: () {}, // No functionality yet
             tooltip: 'Language',
           ),
-          IconButton(
-            icon: const Icon(Icons.filter_list, color: Colors.white),
-            onPressed: () {}, // No functionality yet
-            tooltip: 'Filters',
-          ),
+          if (onFilter != null)
+            IconButton(
+              icon: const Icon(Icons.filter_list, color: Colors.white),
+              onPressed: onFilter,
+              tooltip: 'Filters',
+            ),
         ],
       ),
     );
