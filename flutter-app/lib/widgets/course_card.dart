@@ -254,7 +254,7 @@ class CourseCard extends StatelessWidget {
                 if (course['additionalDietInfo'] != null && course['additionalDietInfo']['allergens'] != null)
                   RichText(
                     text: TextSpan(
-                      text: 'Allergiat: ',
+                      text: 'Allergeenit: ',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -286,9 +286,23 @@ class CourseCard extends StatelessWidget {
 
   List<Widget> _buildRecipeDetails(Map<String, dynamic> recipes) {
     List<Widget> details = [];
+    bool firstRecipe = true;
 
     recipes.forEach((key, recipe) {
       if (key != 'hideAll') {
+        if (!firstRecipe) {
+          details.add(
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Divider(
+                color: Colors.white24,
+                thickness: 1,
+                height: 1,
+              ),
+            ),
+          );
+        }
+        firstRecipe = false;
         details.add(const SizedBox(height: 8));
         // Recipe name
         details.add(
@@ -310,7 +324,7 @@ class CourseCard extends StatelessWidget {
           details.add(
             RichText(
               text: TextSpan(
-                text: 'Allergiat: ',
+                text: 'Allergeenit: ',
                 style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                 children: <TextSpan>[
                   TextSpan(
