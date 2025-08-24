@@ -27,7 +27,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
         children: [
           Expanded(
             child: Text(
-              "Favorites",
+              "Suosikit",
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -49,6 +49,11 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
             icon: const Icon(Icons.filter_list, color: Colors.white),
             onPressed: () {}, // No functionality yet
             tooltip: 'Filters',
+          ),
+          IconButton(
+            icon: const Icon(Icons.star, color: Colors.white),
+            onPressed: () {}, // No functionality yet
+            tooltip: 'Sort',
           ),
         ],
       ),
