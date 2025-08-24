@@ -6,10 +6,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LunchAppState extends ChangeNotifier {
   var current = WordPair.random();
 
-  // Holds the set of favorite restaurant IDs (we'll use urlId as a unique key).
-  Set<String> _favorites = {};
+  // Holds the ordered list of favorite restaurant IDs (we'll use urlId as a unique key).
+  List<String> _favorites = [];
 
-  Set<String> get favorites => _favorites;
+  List<String> get favorites => _favorites;
+  Set<String> get favoritesSet => _favorites.toSet();
 
   LunchAppState() {
     _loadFavoritesFromPrefs();
@@ -21,7 +22,7 @@ class LunchAppState extends ChangeNotifier {
   }
 
   /// Toggles a restaurant's favorite status.
-  /// If it’s already favorited, remove it. If not, add it.
+  /// If it's already favorited, remove it. If not, add it to the end of the list.
   /// Persists changes in SharedPreferences.
   Future<void> toggleFavorite(String restaurantId) async {
     if (_favorites.contains(restaurantId)) {
@@ -36,12 +37,20 @@ class LunchAppState extends ChangeNotifier {
   /// Checks if a restaurantId is in the favorites.
   bool isFavorite(String restaurantId) => _favorites.contains(restaurantId);
 
+  /// Reorders the favorites list to a new order.
+  /// Used by the reorder dialog to change the order of favorites.
+  Future<void> reorderFavorites(List<String> newOrder) async {
+    _favorites = List<String>.from(newOrder);
+    notifyListeners();
+    await _saveFavoritesToPrefs();
+  }
+
   /// Loads favorites from SharedPreferences on startup.
   Future<void> _loadFavoritesFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     final List<String>? storedFavorites = prefs.getStringList('favorites');
     if (storedFavorites != null) {
-      _favorites = storedFavorites.toSet();
+      _favorites = storedFavorites;
     }
     notifyListeners();
   }
@@ -49,6 +58,6 @@ class LunchAppState extends ChangeNotifier {
   /// Persists current favorites to SharedPreferences.
   Future<void> _saveFavoritesToPrefs() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('favorites', _favorites.toList());
+    await prefs.setStringList('favorites', _favorites);
   }
 }

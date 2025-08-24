@@ -10,6 +10,7 @@ import '../widgets/favorites_header.dart';
 import '../widgets/custom_tab_bar.dart';
 import '../widgets/weekly_menu_list.dart';
 import '../widgets/menu_state_builder.dart';
+import '../widgets/reorder_favorites_dialog.dart';
 
 class FavoriteMenusPage extends StatefulWidget {
   const FavoriteMenusPage({super.key});
@@ -129,12 +130,50 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
     }
   }
 
+  void _handleReorder() {
+    final appState = Provider.of<LunchAppState>(context, listen: false);
+    final favoriteRestaurants = appState.favorites
+        .map((urlId) {
+          try {
+            return _allRestaurants.firstWhere((r) => r.urlId == urlId);
+          } catch (e) {
+            return null;
+          }
+        })
+        .where((restaurant) => restaurant != null)
+        .cast<Restaurant>()
+        .toList();
+
+    if (favoriteRestaurants.isNotEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => ReorderFavoritesDialog(
+          favoriteRestaurants: favoriteRestaurants,
+          onReorder: (newOrder) {
+            appState.reorderFavorites(newOrder);
+          },
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // Listen to the favorites changes in the provider.
-    final favorites = Provider.of<LunchAppState>(context).favorites;
-    // Filter the loaded restaurants based on the current favorites.
-    final favoriteRestaurants = _allRestaurants.where((r) => favorites.contains(r.urlId)).toList();
+    final appState = Provider.of<LunchAppState>(context);
+    final favorites = appState.favorites;
+    // Filter the loaded restaurants based on the current favorites and maintain order.
+    final favoriteRestaurants = favorites
+        .map((urlId) {
+          try {
+            return _allRestaurants.firstWhere((r) => r.urlId == urlId);
+          } catch (e) {
+            return null;
+          }
+        })
+        .where((restaurant) => restaurant != null)
+        .cast<Restaurant>()
+        .toList();
 
     // Update tab controller only when the tab count changes
     final currentTabCount = favoriteRestaurants.length;
@@ -159,7 +198,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
           backgroundColor: const Color.fromARGB(255, 17, 17, 17),
           body: Column(
             children: [
-              FavoritesHeader(onRefresh: _handleRefresh),
+              FavoritesHeader(onRefresh: _handleRefresh, onReorder: _handleReorder),
               const Expanded(child: Center(child: CircularProgressIndicator())),
             ],
           ),
@@ -173,7 +212,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
           backgroundColor: const Color.fromARGB(255, 17, 17, 17),
           body: Column(
             children: [
-              FavoritesHeader(onRefresh: _handleRefresh),
+              FavoritesHeader(onRefresh: _handleRefresh), // No reorder when empty
               const Expanded(
                 child: Center(
                   child: Text(
@@ -194,7 +233,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
         backgroundColor: const Color.fromARGB(255, 17, 17, 17),
         body: Column(
           children: [
-            FavoritesHeader(onRefresh: _handleRefresh),
+            FavoritesHeader(onRefresh: _handleRefresh, onReorder: _handleReorder),
             // Tab bar for restaurant names
             CustomTabBar(
               controller: _tabController,

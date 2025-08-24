@@ -413,8 +413,8 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
     final appState = Provider.of<LunchAppState>(context);
 
     // Separate restaurants into favorites and non-favorites for sorting.
-    final favoriteRestaurants = _filteredRestaurants.where((r) => appState.isFavorite(r.urlId)).toList();
-    final nonFavoriteRestaurants = _filteredRestaurants.where((r) => !appState.isFavorite(r.urlId)).toList();
+    final favoriteRestaurants = _filteredRestaurants.where((r) => appState.favoritesSet.contains(r.urlId)).toList();
+    final nonFavoriteRestaurants = _filteredRestaurants.where((r) => !appState.favoritesSet.contains(r.urlId)).toList();
 
     if (_sortByDistance && _userLocation != null) {
       favoriteRestaurants.sort((a, b) {
@@ -448,7 +448,12 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
         return distanceA.compareTo(distanceB);
       });
     } else {
-      favoriteRestaurants.sort((a, b) => a.name.compareTo(b.name));
+      // Sort favorites by their order in the favorites list
+      favoriteRestaurants.sort((a, b) {
+        int indexA = appState.favorites.indexOf(a.urlId);
+        int indexB = appState.favorites.indexOf(b.urlId);
+        return indexA.compareTo(indexB);
+      });
       nonFavoriteRestaurants.sort((a, b) => a.name.compareTo(b.name));
     }
 
