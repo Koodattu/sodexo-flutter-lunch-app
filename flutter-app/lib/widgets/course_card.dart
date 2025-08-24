@@ -290,6 +290,7 @@ class CourseCard extends StatelessWidget {
     recipes.forEach((key, recipe) {
       if (key != 'hideAll') {
         details.add(const SizedBox(height: 8));
+        // Recipe name
         details.add(
           RichText(
             text: TextSpan(
@@ -304,15 +305,16 @@ class CourseCard extends StatelessWidget {
             ),
           ),
         );
-        if (recipe['ingredients'] != null) {
+        // Allergens
+        if (recipe['allergens'] != null) {
           details.add(
             RichText(
               text: TextSpan(
-                text: 'Ainesosat: ',
+                text: 'Allergiat: ',
                 style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                 children: <TextSpan>[
                   TextSpan(
-                    text: '${recipe['ingredients']}\n',
+                    text: '${recipe['allergens']}\n',
                     style: const TextStyle(fontWeight: FontWeight.normal),
                   ),
                 ],
@@ -320,6 +322,7 @@ class CourseCard extends StatelessWidget {
             ),
           );
         }
+        // Nutrients
         if (recipe['nutrients'] != null) {
           details.add(
             RichText(
@@ -329,6 +332,23 @@ class CourseCard extends StatelessWidget {
                 children: <TextSpan>[
                   TextSpan(
                     text: '${recipe['nutrients']}\n'.replaceAll("|", "\n"),
+                    style: const TextStyle(fontWeight: FontWeight.normal),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+        // Ingredients
+        if (recipe['ingredients'] != null) {
+          details.add(
+            RichText(
+              text: TextSpan(
+                text: 'Ainesosat: ',
+                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: '${recipe['ingredients']}\n',
                     style: const TextStyle(fontWeight: FontWeight.normal),
                   ),
                 ],
