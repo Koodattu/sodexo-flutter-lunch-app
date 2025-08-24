@@ -23,6 +23,25 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
   Map<String, ValueNotifier<int>> _tabNotifiers = {};
   Map<String, Map<String, dynamic>?> _menuCache = {};
 
+  /// Converts a List of courses to a Map format for consistency
+  Map<String, dynamic>? _convertListToMap(dynamic coursesList) {
+    if (coursesList == null || coursesList is! List || coursesList.isEmpty) {
+      return null;
+    }
+
+    final Map<String, dynamic> coursesMap = {};
+    for (int i = 0; i < coursesList.length; i++) {
+      coursesMap[i.toString()] = coursesList[i];
+    }
+    return coursesMap;
+  }
+
+  /// Returns Finnish weekday name for given date
+  String _getFinnishWeekdayName(DateTime date) {
+    const weekdays = ['Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai', 'Sunnuntai'];
+    return weekdays[date.weekday - 1];
+  }
+
   Widget _buildHeader() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
@@ -136,17 +155,96 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
     }
 
     try {
+      // First, try to fetch current week menu
       final response = await http.get(Uri.parse('https://www.sodexo.fi/ruokalistat/output/weekly_json/$jsonId'));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        // Cache the result
+
+        // Check if current week menu is still valid
+        if (data['mealdates'] != null && data['mealdates'].isNotEmpty) {
+          final List<dynamic> mealdates = data['mealdates'];
+          final DateTime now = DateTime.now();
+          final DateTime startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+
+          // Check if current date is after the last date in the week menu
+          final DateTime lastDayOfWeek = startOfWeek.add(Duration(days: mealdates.length - 1));
+
+          if (now.isAfter(lastDayOfWeek.add(const Duration(days: 1)))) {
+            // Current week is expired, fetch next week menu
+            final nextWeekData = await _fetchNextWeekMenuData(jsonId);
+            if (nextWeekData != null) {
+              _menuCache[jsonId] = nextWeekData;
+              return nextWeekData;
+            }
+          }
+        }
+
+        // Cache and return current week data
         _menuCache[jsonId] = data;
         return data;
       }
     } catch (e) {
-      // Handle error as needed.
+      // If current week fails, try next week
+      final nextWeekData = await _fetchNextWeekMenuData(jsonId);
+      if (nextWeekData != null) {
+        _menuCache[jsonId] = nextWeekData;
+        return nextWeekData;
+      }
     }
     return null;
+  }
+
+  Future<Map<String, dynamic>?> _fetchNextWeekMenuData(String jsonId) async {
+    final List<Map<String, dynamic>> nextWeekMenu = [];
+    final DateTime today = DateTime.now();
+    final DateTime nextMonday = today.weekday == DateTime.monday
+        ? today.add(const Duration(days: 7))
+        : today.add(Duration(days: (8 - today.weekday) % 7));
+
+    try {
+      for (int i = 0; i < 5; i++) {
+        final DateTime nextWeekDay = nextMonday.add(Duration(days: i));
+        final String dateString = "${nextWeekDay.year}-${_twoDigits(nextWeekDay.month)}-${_twoDigits(nextWeekDay.day)}";
+
+        final response = await http.get(
+          Uri.parse(
+            'https://www.sodexo.fi/ruokalistat/output/daily_json/$jsonId/$dateString',
+          ),
+        );
+
+        if (response.statusCode == 200) {
+          final decodedData = json.decode(response.body);
+          nextWeekMenu.add(decodedData);
+        } else {
+          nextWeekMenu.add({});
+        }
+      }
+
+      // Convert next week data to the same format as current week data
+      final List<Map<String, dynamic>> mealdates = [];
+      for (int i = 0; i < nextWeekMenu.length; i++) {
+        final dayData = nextWeekMenu[i];
+        final DateTime currentDayDate = nextMonday.add(Duration(days: i));
+        final String dayName = _getFinnishWeekdayName(currentDayDate);
+
+        // Handle the different data structure for next week (daily API returns List instead of Map)
+        final courses = dayData['courses'] is List
+            ? _convertListToMap(dayData['courses'])
+            : dayData['courses'] as Map<String, dynamic>?;
+
+        mealdates.add({
+          'date': dayName,
+          'courses': courses ?? {},
+        });
+      }
+
+      return {
+        'mealdates': mealdates,
+        'isNextWeek': true, // Flag to indicate this is next week data
+      };
+    } catch (error) {
+      return null;
+    }
   }
 
   Future<Map<String, dynamic>?> _getMenuForRestaurant(String restaurantJsonId, int refreshKey) async {
@@ -156,7 +254,18 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
 
   Widget _buildWeeklyMenu(Map<String, dynamic> menuData) {
     final List<dynamic> mealdates = menuData['mealdates'];
-    final DateTime startOfWeek = DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
+    final bool isNextWeek = menuData['isNextWeek'] ?? false;
+
+    // Calculate the correct start date based on whether this is next week data
+    final DateTime startOfWeek;
+    if (isNextWeek) {
+      final DateTime today = DateTime.now();
+      startOfWeek = today.weekday == DateTime.monday
+          ? today.add(const Duration(days: 7))
+          : today.add(Duration(days: (8 - today.weekday) % 7));
+    } else {
+      startOfWeek = DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
+    }
 
     return ListView.builder(
       padding: const EdgeInsets.only(bottom: 20),
