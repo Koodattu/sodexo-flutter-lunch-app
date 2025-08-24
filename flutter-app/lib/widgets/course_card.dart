@@ -68,117 +68,135 @@ class CourseCard extends StatelessWidget {
         },
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
             children: [
-              // Main title
-              Text(
-                course['title_fi'] ?? 'Ei otsikkoa',
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  height: 1.2,
-                ),
-              ),
-              const SizedBox(height: 8),
-
-              // Category and Diet codes row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Category chip on the left
-                  if (course['category'] != null)
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.deepOrange.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.restaurant_menu,
+                  // Main title
+                  Text(
+                    course['title_fi'] ?? 'Ei otsikkoa',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      height: 1.2,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Category and Diet codes row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Category chip on the left
+                      if (course['category'] != null)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.deepOrange.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.restaurant_menu,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                course['category'],
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      else
+                        const SizedBox.shrink(),
+
+                      // Diet codes chips on the right
+                      if (course['dietcodes'] != null)
+                        Flexible(
+                          child: Wrap(
+                            spacing: 4,
+                            runSpacing: 4,
+                            alignment: WrapAlignment.end,
+                            children: _buildDietCodeChips(course['dietcodes']),
+                          ),
+                        )
+                      else
+                        const SizedBox.shrink(),
+                    ],
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // Price section
+                  Row(
+                    children: [
+                      if (course['price'] != null) ...[
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.blue.withOpacity(0.8),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Icon(
+                            Icons.euro,
+                            color: Colors.yellow.shade400,
                             size: 16,
-                            color: Colors.white,
                           ),
-                          const SizedBox(width: 4),
-                          Text(
-                            course['category'],
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal,
-                            ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          course['price'],
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.white70,
                           ),
-                        ],
-                      ),
-                    )
-                  else
-                    const SizedBox.shrink(),
-
-                  // Diet codes chips on the right
-                  if (course['dietcodes'] != null)
-                    Flexible(
-                      child: Wrap(
-                        spacing: 4,
-                        runSpacing: 4,
-                        alignment: WrapAlignment.end,
-                        children: _buildDietCodeChips(course['dietcodes']),
-                      ),
-                    )
-                  else
-                    const SizedBox.shrink(),
-                ],
-              ),
-
-              const SizedBox(height: 8),
-
-              // Price section
-              Row(
-                children: [
-                  if (course['price'] != null) ...[
-                    const Icon(
-                      Icons.euro,
-                      color: Colors.white70,
-                      size: 16,
-                    ),
-                    const SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        course['price'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.white70,
                         ),
-                      ),
-                    ),
-                  ] else ...[
-                    const Icon(
-                      Icons.euro,
-                      color: Colors.white54,
-                      size: 16,
-                    ),
-                    const SizedBox(width: 4),
-                    const Expanded(
-                      child: Text(
-                        'Hinta ei saatavilla',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white54,
+                      ] else ...[
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: const Icon(
+                            Icons.euro,
+                            color: Colors.white54,
+                            size: 16,
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
-                  // Tap indicator
-                  const Icon(
-                    Icons.info_outline,
-                    color: Colors.white54,
-                    size: 20,
+                        const SizedBox(width: 8),
+                        const Text(
+                          'Hinta ei saatavilla',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white54,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ],
+              ),
+              // Absolutely positioned info icon in top right corner
+              Positioned(
+                top: 0,
+                right: 0,
+                child: Icon(
+                  Icons.info_outline,
+                  color: Colors.white54,
+                  size: 20,
+                ),
               ),
             ],
           ),
