@@ -35,8 +35,7 @@ class _ReorderFavoritesDialogState extends State<ReorderFavoritesDialog> {
       content: SizedBox(
         width: double.maxFinite,
         height: 400,
-        child: ReorderableListView.builder(
-          itemCount: _restaurants.length,
+        child: ReorderableListView(
           onReorder: (oldIndex, newIndex) {
             setState(() {
               if (newIndex > oldIndex) {
@@ -46,16 +45,20 @@ class _ReorderFavoritesDialogState extends State<ReorderFavoritesDialog> {
               _restaurants.insert(newIndex, item);
             });
           },
-          itemBuilder: (context, index) {
-            final restaurant = _restaurants[index];
+          children: _restaurants.asMap().entries.map((entry) {
+            final index = entry.key;
+            final restaurant = entry.value;
             return Card(
               key: ValueKey(restaurant.urlId),
               color: const Color.fromARGB(255, 60, 60, 60),
               margin: const EdgeInsets.symmetric(vertical: 4),
               child: ListTile(
-                leading: Icon(
-                  Icons.drag_handle,
-                  color: Colors.white70,
+                leading: ReorderableDragStartListener(
+                  index: index,
+                  child: const Icon(
+                    Icons.drag_handle,
+                    color: Colors.white70,
+                  ),
                 ),
                 title: Text(
                   restaurant.name,
@@ -78,7 +81,7 @@ class _ReorderFavoritesDialogState extends State<ReorderFavoritesDialog> {
                 ),
               ),
             );
-          },
+          }).toList(),
         ),
       ),
       actions: [

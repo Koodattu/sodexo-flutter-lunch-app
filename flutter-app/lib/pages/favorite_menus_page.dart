@@ -24,6 +24,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
   TabController? _tabController;
   final Map<String, Map<String, dynamic>?> _menuCache = {};
   final Set<String> _refreshingMenus = {};
+  final Set<String> _errorMenus = {};
   Set<String> _previousFavorites = {};
   int _previousTabCount = 0;
 
@@ -73,8 +74,15 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
     for (final restaurant in favoriteRestaurants) {
       final jsonId = restaurant.jsonId ?? '';
       if (jsonId.isNotEmpty && !_menuCache.containsKey(jsonId)) {
-        final menuData = await MenuService.fetchMenuWithFallback(jsonId);
-        _menuCache[jsonId] = menuData;
+        try {
+          final menuData = await MenuService.fetchMenuWithFallback(jsonId);
+          _menuCache[jsonId] = menuData;
+          _errorMenus.remove(jsonId);
+        } catch (e) {
+          // Store empty map to indicate failed attempt and mark as error
+          _menuCache[jsonId] = {};
+          _errorMenus.add(jsonId);
+        }
       }
     }
     setState(() {});
@@ -83,6 +91,7 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
   Future<void> _refreshMenu(String jsonId) async {
     setState(() {
       _refreshingMenus.add(jsonId);
+      _errorMenus.remove(jsonId);
     });
 
     try {
@@ -93,6 +102,9 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
       });
     } catch (e) {
       setState(() {
+        // Store empty map to indicate failed attempt and mark as error
+        _menuCache[jsonId] = {};
+        _errorMenus.add(jsonId);
         _refreshingMenus.remove(jsonId);
       });
     }
@@ -107,6 +119,15 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
           if (mounted) {
             setState(() {
               _menuCache[jsonId] = menuData;
+              _errorMenus.remove(jsonId);
+            });
+          }
+        }).catchError((e) {
+          if (mounted) {
+            setState(() {
+              // Store empty map to indicate failed attempt and mark as error
+              _menuCache[jsonId] = {};
+              _errorMenus.add(jsonId);
             });
           }
         });
@@ -248,13 +269,17 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProvid
                   final restaurantJsonId = restaurant.jsonId ?? '';
                   final cachedMenu = _menuCache[restaurantJsonId];
                   final isRefreshing = _refreshingMenus.contains(restaurantJsonId);
+                  final hasError = _errorMenus.contains(restaurantJsonId);
+                  final isLoading = isRefreshing || (!hasError && cachedMenu == null);
+                  final isEmpty = !isRefreshing && !hasError && cachedMenu != null && cachedMenu.isEmpty;
 
                   return MenuStateBuilder(
-                    isLoading: isRefreshing || cachedMenu == null,
-                    hasError: false,
-                    isEmpty: !isRefreshing && (cachedMenu == null || cachedMenu.isEmpty),
+                    isLoading: isLoading,
+                    hasError: hasError,
+                    isEmpty: isEmpty,
                     errorMessage: "Ruokalistan lataaminen epäonnistui.",
-                    emptyMessage: "Ei ruokalistaa saatavilla.",
+                    emptyMessage:
+                        "Tälle ravintolalle ei ole saatavilla ruokalistaa tällä hetkellä. Tarkista myöhemmin uudelleen tai kokeile ravintolan omaa verkkosivustoa.",
                     contentBuilder: () => WeeklyMenuList(menuData: cachedMenu!),
                   );
                 }).toList(),
