@@ -14,10 +14,11 @@ class FavoriteMenusPage extends StatefulWidget {
   State<FavoriteMenusPage> createState() => _FavoriteMenusPageState();
 }
 
-class _FavoriteMenusPageState extends State<FavoriteMenusPage> {
+class _FavoriteMenusPageState extends State<FavoriteMenusPage> with TickerProviderStateMixin {
   String _twoDigits(int n) => n.toString().padLeft(2, '0');
   List<Restaurant> _allRestaurants = [];
   bool _isLoading = true;
+  TabController? _tabController;
 
   Widget _buildHeader() {
     return Padding(
@@ -58,6 +59,21 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> {
   void initState() {
     super.initState();
     _loadRestaurants();
+  }
+
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    super.dispose();
+  }
+
+  void _updateTabController(int length) {
+    _tabController?.dispose();
+    if (length >= 2) {
+      _tabController = TabController(length: length, vsync: this);
+    } else {
+      _tabController = null;
+    }
   }
 
   Future<void> _loadRestaurants() async {
@@ -123,6 +139,9 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> {
     // Filter the loaded restaurants based on the current favorites.
     final favoriteRestaurants = _allRestaurants.where((r) => favorites.contains(r.urlId)).toList();
 
+    // Update tab controller when favorites change
+    _updateTabController(favoriteRestaurants.length);
+
     if (_isLoading) {
       return SafeArea(
         child: Scaffold(
@@ -158,51 +177,95 @@ class _FavoriteMenusPageState extends State<FavoriteMenusPage> {
       );
     }
 
+    // Single favorite - show as before
+    if (favoriteRestaurants.length == 1) {
+      final restaurant = favoriteRestaurants[0];
+      return SafeArea(
+        child: Scaffold(
+          backgroundColor: const Color.fromARGB(255, 17, 17, 17),
+          body: Column(
+            children: [
+              _buildHeader(),
+              // Restaurant header.
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  restaurant.name,
+                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+              ),
+              // Weekly menu for the restaurant.
+              Expanded(
+                child: FutureBuilder<Map<String, dynamic>?>(
+                  future: _fetchWeeklyMenu(restaurant.jsonId ?? ''),
+                  builder: (context, menuSnapshot) {
+                    if (menuSnapshot.connectionState != ConnectionState.done) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (!menuSnapshot.hasData || menuSnapshot.data == null || (menuSnapshot.data?.isEmpty ?? true)) {
+                      return const Center(
+                        child: Text("No menu available.", style: TextStyle(color: Colors.white)),
+                      );
+                    }
+                    return _buildWeeklyMenu(menuSnapshot.data!);
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // Multiple favorites - show with tabs
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 17, 17, 17),
         body: Column(
           children: [
             _buildHeader(),
-            Expanded(
-              child: PageView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: favoriteRestaurants.length,
-                itemBuilder: (context, index) {
-                  final restaurant = favoriteRestaurants[index];
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Restaurant header.
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Text(
-                          restaurant.name,
-                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                      ),
-                      // Weekly menu for the restaurant.
-                      Expanded(
-                        child: FutureBuilder<Map<String, dynamic>?>(
-                          future: _fetchWeeklyMenu(restaurant.jsonId ?? ''),
-                          builder: (context, menuSnapshot) {
-                            if (menuSnapshot.connectionState != ConnectionState.done) {
-                              return const Center(child: CircularProgressIndicator());
-                            }
-                            if (!menuSnapshot.hasData ||
-                                menuSnapshot.data == null ||
-                                (menuSnapshot.data?.isEmpty ?? true)) {
-                              return const Center(
-                                child: Text("No menu available.", style: TextStyle(color: Colors.white)),
-                              );
-                            }
-                            return _buildWeeklyMenu(menuSnapshot.data!);
-                          },
-                        ),
-                      ),
-                    ],
+            // Tab bar for restaurant names
+            Container(
+              color: const Color.fromARGB(255, 17, 17, 17),
+              child: TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                tabAlignment: TabAlignment.start,
+                indicator: const BoxDecoration(), // Remove the underline indicator
+                dividerColor: Colors.transparent, // Remove the separator line
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.grey,
+                labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                unselectedLabelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                overlayColor: MaterialStateProperty.all(Colors.transparent), // Remove tap ripple effect
+                splashFactory: NoSplash.splashFactory, // Remove splash effect
+                tabs: favoriteRestaurants.map((restaurant) {
+                  return Tab(
+                    text: restaurant.name,
                   );
-                },
+                }).toList(),
+              ),
+            ),
+            // Tab view for restaurant content
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: favoriteRestaurants.map((restaurant) {
+                  return FutureBuilder<Map<String, dynamic>?>(
+                    future: _fetchWeeklyMenu(restaurant.jsonId ?? ''),
+                    builder: (context, menuSnapshot) {
+                      if (menuSnapshot.connectionState != ConnectionState.done) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      if (!menuSnapshot.hasData || menuSnapshot.data == null || (menuSnapshot.data?.isEmpty ?? true)) {
+                        return const Center(
+                          child: Text("No menu available.", style: TextStyle(color: Colors.white)),
+                        );
+                      }
+                      return _buildWeeklyMenu(menuSnapshot.data!);
+                    },
+                  );
+                }).toList(),
               ),
             ),
           ],
