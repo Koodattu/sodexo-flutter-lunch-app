@@ -10,47 +10,167 @@ class CourseCard extends StatelessWidget {
     required this.course,
   });
 
+  /// Returns color for different diet codes
+  Color _getDietCodeColor(String code) {
+    switch (code.trim().toUpperCase()) {
+      case 'G':
+        return const Color.fromARGB(255, 76, 175, 80); // Green for gluten-free
+      case 'L':
+        return const Color.fromARGB(255, 33, 150, 243); // Blue for lactose-free
+      case 'M':
+        return const Color.fromARGB(255, 156, 39, 176); // Purple for milk-free
+      case 'VE':
+        return const Color.fromARGB(255, 139, 195, 74); // Light green for vegan
+      case 'VL':
+        return const Color.fromARGB(255, 104, 159, 56); // Darker green for low-lactose
+      case 'S':
+        return const Color.fromARGB(255, 255, 152, 0); // Orange for contains soy
+      default:
+        return const Color.fromARGB(255, 96, 125, 139); // Blue grey for unknown codes
+    }
+  }
+
+  /// Builds individual diet code chips
+  List<Widget> _buildDietCodeChips(String dietCodes) {
+    final codes = dietCodes.split(',').map((code) => code.trim()).where((code) => code.isNotEmpty).toList();
+
+    return codes
+        .map((code) => Container(
+              margin: const EdgeInsets.only(right: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: _getDietCodeColor(code),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                code,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ))
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       color: const Color.fromARGB(255, 46, 46, 46),
+      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 4,
       child: InkWell(
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        borderRadius: BorderRadius.circular(12),
         onTap: () {
           _showCourseDetailDialog(context, course);
         },
-        child: SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  course['title_fi'] ?? 'Ei otsikkoa',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Main title
+              Text(
+                course['title_fi'] ?? 'Ei otsikkoa',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  height: 1.2,
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              // Category and Diet codes row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Category chip on the left
+                  if (course['category'] != null)
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 223, 0, 0),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Text(
+                        course['category'],
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    )
+                  else
+                    const SizedBox.shrink(),
+
+                  // Diet codes chips on the right
+                  if (course['dietcodes'] != null)
+                    Flexible(
+                      child: Wrap(
+                        spacing: 4,
+                        runSpacing: 4,
+                        alignment: WrapAlignment.end,
+                        children: _buildDietCodeChips(course['dietcodes']),
+                      ),
+                    )
+                  else
+                    const SizedBox.shrink(),
+                ],
+              ),
+
+              const SizedBox(height: 12),
+
+              // Price section
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (course['price'] != null) ...[
+                    Expanded(
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.euro,
+                            color: Color.fromARGB(255, 255, 193, 7),
+                            size: 16,
+                          ),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              course['price'],
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 255, 193, 7),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ] else ...[
+                    const Text(
+                      'Hinta ei saatavilla',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white54,
+                      ),
+                    ),
+                  ],
+
+                  // Tap indicator
+                  const Icon(
+                    Icons.info_outline,
+                    color: Colors.white54,
+                    size: 20,
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  course['title_en'] ?? 'No English Title',
-                  style: const TextStyle(fontSize: 16, color: Colors.white70),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  course['category'] ?? 'Ei kategoriaa',
-                  style: const TextStyle(fontSize: 14, color: Colors.white54),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Hinta: ${course['price'] ?? 'N/A'}',
-                  style: const TextStyle(fontSize: 14, color: Colors.white54),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

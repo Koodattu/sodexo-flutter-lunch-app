@@ -113,6 +113,19 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
     return n.toString().padLeft(2, '0');
   }
 
+  /// Converts a List of courses to a Map format for consistency
+  Map<String, dynamic>? _convertListToMap(dynamic coursesList) {
+    if (coursesList == null || coursesList is! List || coursesList.isEmpty) {
+      return null;
+    }
+
+    final Map<String, dynamic> coursesMap = {};
+    for (int i = 0; i < coursesList.length; i++) {
+      coursesMap[i.toString()] = coursesList[i];
+    }
+    return coursesMap;
+  }
+
   /// Returns Finnish weekday name for given date
   String _getFinnishWeekdayName(DateTime date) {
     const weekdays = ['Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai', 'Sunnuntai'];
@@ -122,7 +135,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
   /// Builds the day section with title and courses
   Widget _buildDaySection(String dayTitle, Map<String, dynamic>? courses) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -130,10 +143,10 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
             dayTitle,
             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 4),
           if (courses == null || courses.isEmpty)
             const Text(
-              "Ei valikkoa saatavilla tälle päivälle.",
+              "Ei ruokalistaa saatavilla tälle päivälle.",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -144,8 +157,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
             ...courses.entries.map<Widget>((courseEntry) {
               final course = courseEntry.value;
               return CourseCard(course: course);
-            }).toList(),
-          const SizedBox(height: 20),
+            }),
         ],
       ),
     );
@@ -214,8 +226,8 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
       isLoading: _isLoadingCurrentWeek,
       hasError: _errorFetchingCurrentWeek,
       isEmpty: _currentWeekMenuData?.isEmpty ?? true,
-      errorMessage: "Valikon lataaminen tälle viikolle epäonnistui.",
-      emptyMessage: "Ei valikkoa saatavilla tälle viikolle.",
+      errorMessage: "Ruokalistan lataaminen tälle viikolle epäonnistui.",
+      emptyMessage: "Ei ruokalistaa saatavilla tälle viikolle.",
       contentBuilder: () {
         final DateTime startOfWeek = DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
 
@@ -242,8 +254,8 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
       isLoading: _isLoadingNextWeek,
       hasError: _errorFetchingNextWeek,
       isEmpty: (_nextWeekMenuData?.isEmpty ?? true) || (_nextWeekMenuData?.every((day) => day.isEmpty) ?? true),
-      errorMessage: "Valikon lataaminen seuraavalle viikolle epäonnistui.",
-      emptyMessage: "Ei valikkoa saatavilla seuraavalle viikolle.",
+      errorMessage: "Ruokalistan lataaminen seuraavalle viikolle epäonnistui.",
+      emptyMessage: "Ei ruokalistaa saatavilla seuraavalle viikolle.",
       contentBuilder: () {
         final DateTime nextMonday = DateTime.now().weekday == DateTime.monday
             ? DateTime.now().add(const Duration(days: 7))
@@ -258,7 +270,11 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
             final String dayDate =
                 "${_twoDigits(currentDayDate.day)}.${_twoDigits(currentDayDate.month)}.${currentDayDate.year}";
             final String dayTitle = '$dayName - $dayDate';
-            final courses = dayData['courses'];
+
+            // Handle the different data structure for next week (daily API returns List instead of Map)
+            final courses = dayData['courses'] is List
+                ? _convertListToMap(dayData['courses'])
+                : dayData['courses'] as Map<String, dynamic>?;
 
             return _buildDaySection(dayTitle, courses);
           },
