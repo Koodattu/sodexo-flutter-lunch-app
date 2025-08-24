@@ -118,7 +118,7 @@ class CourseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: const Color.fromARGB(255, 46, 46, 46),
-      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 4,
       child: InkWell(
