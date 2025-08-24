@@ -186,39 +186,49 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> with Single
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 17, 17, 17),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Color.fromARGB(132, 0, 0, 0),
-        ),
-        title: Text(
-          widget.restaurant.name,
-          style: const TextStyle(color: Colors.white),
-        ),
-        bottom: TabBar(
-          controller: _tabController,
-          indicator: const BoxDecoration(), // Remove the underline indicator
-          dividerColor: Colors.transparent, // Remove the separator line
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.grey,
-          labelStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          unselectedLabelStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          overlayColor: MaterialStateProperty.all(Colors.transparent), // Remove tap ripple effect
-          splashFactory: NoSplash.splashFactory, // Remove splash effect
-          tabs: const [
-            Tab(text: 'Tämä viikko'),
-            Tab(text: 'Seuraava viikko'),
-          ],
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: [Colors.red.shade900, Colors.blue.shade900]),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _buildCurrentWeekMenu(),
-          _buildNextWeekMenu(),
-        ],
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          toolbarHeight: 0,
+          backgroundColor: Colors.transparent,
+        ),
+        body: Scaffold(
+          backgroundColor: const Color.fromARGB(255, 17, 17, 17),
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: Text(
+              widget.restaurant.name,
+              style: const TextStyle(color: Colors.white),
+            ),
+            bottom: TabBar(
+              controller: _tabController,
+              indicator: const BoxDecoration(), // Remove the underline indicator
+              dividerColor: Colors.transparent, // Remove the separator line
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.grey,
+              labelStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              unselectedLabelStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              overlayColor: MaterialStateProperty.all(Colors.transparent), // Remove tap ripple effect
+              splashFactory: NoSplash.splashFactory, // Remove splash effect
+              tabs: const [
+                Tab(text: 'Tämä viikko'),
+                Tab(text: 'Seuraava viikko'),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            controller: _tabController,
+            children: [
+              _buildCurrentWeekMenu(),
+              _buildNextWeekMenu(),
+            ],
+          ),
+        ),
       ),
     );
   }
