@@ -7,6 +7,8 @@
     <br />
 </div>
 
+![Preview](images/preview.png)
+
 ## 🍽️ About the Project
 
 SDX Restaurant Menus is a cross-platform application that makes finding your daily lunch easier by providing quick access to menu information from Sodexo restaurants across Finland. Whether you're a student looking for the closest campus cafeteria, an office worker checking what's for lunch today, or someone exploring dining options in your area, this app has you covered.
