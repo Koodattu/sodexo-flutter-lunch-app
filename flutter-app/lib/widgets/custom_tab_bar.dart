@@ -30,7 +30,7 @@ class CustomTabBar extends StatelessWidget implements PreferredSizeWidget {
         unselectedLabelColor: Colors.grey,
         labelStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         unselectedLabelStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        overlayColor: MaterialStateProperty.all(Colors.transparent), // Remove tap ripple effect
+        overlayColor: WidgetStateProperty.all(Colors.transparent), // Remove tap ripple effect
         splashFactory: NoSplash.splashFactory, // Remove splash effect
         labelPadding: isScrollable
             ? const EdgeInsets.symmetric(horizontal: 8.0)
